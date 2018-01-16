@@ -27,10 +27,10 @@ class TransactionPendingCell: UITableViewCell {
         self.cryptoAmountLabel.text = "\(convertSatoshiToBTC(sum: histObj.txOutAmount.uint32Value)) BTC"
         self.fiatAmountLabel.text = "\((convertSatoshiToBTC(sum: histObj.txOutAmount.uint32Value) * histObj.btcToUsd).fixedFraction(digits: 2)) USD"
         
-        if histObj.txStatus == "incoming in block" {
+        if histObj.txStatus.intValue == TxStatus.BlockIncoming.rawValue {
 //            lockedCryptoAmountLabel.text = "\"
 //            lockedFiatAmountLabel.text = "\((amountInDouble * histObj.btcToUsd).fixedFraction(digits: 2))"
-        } else if histObj.txStatus == "spend in mempool" {
+        } else if histObj.txStatus.intValue == TxStatus.MempoolOutcoming.rawValue {
             let amount = self.calculateAmount(transactions: histObj.txInputs)
             let amountInDouble = convertSatoshiToBTC(sum: amount)
             lockedCryptoAmountLabel.text = "\(amountInDouble.fixedFraction(digits: 8))"
