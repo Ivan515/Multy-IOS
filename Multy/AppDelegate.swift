@@ -99,31 +99,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
     func performFirstEnterFlow() {
-//        guard self.window != nil && self.window?.rootViewController != nil else {
-//            return
-//        }
-//        
-//        let assetVC = self.window?.rootViewController?.childViewControllers[0].childViewControllers[0] as! AssetsViewController
-//        switch isDeviceJailbroken() {
-//        case true:
-//            assetVC.presenter.isJailed = true
-//        case false:
-//            assetVC.presenter.isJailed = false
-//            DataManager.shared.getServerConfig { (hardVersion, softVersion, err) in
-//                let dictionary = Bundle.main.infoDictionary!
-//                let buildVersion = (dictionary["CFBundleVersion"] as! NSString).integerValue
-//                
-//                //MARK: change > to <
-//                if err != nil || buildVersion > hardVersion! {
-//                    assetVC.isFlowPassed = true
-//                    assetVC.viewDidLoad()
-//                    let _ = UserPreferences.shared
-//                    self.saveMkVersion()
-//                } else {
-//                    assetVC.presentUpdateAlert()
-//                }
-//            }
-//        }
+        guard self.window != nil && self.window?.rootViewController != nil else {
+            return
+        }
+        
+        let assetVC = self.window?.rootViewController?.childViewControllers[0].childViewControllers[0] as! AssetsViewController
+        switch isDeviceJailbroken() {
+        case true:
+            assetVC.presenter.isJailed = true
+        case false:
+            assetVC.presenter.isJailed = false
+            DataManager.shared.getServerConfig { (hardVersion, softVersion, err) in
+                let dictionary = Bundle.main.infoDictionary!
+                let buildVersion = (dictionary["CFBundleVersion"] as! NSString).integerValue
+                
+                //MARK: change > to <
+                if err != nil || buildVersion > hardVersion! {
+                    assetVC.isFlowPassed = true
+                    assetVC.viewDidLoad()
+                    let _ = UserPreferences.shared
+                    self.saveMkVersion()
+                } else {
+                    assetVC.presentUpdateAlert()
+                }
+            }
+        }
     }
     
     func saveMkVersion(){

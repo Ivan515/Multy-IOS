@@ -653,20 +653,20 @@
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noInternetConnection" translatesAutoresizingMaskIntoConstraints="NO" id="4xv-6L-vmO">
-                                <rect key="frame" x="126" y="147" width="123" height="104"/>
+                                <rect key="frame" x="126" y="162.5" width="123" height="104"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="104" id="Pkg-hZ-b5D"/>
                                     <constraint firstAttribute="width" constant="123" id="VDA-x3-BS4"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No internet connection" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eXV-cf-GXL">
-                                <rect key="frame" x="49" y="300" width="276" height="36"/>
+                                <rect key="frame" x="49" y="315.5" width="276" height="36"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="26"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="312-E7-Xe2">
-                                <rect key="frame" x="37" y="377" width="301" height="82"/>
+                                <rect key="frame" x="21" y="392.5" width="333" height="82"/>
                                 <string key="text">Unfortunately you are not conencted to 
 the network now. Multy needs constant 
 conenction to provide it’s work
@@ -680,14 +680,14 @@ correctly</string>
                         <constraints>
                             <constraint firstItem="tdq-0K-Sb2" firstAttribute="leading" secondItem="qNv-C3-uhH" secondAttribute="leading" id="0af-Tf-3S4"/>
                             <constraint firstItem="312-E7-Xe2" firstAttribute="top" secondItem="eXV-cf-GXL" secondAttribute="bottom" constant="41" id="19G-Bk-FhF"/>
-                            <constraint firstItem="4xv-6L-vmO" firstAttribute="top" secondItem="bgs-7C-47o" secondAttribute="bottom" constant="127" id="5na-Ok-Xrt"/>
                             <constraint firstAttribute="trailing" secondItem="tdq-0K-Sb2" secondAttribute="trailing" id="8el-4e-zje"/>
                             <constraint firstItem="7Cv-dM-kj0" firstAttribute="top" secondItem="tdq-0K-Sb2" secondAttribute="bottom" id="Gx7-nc-o3V"/>
-                            <constraint firstItem="312-E7-Xe2" firstAttribute="leading" secondItem="qNv-C3-uhH" secondAttribute="leading" constant="37" id="IfC-LF-p4P"/>
-                            <constraint firstAttribute="trailing" secondItem="312-E7-Xe2" secondAttribute="trailing" constant="37" id="Nle-00-FuM"/>
+                            <constraint firstItem="312-E7-Xe2" firstAttribute="leading" secondItem="qNv-C3-uhH" secondAttribute="leading" constant="21" id="IfC-LF-p4P"/>
+                            <constraint firstAttribute="trailing" secondItem="312-E7-Xe2" secondAttribute="trailing" constant="21" id="Nle-00-FuM"/>
                             <constraint firstItem="eXV-cf-GXL" firstAttribute="centerX" secondItem="qNv-C3-uhH" secondAttribute="centerX" id="gnX-iI-VMn"/>
                             <constraint firstItem="4xv-6L-vmO" firstAttribute="centerX" secondItem="qNv-C3-uhH" secondAttribute="centerX" id="h5b-s0-bLC"/>
                             <constraint firstItem="eXV-cf-GXL" firstAttribute="top" secondItem="4xv-6L-vmO" secondAttribute="bottom" constant="49" id="iFH-FP-t58"/>
+                            <constraint firstItem="eXV-cf-GXL" firstAttribute="centerY" secondItem="qNv-C3-uhH" secondAttribute="centerY" id="juZ-Te-j57"/>
                             <constraint firstItem="eXV-cf-GXL" firstAttribute="top" secondItem="4xv-6L-vmO" secondAttribute="bottom" constant="49" id="yp2-6T-zE1"/>
                         </constraints>
                     </view>
