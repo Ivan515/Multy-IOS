@@ -47,17 +47,6 @@ class AssetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         self.view.addSubview(progressHUD)
         
-        if let path = Bundle.main.path(forResource: "https://github.com/bitcoin/bips/blob/master/bip-0039/english.txt", ofType: "txt") {
-            do {
-                let data = try String(contentsOfFile: path, encoding: .utf8)
-                let myStrings = data.components(separatedBy: .newlines)
-                TextView.text = myStrings.joined(separator: ", ")
-            } catch {
-                print(error)
-            }
-        }
-        
-        
         //MAKE: first launch
 //        let _ = DataManager.shared
         
