@@ -17,7 +17,6 @@ class AssetsPresenter: NSObject {
         didSet {
             print("")
 //            fetchTickets()
-//            getExchange()
 //            getTransInfo()
 //            getWalletVerbose()
 //            getWalletOutputs()
@@ -54,6 +53,8 @@ class AssetsPresenter: NSObject {
                     if acc != nil {
                         self.account = acc
                         self.getWalletVerbose()
+                    } else {
+                        
                     }
                 })
             }
@@ -119,11 +120,11 @@ class AssetsPresenter: NSObject {
         self.assetsVC?.tableView.register(newWalletCell, forCellReuseIdentifier: "newWalletCell")
     }
     
-    func updateExchangeCourse() {
-        DataManager.shared.getExhanchgeCourse((account?.token)!) { (dict, err) in
-            
-        }
-    }
+//    func updateExchangeCourse() {
+//        DataManager.shared.getExhanchgeCourse((account?.token)!) { (dict, err) in
+//            
+//        }
+//    }
     
     //////////////////////////////////////////////////////////////////////
     //test
@@ -136,12 +137,6 @@ class AssetsPresenter: NSObject {
             
             print(dict!)
         }
-    }
-    
-    func getExchange() {
-//        DataManager.shared.getExchangeCourse { (error) in
-//            print(error)
-//        }
     }
     
     func getTransInfo() {

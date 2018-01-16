@@ -9,7 +9,7 @@ class RealmManager: NSObject {
     static let shared = RealmManager()
     
     private var realm : Realm? = nil
-    let schemaVersion : UInt64 = 11
+    let schemaVersion : UInt64 = 12
     
     private override init() {
         super.init()
@@ -74,6 +74,9 @@ class RealmManager: NSObject {
                                                     }
                                                     if oldSchemaVersion < 12 {
                                                         self.migrateFrom11To12(with: migration)
+                                                    }
+                                                    if oldSchemaVersion < 13 {
+                                                        self.migrateFrom12To13(with: migration)
                                                     }
             })
             
@@ -491,6 +494,12 @@ class RealmManager: NSObject {
             } else {
                 newHistoryRLM?["txStatus"] = NSNumber(value: 0)
             }
+        }
+    }
+    
+    func migrateFrom12To13(with migration: Migration) {
+        migration.enumerateObjects(ofType: AddressRLM.className()) { (_, newAddress) in
+            newAddress?["lastActionDate"] = Date()
         }
     }
     

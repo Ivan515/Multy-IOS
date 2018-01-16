@@ -26,7 +26,6 @@ class FastOperationsViewController: UIViewController {
         self.tabBarController?.tabBar.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
         self.navigationController?.navigationBar.isHidden = true
         (self.tabBarController as! CustomTabBarViewController).menuButton.isHidden = true
-        self.presenter.getExchange()
     }
     
     @IBAction func closeAction(_ sender: Any) {

@@ -76,10 +76,4 @@ class SendStartPresenter: NSObject, CancelProtocol, SendAddressProtocol, GoToQrP
         self.sendStartVC?.makeAvailableNextBtn()
         self.sendStartVC?.updateUI()
     }
-    
-    func getExchange() {
-        DataManager.shared.getExchangeCourse { (error) in
-            
-        }
-    }
 }

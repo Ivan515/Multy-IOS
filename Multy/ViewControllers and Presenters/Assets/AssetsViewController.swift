@@ -185,17 +185,6 @@ class AssetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
-    func getExchange() {
-//        DataManager.shared.apiManager.getExchangePrice(presenter.account!.token, direction: "") { (dict, error) in
-//            guard dict != nil  else {
-//                return
-//            }
-//            if dict!["USD"] != nil {
-//                exchangeCourse = dict!["USD"] as! Double
-//            }
-//        }
-    }
-    
     func getTransInfo() {
         DataManager.shared.apiManager.getTransactionInfo(presenter.account!.token,
                                                          transactionString: "d83a5591585f05dc367d5e68579ece93240a6b4646133a38106249cadea53b77") { (transDict, error) in

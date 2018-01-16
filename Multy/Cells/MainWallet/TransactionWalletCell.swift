@@ -30,9 +30,7 @@ class TransactionWalletCell: UITableViewCell {
     }
     
     public func fillCell() {
-        let dateFormat = DateFormatter()
-        dateFormat.timeZone = TimeZone(abbreviation: "GMT")
-        dateFormat.dateFormat = "dd MMM yyyy HH:mm"
+        let dateFormatter = Date.defaultGMTDateFormatter()
         
         if histObj.txStatus.intValue == TxStatus.MempoolIncoming.rawValue ||
             histObj.txStatus.intValue == TxStatus.MempoolOutcoming.rawValue {
@@ -67,7 +65,7 @@ class TransactionWalletCell: UITableViewCell {
         if histObj.txStatus.intValue < 0 /* rejected tx*/ {
             self.timeLabel.text = "Unable to send transaction"
         } else {
-            self.timeLabel.text = dateFormat.string(from: histObj.blockTime)
+            self.timeLabel.text = dateFormatter.string(from: histObj.blockTime)
         }
         
         self.cryptoAmountLabel.text = "\(convertSatoshiToBTC(sum: histObj.txOutAmount.uint32Value)) BTC"

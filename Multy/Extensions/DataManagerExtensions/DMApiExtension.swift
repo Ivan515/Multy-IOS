@@ -155,18 +155,18 @@ extension DataManager {
         }
     }
     
-    func getExhanchgeCourse(_ token: String, completion: @escaping (_ dictionary: NSDictionary?, _ error: Error?) -> ()) {
-        apiManager.getExchangePrice(token, direction: "BTC/USD") { (dict, err) in
-            if err == nil {
-                if dict != nil {
-                    
-                }
-                completion(dict!, nil)
-            } else {
-                completion(nil, err)
-            }
-        }
-    }
+//    func getExhanchgeCourse(_ token: String, completion: @escaping (_ dictionary: NSDictionary?, _ error: Error?) -> ()) {
+//        apiManager.getExchangePrice(token, direction: "BTC/USD") { (dict, err) in
+//            if err == nil {
+//                if dict != nil {
+//                    
+//                }
+//                completion(dict!, nil)
+//            } else {
+//                completion(nil, err)
+//            }
+//        }
+//    }
     
     func getFeeRate(_ token: String, currencyID: UInt32, completion: @escaping (_ feeRateDict: NSDictionary?,_ error: Error?) -> ()) {
         apiManager.getFeeRate(token, currencyID: currencyID) { (answer, error) in

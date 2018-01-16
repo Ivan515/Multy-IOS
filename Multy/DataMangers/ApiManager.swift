@@ -122,26 +122,26 @@ class ApiManager: NSObject, RequestRetrier {
         }
     }
     
-    func getExchangePrice(_ token: String, direction: String, completion: @escaping (_ answer: NSDictionary?,_ error: Error?) -> ()) {
-        
-        let header: HTTPHeaders = [
-            "Content-Type": "application/json",
-            "Authorization" : "Bearer \(token)"
-        ]
-        
-        //MARK: USD
-        requestManager.request("\(apiUrl)api/v1/getexchangeprice/BTC/USD", method: .get, parameters: nil, encoding: JSONEncoding.default, headers: header).responseJSON { (response: DataResponse<Any>) in
-            switch response.result {
-            case .success(_):
-                if response.result.value != nil {
-                    completion((response.result.value as! NSDictionary), nil)
-                }
-            case .failure(_):
-                completion(nil, response.result.error)
-                break
-            }
-        }
-    }
+//    func getExchangePrice(_ token: String, direction: String, completion: @escaping (_ answer: NSDictionary?,_ error: Error?) -> ()) {
+//        
+//        let header: HTTPHeaders = [
+//            "Content-Type": "application/json",
+//            "Authorization" : "Bearer \(token)"
+//        ]
+//        
+//        //MARK: USD
+//        requestManager.request("\(apiUrl)api/v1/getexchangeprice/BTC/USD", method: .get, parameters: nil, encoding: JSONEncoding.default, headers: header).responseJSON { (response: DataResponse<Any>) in
+//            switch response.result {
+//            case .success(_):
+//                if response.result.value != nil {
+//                    completion((response.result.value as! NSDictionary), nil)
+//                }
+//            case .failure(_):
+//                completion(nil, response.result.error)
+//                break
+//            }
+//        }
+//    }
     
     func getTransactionInfo(_ token: String, transactionString: String, completion: @escaping (_ answer: NSDictionary?,_ error: Error?) -> ()) {
         

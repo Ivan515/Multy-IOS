@@ -52,28 +52,28 @@ class DataManager: NSObject {
     //MARK: CoreLibManager
     //DMCoreLibExtension Functions
     
-    func getExchangeCourse(completion: @escaping (_ error: Error?) -> ()) {
-        DataManager.shared.realmManager.getAccount { (acc, err) in
-            if err == nil {
-                DataManager.shared.apiManager.getExchangePrice(acc!.token, direction: "") { (dict, error) in
-                    if dict == nil {
-                        completion(error)
-                        
-                        return
-                    }
-                    
-                    if dict!["USD"] != nil {
-                        exchangeCourse = dict!["USD"] as! Double
-                        completion(nil)
-                    } else {
-                        completion(nil)
-                    }
-                }
-            } else {
-                completion(nil)
-            }
-        }
-    }
+//    func getExchangeCourse(completion: @escaping (_ error: Error?) -> ()) {
+//        DataManager.shared.realmManager.getAccount { (acc, err) in
+//            if err == nil {
+//                DataManager.shared.apiManager.getExchangePrice(acc!.token, direction: "") { (dict, error) in
+//                    if dict == nil {
+//                        completion(error)
+//                        
+//                        return
+//                    }
+//                    
+//                    if dict!["USD"] != nil {
+//                        exchangeCourse = dict!["USD"] as! Double
+//                        completion(nil)
+//                    } else {
+//                        completion(nil)
+//                    }
+//                }
+//            } else {
+//                completion(nil)
+//            }
+//        }
+//    }
     
     func getHistoryOfWalletAndSaveToDB(token: String, walletID: NSNumber, completion: @escaping(_ historyArr: List<HistoryRLM>?,_ error: Error?) -> ()) {
         DataManager.shared.getTransactionHistory(token: token, walletID: walletID) { (historyList, err) in
