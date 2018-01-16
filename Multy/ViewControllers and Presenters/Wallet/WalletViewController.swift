@@ -35,9 +35,7 @@ class WalletViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.applyGradient(withColours: [UIColor(ciColor: CIColor(red: 0/255, green: 178/255, blue: 255/255)),
-                                                   UIColor(ciColor: CIColor(red: 0/255, green: 122/255, blue: 255/255))],
-                                     gradientOrientation: .topRightBottomLeft)
+        
 //        headerView.backgroundColor = .clear
 //        gradientLayer.frame = headerView.bounds
 //        let color1 = #colorLiteral(red: 0.6679978967, green: 0.4751212597, blue: 0.2586010993, alpha: 1)
@@ -47,7 +45,6 @@ class WalletViewController: UIViewController {
 //
 //        self.headerView.layer.insertSublayer(gradientLayer, at: 0)
         
-        setGradientBackground()
         
         presenter.mainVC = self
         
@@ -80,6 +77,10 @@ class WalletViewController: UIViewController {
 //        self.headerView.layer.insertSublayer(gradientLayer)
 //        self.headerView.alpha = 0.5
         self.headerView.layer.insertSublayer(gradientLayer, at: 0)
+        
+        self.tableView.applyGradient(withColours: [UIColor(ciColor: CIColor(red: 0/255, green: 178/255, blue: 255/255)),
+                                                   UIColor(ciColor: CIColor(red: 0/255, green: 122/255, blue: 255/255))],
+                                     gradientOrientation: .topRightBottomLeft)
     }
     
     
@@ -201,6 +202,7 @@ class WalletViewController: UIViewController {
 //        headerCell.podlojkaView.applyGradient(withColours: [UIColor(ciColor: CIColor(red: 0/255, green: 178/255, blue: 255/255)),
 //                                                            UIColor(ciColor: CIColor(red: 0/255, green: 122/255, blue: 255/255))],
 //                                              gradientOrientation: .topRightBottomLeft)
+        setGradientBackground()
     }
     
     @IBAction func sendAction(_ sender: Any) {
