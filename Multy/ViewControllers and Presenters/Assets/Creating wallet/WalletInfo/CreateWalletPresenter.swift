@@ -3,6 +3,7 @@
 //See LICENSE for details
 
 import UIKit
+import Firebase
 
 class CreateWalletPresenter: NSObject {
     weak var mainVC: CreateWalletViewController?
@@ -49,8 +50,10 @@ class CreateWalletPresenter: NSObject {
             ] as [String : Any]
         
         DataManager.shared.addWallet(self.account!.token, params: params) { (dict, error) in
-            print(dict as Any)
-            self.mainVC?.cancleAction(UIButton())
+            if error == nil {
+                print(dict as Any)
+                self.mainVC?.cancleAction(UIButton())
+            }
         }
     }
 }

@@ -4,6 +4,7 @@
 
 import UIKit
 import ZFRippleButton
+import Firebase
 
 class CreateWalletViewController: UIViewController {
 
@@ -29,6 +30,8 @@ class CreateWalletViewController: UIViewController {
                                                name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide),
                                                name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        Analytics.setUserProperty("open creating wallet", forName: "open_creating_wallet")
+        Analytics.logEvent("open_creating_wallet", parameters: ["name": "name" as NSObject])
     }
     
     override func viewWillAppear(_ animated: Bool) {
