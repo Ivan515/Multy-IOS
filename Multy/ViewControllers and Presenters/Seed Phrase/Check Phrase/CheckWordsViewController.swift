@@ -83,7 +83,17 @@ class CheckWordsViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func nextWordAndContinueAction(_ sender: Any) {
-        if (self.wordTF.text?.count)! < 3 {
+        if self.wordTF.text == nil {
+            return
+        }
+        
+        if self.wordTF.text!.count < 3 {
+            return
+        }
+        
+        if !DataManager.shared.isWordCorrect(word: self.wordTF.text!) {
+            presentAlert()
+            
             return
         }
         
@@ -163,6 +173,15 @@ class CheckWordsViewController: UIViewController, UITextFieldDelegate {
             let wrongVC = segue.destination as! WrongSeedPhraseViewController
             wrongVC.presenter.prevVC = self
         }
+    }
+    
+    func presentAlert() {
+        let message = "You entered wrong word!"
+        let alert = UIAlertController(title: "Warning", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action) in
+            
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
 }
 

@@ -154,6 +154,7 @@
 		FA86A7411FC2C72B002826EC /* MasterKeyGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA86A7401FC2C72B002826EC /* MasterKeyGenerator.swift */; };
 		FA8835901FD854EC007694A2 /* AddressRLM.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA88358F1FD854EC007694A2 /* AddressRLM.swift */; };
 		FA8835921FD856F4007694A2 /* UserWalletRLM.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8835911FD856F4007694A2 /* UserWalletRLM.swift */; };
+		FA8C8781200E44D300F8D5D9 /* english.txt in Resources */ = {isa = PBXBuildFile; fileRef = FA8C8780200E44D200F8D5D9 /* english.txt */; };
 		FACEB5A1200A46F600055788 /* TransactionPendingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACEB59F200A46F600055788 /* TransactionPendingCell.swift */; };
 		FACEB5A2200A46F600055788 /* TransactionPendingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FACEB5A0200A46F600055788 /* TransactionPendingCell.xib */; };
 		FADC00461FC3231A00182E45 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADC00451FC3231A00182E45 /* DataManager.swift */; };
@@ -340,6 +341,7 @@
 		FA86A74E1FC2C806002826EC /* Multy-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Multy-Bridging-Header.h"; sourceTree = "<group>"; };
 		FA88358F1FD854EC007694A2 /* AddressRLM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressRLM.swift; sourceTree = "<group>"; };
 		FA8835911FD856F4007694A2 /* UserWalletRLM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserWalletRLM.swift; sourceTree = "<group>"; };
+		FA8C8780200E44D200F8D5D9 /* english.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = english.txt; sourceTree = "<group>"; };
 		FACEB59F200A46F600055788 /* TransactionPendingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionPendingCell.swift; sourceTree = "<group>"; };
 		FACEB5A0200A46F600055788 /* TransactionPendingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransactionPendingCell.xib; sourceTree = "<group>"; };
 		FADC00451FC3231A00182E45 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
@@ -1038,6 +1040,7 @@
 				FA86A7401FC2C72B002826EC /* MasterKeyGenerator.swift */,
 				FA4125F52005139600DF9AC3 /* UserPreferences.swift */,
 				45F42C831FDC081400210B1F /* IsJailbroken.swift */,
+				FA8C8780200E44D200F8D5D9 /* english.txt */,
 			);
 			path = Security;
 			sourceTree = "<group>";
@@ -1140,6 +1143,7 @@
 				FACEB5A2200A46F600055788 /* TransactionPendingCell.xib in Resources */,
 				45A949361FC5992A003C3A23 /* SearchAddressTableViewCell.xib in Resources */,
 				45B5CCAA1FDAC0B00069BD46 /* TextTableViewCell.xib in Resources */,
+				FA8C8781200E44D300F8D5D9 /* english.txt in Resources */,
 				45A9493B1FC59E51003C3A23 /* RecentAddressTableViewCell.xib in Resources */,
 				4583AC931FBC7122001991AA /* PortfolioTableViewCell.xib in Resources */,
 				4583AC991FBC8596001991AA /* PortfolioCollectionViewCell.xib in Resources */,

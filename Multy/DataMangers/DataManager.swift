@@ -13,6 +13,33 @@ class DataManager: NSObject {
     let socketManager = Socket.shared
     let coreLibManager = CoreLibManager.shared
     
+    var seedWordsArray = [String]()
+    
+    override init() {
+        super.init()
+        
+        if let path = Bundle.main.path(forResource: "english", ofType: "txt") {
+            do {
+                let data = try String(contentsOfFile: path, encoding: .utf8)
+                var myStrings = data.components(separatedBy: .newlines)
+                myStrings.removeLast()
+                
+                seedWordsArray = myStrings
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
+    func isWordCorrect(word: String) -> Bool {
+        if seedWordsArray.count > 0 {
+            return seedWordsArray.contains(word)
+        } else {
+            return true
+        }
+        
+    }
+    
     //MARK: ApiManager Functions
     //DMApiExtension
     
