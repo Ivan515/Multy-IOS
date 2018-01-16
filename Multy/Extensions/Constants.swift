@@ -48,9 +48,10 @@ func convertBTCStringToSatoshi(sum: String) -> UInt32 {
 
 enum TxStatus : Int {
     case
-        MempoolIncoming =       0,
-        BlockIncoming =         1,
-        MempoolOutcoming =      2,
-        BlockOutcoming =        3,
-        BlockConfirmed =        4
+        MempoolIncoming =           1,
+        BlockIncoming =             2,
+        MempoolOutcoming =          3,
+        BlockOutcoming =            4,
+        BlockConfirmedIncoming =    5,
+        BlockConfirmedOutcoming =   6
 }

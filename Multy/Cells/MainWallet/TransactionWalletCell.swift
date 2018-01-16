@@ -34,19 +34,22 @@ class TransactionWalletCell: UITableViewCell {
         dateFormat.timeZone = TimeZone(abbreviation: "GMT")
         dateFormat.dateFormat = "dd MMM yyyy HH:mm"
         
-        if histObj.txStatus.intValue == TxStatus.MempoolIncoming.rawValue {
+        if histObj.txStatus.intValue == TxStatus.MempoolIncoming.rawValue ||
+            histObj.txStatus.intValue == TxStatus.MempoolOutcoming.rawValue {
             self.transactionImage.image = #imageLiteral(resourceName: "pending")
             let blockedTxInfoColor = UIColor(redInt: 135, greenInt: 161, blueInt: 197, alpha: 0.4)
             self.addressLabel.textColor = blockedTxInfoColor
             self.timeLabel.textColor = blockedTxInfoColor
             self.cryptoAmountLabel.textColor = blockedTxInfoColor
-        } else if histObj.txStatus.intValue == TxStatus.BlockIncoming.rawValue || histObj.txStatus.intValue == TxStatus.BlockConfirmed.rawValue {
+        } else if histObj.txStatus.intValue == TxStatus.BlockIncoming.rawValue ||
+            histObj.txStatus.intValue == TxStatus.BlockConfirmedIncoming.rawValue {
             let blockedTxInfoColor = UIColor(redInt: 135, greenInt: 161, blueInt: 197, alpha: 0.4)
             self.transactionImage.image = #imageLiteral(resourceName: "recieve")
             self.addressLabel.textColor = .black
             self.timeLabel.textColor = blockedTxInfoColor
             self.cryptoAmountLabel.textColor = .black
-        } else if histObj.txStatus.intValue == TxStatus.MempoolOutcoming.rawValue || histObj.txStatus.intValue == TxStatus.BlockOutcoming.rawValue {
+        } else if histObj.txStatus.intValue == TxStatus.BlockOutcoming.rawValue ||
+            histObj.txStatus.intValue == TxStatus.BlockConfirmedOutcoming.rawValue {
             let blockedTxInfoColor = UIColor(redInt: 135, greenInt: 161, blueInt: 197, alpha: 0.4)
             self.transactionImage.image = #imageLiteral(resourceName: "send")
             self.addressLabel.textColor = .black
