@@ -53,7 +53,20 @@ class CreateWalletPresenter: NSObject {
             if error == nil {
                 print(dict as Any)
                 self.mainVC?.cancleAction(UIButton())
+            } else {
+                self.mainVC?.progressHUD.hide()
+                self.presentAlert()
             }
         }
+    }
+    
+    func presentAlert() {
+        let message = "Error while creating wallet!"
+        let alert = UIAlertController(title: "Warning", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action) in
+            
+        }))
+        
+        mainVC?.present(alert, animated: true, completion: nil)
     }
 }

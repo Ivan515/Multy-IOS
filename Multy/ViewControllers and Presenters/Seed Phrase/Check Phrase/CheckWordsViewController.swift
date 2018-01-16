@@ -181,7 +181,9 @@ class CheckWordsViewController: UIViewController, UITextFieldDelegate {
         alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action) in
             
         }))
-        self.present(alert, animated: true, completion: nil)
+        
+        let rootViewController: UIViewController = UIApplication.shared.windows.last!.rootViewController!
+        rootViewController.present(alert, animated: true, completion: nil)
     }
 }
 

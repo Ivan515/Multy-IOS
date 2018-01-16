@@ -24,7 +24,7 @@ class AssetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var isFlowPassed = false
     
-    let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
+    let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
     
     override func viewDidLoad() {
         super.viewDidLoad()
