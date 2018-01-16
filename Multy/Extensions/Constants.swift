@@ -55,3 +55,8 @@ enum TxStatus : Int {
         BlockConfirmedIncoming =    5,
         BlockConfirmedOutcoming =   6
 }
+
+//API REST constants
+let apiUrl = "http://88.198.47.112:7778/"//"http://192.168.0.121:7778/"
+let apiUrlTest = "http://192.168.0.125:8080/"
+let nonLocalURL = "http://88.198.47.112:7778/"
