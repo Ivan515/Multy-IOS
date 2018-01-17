@@ -105,6 +105,13 @@ class UserWalletRLM: Object {
         self.fiatSymbol = "$"
     }
     
+    public func fetchAddresses() -> [String] {
+        var addresses = [String]()
+        self.addresses.forEach({ addresses.append($0.address) })
+        
+        return addresses
+    }
+    
     override class func primaryKey() -> String? {
         return "id"
     }

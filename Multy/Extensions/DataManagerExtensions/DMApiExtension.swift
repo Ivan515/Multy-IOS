@@ -213,7 +213,7 @@ extension DataManager {
     
     func getOneWalletVerbose(_ token: String, walletID: NSNumber, completion: @escaping (_ answer: UserWalletRLM?,_ error: Error?) -> ()) {
         apiManager.getOneWalletVerbose(token, walletID: walletID) { (dict, error) in
-            if dict != nil && dict!["wallet"] != nil /*&& !(dict!["wallet"] is NSNull)*/ {
+            if dict != nil && dict!["wallet"] != nil && !(dict!["wallet"] is NSNull) {
                 let wallet = UserWalletRLM.initWithInfo(walletInfo: (dict!["wallet"] as! NSArray)[0] as! NSDictionary)
 //                let addressesInfo = ((dict!["wallet"] as! NSArray)[0] as! NSDictionary)["addresses"]!
                 

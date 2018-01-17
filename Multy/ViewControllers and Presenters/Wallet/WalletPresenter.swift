@@ -79,11 +79,27 @@ class WalletPresenter: NSObject {
             return sum
         }
         
-        for address in wallet!.addresses {
-            for out in address.spendableOutput {
-                if out.transactionStatus.intValue == TxStatus.MempoolIncoming.rawValue ||
-                    out.transactionStatus.intValue == TxStatus.MempoolOutcoming.rawValue {
-                    sum += out.transactionOutAmount.uint32Value
+        if historyArray.count == 0 {
+            return sum
+        }
+        
+//        for address in wallet!.addresses {
+//            for out in address.spendableOutput {
+//                if out.transactionStatus.intValue == TxStatus.MempoolIncoming.rawValue {
+//                    sum += out.transactionOutAmount.uint32Value
+//                } else if out.transactionStatus.intValue == TxStatus.MempoolOutcoming.rawValue {
+//                    out.
+//                }
+//            }
+//        }
+        for history in historyArray {
+            if history.txStatus.intValue == TxStatus.MempoolIncoming.rawValue {
+                sum += history.txOutAmount.uint32Value
+            } else if history.txStatus.intValue == TxStatus.MempoolOutcoming.rawValue {
+                let addresses = wallet!.fetchAddresses()
+                
+                if addresses.contains(history.address) {
+                    sum += history.txOutAmount.uint32Value
                 }
             }
         }
