@@ -81,7 +81,8 @@ class WalletPresenter: NSObject {
         
         for address in wallet!.addresses {
             for out in address.spendableOutput {
-                if out.transactionStatus == 0 {
+                if out.transactionStatus.intValue == TxStatus.MempoolIncoming.rawValue ||
+                    out.transactionStatus.intValue == TxStatus.MempoolOutcoming.rawValue {
                     sum += out.transactionOutAmount.uint32Value
                 }
             }

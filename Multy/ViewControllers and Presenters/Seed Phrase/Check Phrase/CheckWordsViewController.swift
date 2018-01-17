@@ -17,6 +17,7 @@ class CheckWordsViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var constraintBtnBottom: NSLayoutConstraint!
     @IBOutlet weak var constraintTop: NSLayoutConstraint!
     @IBOutlet weak var constraintAfterTopLabel: NSLayoutConstraint!
+    @IBOutlet weak var constraintAfterBricks: NSLayoutConstraint!
     
     let progressHUD = ProgressHUD(text: "Restoring Wallets...")
     
@@ -33,8 +34,10 @@ class CheckWordsViewController: UIViewController, UITextFieldDelegate {
         progressHUD.hide()
         
         if screenWidth < 325 {
-            constraintTop.constant = 25
+            constraintTop.constant = 10
             constraintAfterTopLabel.constant = 10
+            constraintAfterBricks.constant = 10
+            wordTF.font?.withSize(50.0)
         }
         
         bricksView.addSubview(BricksView(with: bricksView.bounds, and: 0))

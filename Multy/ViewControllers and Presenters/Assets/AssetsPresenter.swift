@@ -28,6 +28,8 @@ class AssetsPresenter: NSObject {
     }
     
     func auth() {
+        //MARK: need refactoring
+        
         self.assetsVC?.view.isUserInteractionEnabled = false
         assetsVC?.progressHUD.show()
         DataManager.shared.getAccount { (acc, err) in
@@ -42,8 +44,7 @@ class AssetsPresenter: NSObject {
                     
                     DispatchQueue.main.async {
                         self.account = account
-                        DataManager.shared.socketManager.start()                        
-//                        self.fetchAssets()
+                        DataManager.shared.socketManager.start()
                         self.getWalletVerbose()
                     }
                 }
@@ -53,8 +54,7 @@ class AssetsPresenter: NSObject {
                     if acc != nil {
                         self.account = acc
                         self.getWalletVerbose()
-                    } else {
-                        
+                        DataManager.shared.socketManager.start()
                     }
                 })
             }
