@@ -36,16 +36,6 @@ class WalletViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        headerView.backgroundColor = .clear
-//        gradientLayer.frame = headerView.bounds
-//        let color1 = #colorLiteral(red: 0.6679978967, green: 0.4751212597, blue: 0.2586010993, alpha: 1)
-//        let color2 = UIColor.clear
-//        gradientLayer.colors = [color1, color2]
-//        gradientLayer.locations = [0.0, 1.0]
-//
-//        self.headerView.layer.insertSublayer(gradientLayer, at: 0)
-        
-        
         presenter.mainVC = self
         
         presenter.fixConstraints()
@@ -58,6 +48,7 @@ class WalletViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateExchange), name: NSNotification.Name("exchageUpdated"), object: nil)
         (self.tabBarController as! CustomTabBarViewController).changeViewVisibility(isHidden: true)
         self.tableView.addSubview(self.refreshControl)
+        
 //        progressHUD.backgroundColor = .gray
 //        progressHUD.show()
 //        self.view.addSubview(progressHUD)
@@ -77,10 +68,19 @@ class WalletViewController: UIViewController {
 //        self.headerView.layer.insertSublayer(gradientLayer)
 //        self.headerView.alpha = 0.5
         self.headerView.layer.insertSublayer(gradientLayer, at: 0)
-        
-        self.tableView.applyGradient(withColours: [UIColor(ciColor: CIColor(red: 0/255, green: 178/255, blue: 255/255)),
+//
+        if #available(iOS 11.0, *) {
+            tableView.contentInsetAdjustmentBehavior = .never
+            let headerCell = self.tableView.cellForRow(at: [0,0]) as! MainWalletHeaderCell
+            headerCell.applyGradient(withColours: [UIColor(ciColor: CIColor(red: 0/255, green: 178/255, blue: 255/255)),
                                                    UIColor(ciColor: CIColor(red: 0/255, green: 122/255, blue: 255/255))],
                                      gradientOrientation: .topRightBottomLeft)
+        } else {
+            self.tableView.applyGradient(withColours: [UIColor(ciColor: CIColor(red: 0/255, green: 178/255, blue: 255/255)),
+                                                       UIColor(ciColor: CIColor(red: 0/255, green: 122/255, blue: 255/255))],
+                                         gradientOrientation: .topRightBottomLeft)
+        }
+//        self.tableView.backgroundColor = .red
     }
     
     
@@ -184,9 +184,9 @@ class WalletViewController: UIViewController {
         if #available(iOS 11.0, *) {
             
         } else {
-//            self.tableView.applyGradient(withColours: [UIColor(ciColor: CIColor(red: 0/255, green: 178/255, blue: 255/255)),
-//                                                       UIColor(ciColor: CIColor(red: 0/255, green: 122/255, blue: 255/255))],
-//                                         gradientOrientation: .topRightBottomLeft)
+            self.tableView.applyGradient(withColours: [UIColor(ciColor: CIColor(red: 0/255, green: 178/255, blue: 255/255)),
+                                                       UIColor(ciColor: CIColor(red: 0/255, green: 122/255, blue: 255/255))],
+                                         gradientOrientation: .topRightBottomLeft)
         }
         
         self.backView.applyGradient(withColours: [UIColor(ciColor: CIColor(red: 0/255, green: 178/255, blue: 255/255)),
@@ -243,7 +243,7 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
                 return countOfHistObjects + 1
             }
         } else {
-//            self.tableView.isScrollEnabled = false
+            self.tableView.isScrollEnabled = false
             return 10
         }
     }
@@ -276,6 +276,7 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
                 }
             } else {
                 walletCell.changeState(isEmpty: true)
+                fixForiPadAndiPhone5()
             }
             
             if indexPath == [0,1] {
@@ -294,6 +295,12 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
         self.emptyFirstLbl.isHidden = true
         self.emptySecondLbl.isHidden = true
         self.emptyArrowImg.isHidden = true
+    }
+    
+    func fixForiPadAndiPhone5() {
+        if screenWidth <= 320 { //ipad, iphone 5s
+            hideEmptyLbls()
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
