@@ -98,8 +98,10 @@ class WalletPresenter: NSObject {
             } else if history.txStatus.intValue == TxStatus.MempoolOutcoming.rawValue {
                 let addresses = wallet!.fetchAddresses()
                 
-                if addresses.contains(history.address) {
-                    sum += history.txOutAmount.uint32Value
+                for tx in history.txOutputs {
+                    if addresses.contains(tx.address) {
+                        sum += history.txOutAmount.uint32Value
+                    }
                 }
             }
         }
