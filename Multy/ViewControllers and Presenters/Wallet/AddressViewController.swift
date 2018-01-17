@@ -9,6 +9,12 @@ class AddressViewController: UIViewController {
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var qrImg: UIImageView!
     @IBOutlet weak var addressLbl: UILabel!
+    @IBOutlet weak var whiteView: UIView!
+    
+    @IBOutlet weak var firstConstraint: NSLayoutConstraint!
+    @IBOutlet weak var seondConstraint: NSLayoutConstraint!
+    @IBOutlet weak var thirdConstraint: NSLayoutConstraint!
+    @IBOutlet weak var fourthConstraint: NSLayoutConstraint!
     
     var wallet: UserWalletRLM?
     
@@ -23,6 +29,14 @@ class AddressViewController: UIViewController {
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
         self.view.addGestureRecognizer(tap)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        if screenHeight == 480 {
+            firstConstraint.constant = firstConstraint.constant/2
+//            seondConstraint.constant = seondConstraint.constant/2
+            thirdConstraint.constant = thirdConstraint.constant/2
+        }
     }
     
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
