@@ -54,6 +54,7 @@ class AssetsPresenter: NSObject {
                     if acc != nil {
                         self.account = acc
                         self.getWalletVerbose()
+                        DataManager.shared.socketManager.start()
                     }
                 })
             }
