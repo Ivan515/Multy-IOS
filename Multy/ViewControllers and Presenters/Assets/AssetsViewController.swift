@@ -8,8 +8,9 @@ import Alamofire
 import CryptoSwift
 //import BiometricAuthentication
 
-class AssetsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
+
+
+class AssetsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CreateNewWalletProtocol {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tableViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableViewBottomConstraint: NSLayoutConstraint!
@@ -264,6 +265,8 @@ class AssetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             return logoCell
         case [0,1]:        // !!!NEW!!! WALLET CELL
             let newWalletCell = self.tableView.dequeueReusableCell(withIdentifier: "newWalletCell") as! NewWalletTableViewCell
+            newWalletCell.delegate = self
+            
             if presenter.account == nil {
                 newWalletCell.hideAll(flag: true)
             } else {
@@ -345,10 +348,11 @@ class AssetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         case [0,0]:
             break
         case [0,1]:
-            if self.presenter.account == nil {
-                break
-            }
-            self.present(actionSheet, animated: true, completion: nil)
+            break
+//            if self.presenter.account == nil {
+//                break
+//            }
+//            self.present(actionSheet, animated: true, completion: nil)
         case [0,2]:
             if self.presenter.account == nil {
 //                progressHUD.show()
@@ -472,5 +476,13 @@ class AssetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let createVC = segue.destination as! CreateWalletViewController
             createVC.presenter.account = presenter.account
         }
+    }
+    
+    //MARK: CreateNewWalletProtocol
+    func openNewWalletSheet() {
+        if self.presenter.account == nil {
+            return
+        }
+        self.present(self.actionSheet, animated: true, completion: nil)
     }
 }
