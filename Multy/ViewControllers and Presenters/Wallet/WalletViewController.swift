@@ -237,18 +237,21 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //check number of transactions
-        // else retunrn some empty cells
+        // else return some empty cells
         let countOfHistObjects = self.presenter.numberOfTransactions()
         if countOfHistObjects > 0 {
             if countOfHistObjects < visibleCells {
                 self.tableView.isScrollEnabled = false
+                
                 return 10
             } else {
                 self.tableView.isScrollEnabled = true
+                
                 return countOfHistObjects + 1
             }
         } else {
             self.tableView.isScrollEnabled = false
+            
             return 10
         }
     }

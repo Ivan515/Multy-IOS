@@ -40,8 +40,11 @@ class WalletPresenter: NSObject {
 //        let walletCollectionCell = UINib.init(nibName: "MainWalletCollectionViewCell", bundle: nil)
 //        self.mainVC?.tableView.register(walletCollectionCell, forCellReuseIdentifier: "WalletCollectionViewCellID")
         
-        let mainWalletCell = UINib.init(nibName: "TransactionWalletCell", bundle: nil)
-        self.mainVC?.tableView.register(mainWalletCell, forCellReuseIdentifier: "TransactionWalletCellID")
+        let transactionCell = UINib.init(nibName: "TransactionWalletCell", bundle: nil)
+        self.mainVC?.tableView.register(transactionCell, forCellReuseIdentifier: "TransactionWalletCellID")
+        
+        let transactionPendingCell = UINib.init(nibName: "TransactionPendingCell", bundle: nil)
+        self.mainVC?.tableView.register(transactionPendingCell, forCellReuseIdentifier: "TransactionPendingCellID")
     }
     
     func fixConstraints() {
