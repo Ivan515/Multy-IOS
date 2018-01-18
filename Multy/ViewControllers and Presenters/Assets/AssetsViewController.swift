@@ -59,6 +59,9 @@ class AssetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.createAlert()
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateExchange), name: NSNotification.Name("exchageUpdated"), object: nil)
+        if #available(iOS 11.0, *) {
+            tableView.contentInsetAdjustmentBehavior = .never
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -328,7 +331,9 @@ class AssetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
 //        }
  
         if indexPath != [0, 1] && indexPath != [0, 0] {
-            (self.tabBarController as! CustomTabBarViewController).changeViewVisibility(isHidden: true)
+            if self.presenter.isWalletExist() {
+                (self.tabBarController as! CustomTabBarViewController).changeViewVisibility(isHidden: true)
+            }
         }
         
         switch indexPath {
