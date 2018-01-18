@@ -31,7 +31,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9Yy-Xk-shm">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="612"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <outlet property="dataSource" destination="Asu-Y0-uVx" id="SHp-SD-CJz"/>
@@ -251,13 +251,13 @@ operations</string>
                             <constraint firstItem="6mJ-yJ-hqs" firstAttribute="top" secondItem="9Yy-Xk-shm" secondAttribute="top" constant="30" id="bhD-cA-kTv"/>
                             <constraint firstItem="Puy-SH-843" firstAttribute="centerY" secondItem="6mJ-yJ-hqs" secondAttribute="centerY" id="cKV-OT-MLb"/>
                             <constraint firstAttribute="trailing" secondItem="9Yy-Xk-shm" secondAttribute="trailing" id="fhl-NO-Isj"/>
+                            <constraint firstItem="7Jm-m5-Juj" firstAttribute="top" secondItem="9Yy-Xk-shm" secondAttribute="bottom" id="fnW-7u-jc0"/>
                             <constraint firstItem="9Yy-Xk-shm" firstAttribute="leading" secondItem="pbK-RX-Gb3" secondAttribute="leading" id="ihu-dx-lC8"/>
                             <constraint firstItem="RHH-jh-E3C" firstAttribute="centerX" secondItem="7Jm-m5-Juj" secondAttribute="centerX" id="j0d-vI-VC1"/>
                             <constraint firstAttribute="trailing" secondItem="7Jm-m5-Juj" secondAttribute="trailing" id="mU9-fC-GfM"/>
                             <constraint firstItem="7Jm-m5-Juj" firstAttribute="leading" secondItem="pbK-RX-Gb3" secondAttribute="leading" id="oFJ-9S-5nQ"/>
                             <constraint firstItem="z5W-Ap-aao" firstAttribute="centerY" secondItem="3MT-QQ-iCn" secondAttribute="centerY" id="psO-mO-wny"/>
                             <constraint firstItem="3MT-QQ-iCn" firstAttribute="centerY" secondItem="6mJ-yJ-hqs" secondAttribute="centerY" id="qCZ-mW-YZm"/>
-                            <constraint firstItem="sck-xy-UOK" firstAttribute="top" secondItem="9Yy-Xk-shm" secondAttribute="bottom" id="soB-wj-xrt"/>
                             <constraint firstItem="9Yy-Xk-shm" firstAttribute="top" secondItem="pbK-RX-Gb3" secondAttribute="top" id="uHl-F6-APe"/>
                             <constraint firstItem="sck-xy-UOK" firstAttribute="top" secondItem="7Jm-m5-Juj" secondAttribute="bottom" id="wwZ-Yu-Uso"/>
                         </constraints>
