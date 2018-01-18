@@ -156,6 +156,7 @@
 		FA8835921FD856F4007694A2 /* UserWalletRLM.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8835911FD856F4007694A2 /* UserWalletRLM.swift */; };
 		FA8C8781200E44D300F8D5D9 /* english.txt in Resources */ = {isa = PBXBuildFile; fileRef = FA8C8780200E44D200F8D5D9 /* english.txt */; };
 		FA8C8783200E65E900F8D5D9 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8C8782200E65E900F8D5D9 /* Date+Extension.swift */; };
+		FA8C87852010B44300F8D5D9 /* UITableViewCell+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8C87842010B44300F8D5D9 /* UITableViewCell+Extension.swift */; };
 		FACEB5A1200A46F600055788 /* TransactionPendingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACEB59F200A46F600055788 /* TransactionPendingCell.swift */; };
 		FACEB5A2200A46F600055788 /* TransactionPendingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FACEB5A0200A46F600055788 /* TransactionPendingCell.xib */; };
 		FADC00461FC3231A00182E45 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADC00451FC3231A00182E45 /* DataManager.swift */; };
@@ -344,6 +345,7 @@
 		FA8835911FD856F4007694A2 /* UserWalletRLM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserWalletRLM.swift; sourceTree = "<group>"; };
 		FA8C8780200E44D200F8D5D9 /* english.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = english.txt; sourceTree = "<group>"; };
 		FA8C8782200E65E900F8D5D9 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
+		FA8C87842010B44300F8D5D9 /* UITableViewCell+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Extension.swift"; sourceTree = "<group>"; };
 		FACEB59F200A46F600055788 /* TransactionPendingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionPendingCell.swift; sourceTree = "<group>"; };
 		FACEB5A0200A46F600055788 /* TransactionPendingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransactionPendingCell.xib; sourceTree = "<group>"; };
 		FADC00451FC3231A00182E45 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
@@ -613,6 +615,7 @@
 				FA4E559E1FE00F63000FA1A1 /* Double+Extension.swift */,
 				FA6226F01FE7D1C60033CCCE /* Data+Extension.swift */,
 				FA8C8782200E65E900F8D5D9 /* Date+Extension.swift */,
+				FA8C87842010B44300F8D5D9 /* UITableViewCell+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1283,6 +1286,7 @@
 				FA4D43DF1FC58730003C7117 /* TouchIDAuthentication.swift in Sources */,
 				45B0B0F21FEBF326005BB1C0 /* SettingsPresenter.swift in Sources */,
 				FADC00461FC3231A00182E45 /* DataManager.swift in Sources */,
+				FA8C87852010B44300F8D5D9 /* UITableViewCell+Extension.swift in Sources */,
 				FADC004C1FC323A900182E45 /* Socket.swift in Sources */,
 				45A949211FC2DFF9003C3A23 /* ReceiveStartPresenter.swift in Sources */,
 				FA4D43DB1FC581AE003C7117 /* DMRealmExtension.swift in Sources */,

@@ -113,8 +113,8 @@ class WalletViewController: UIViewController {
 //        self.tableView.reloadData()
 //        self.tableView.setContentOffset(offsetBeforeUpdate, animated: false)
         
-        let firstCell = self.tableView.cellForRow(at: [0,0]) as! MainWalletHeaderCell
-        firstCell.updateUI()
+        let firstCell = self.tableView.cellForRow(at: [0,0]) as? MainWalletHeaderCell
+        firstCell?.updateUI()
 //        self.tableView.reloadData()
     }
     
@@ -123,7 +123,7 @@ class WalletViewController: UIViewController {
             return
         }
         let view = UIView()
-        view.frame = CGRect(x: 16, y: (325 /* (screenWidth / 375.0)*/) - 20, width: screenWidth - 32, height: 40)
+        view.frame = CGRect(x: 16, y: (272 /* (screenWidth / 375.0)*/) - 20, width: screenWidth - 32, height: 40)
         view.layer.cornerRadius = 20
         view.backgroundColor = .white
         
@@ -268,24 +268,36 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
             return headerCell
         } else {                           //  Wallet Cellx
             let countOfHistObjs = self.presenter.numberOfTransactions()
-            let walletCell = self.tableView.dequeueReusableCell(withIdentifier: "TransactionWalletCellID") as! TransactionWalletCell
-            walletCell.selectionStyle = .none
-            if countOfHistObjs > 0 {
-                if indexPath.row > countOfHistObjs && countOfHistObjs <= visibleCells {
-                    walletCell.changeState(isEmpty: true)
-                } else {
-                    walletCell.histObj = self.presenter.historyArray[indexPath.row - 1]
-                    walletCell.fillCell()
-                    walletCell.changeState(isEmpty: false)
-                    self.hideEmptyLbls()
-                    if indexPath.row != 1 {
-                        walletCell.changeTopConstraint()
-                    }
-                }
+            
+            var walletCell = UITableViewCell()
+            
+            if indexPath.row < presenter.numberOfTransactions() && presenter.blockedAmount(for: presenter.historyArray[indexPath.row]) > 0 {
+                walletCell = self.tableView.dequeueReusableCell(withIdentifier: "TransactionPendingCellID") as! TransactionPendingCell
+                (walletCell as! TransactionPendingCell).histObj = self.presenter.historyArray[indexPath.row - 1]
+                (walletCell as! TransactionPendingCell).wallet = presenter.wallet
+                (walletCell as! TransactionPendingCell).fillCell()
             } else {
-                walletCell.changeState(isEmpty: true)
-                fixForiPadAndiPhone5()
+                walletCell = self.tableView.dequeueReusableCell(withIdentifier: "TransactionWalletCellID") as! TransactionWalletCell
+                let txWalletCell = walletCell as! TransactionWalletCell
+                if countOfHistObjs > 0 {
+                    if indexPath.row > countOfHistObjs && countOfHistObjs <= visibleCells {
+                        txWalletCell.changeState(isEmpty: true)
+                    } else {
+                        txWalletCell.histObj = self.presenter.historyArray[indexPath.row - 1]
+                        txWalletCell.fillCell()
+                        txWalletCell.changeState(isEmpty: false)
+                        self.hideEmptyLbls()
+                        if indexPath.row != 1 {
+                            txWalletCell.changeTopConstraint()
+                        }
+                    }
+                } else {
+                    txWalletCell.changeState(isEmpty: true)
+                    fixForiPadAndiPhone5()
+                }
             }
+            
+            walletCell.selectionStyle = .none
             
             if indexPath == [0,1] {
                 walletCell.setCorners()
@@ -320,23 +332,31 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
 //            self.even = true
 //        } else {
 //            self.even = false
-//        }
+//        }x
 //        self.performSegue(withIdentifier: "transactionVC", sender: Any.self)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath == [0,0] {
-            let heightForFirstCell : CGFloat = presenter.blockedAmount == 0 ? 332.0 : 332.0
+            let heightForFirstCell : CGFloat = presenter.blockedAmount == 0 ? 272.0 : 332.0
             
             return heightForFirstCell /* (screenWidth / 375.0)*/
         } else { //if indexPath == [0,1] || self.presenter.numberOfTransactions() > 0 {
-            return 70
+            if indexPath.row < presenter.numberOfTransactions() {
+                if presenter.blockedAmount(for: presenter.historyArray[indexPath.row]) == 0 {
+                    return 70
+                } else {
+                    return 135
+                }
+            } else {
+                return 70
+            }
         }
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath == [0, 1] {
-            (cell as! TransactionWalletCell).setCorners()
+            cell.setCorners()
         }
     }
     
@@ -359,7 +379,7 @@ extension WalletViewController : UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let heightForFirstCell : CGFloat = presenter.blockedAmount == 0 ? 210.0 : 250.0
+        let heightForFirstCell : CGFloat = presenter.blockedAmount == 0 ? 190.0 : 250.0
         
         return CGSize(width: screenWidth, height: heightForFirstCell /* (screenWidth / 375.0)*/)
     }

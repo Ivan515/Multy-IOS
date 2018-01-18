@@ -96,15 +96,23 @@ class WalletPresenter: NSObject {
 //            }
 //        }
         for history in historyArray {
-            if history.txStatus.intValue == TxStatus.MempoolIncoming.rawValue {
-                sum += history.txOutAmount.uint32Value
-            } else if history.txStatus.intValue == TxStatus.MempoolOutcoming.rawValue {
-                let addresses = wallet!.fetchAddresses()
-                
-                for tx in history.txOutputs {
-                    if addresses.contains(tx.address) {
-                        sum += history.txOutAmount.uint32Value
-                    }
+            sum += blockedAmount(for: history)
+        }
+        
+        return sum
+    }
+    
+    func blockedAmount(for transaction: HistoryRLM) -> UInt32 {
+        var sum = UInt32(0)
+        
+        if transaction.txStatus.intValue == TxStatus.MempoolIncoming.rawValue {
+            sum += transaction.txOutAmount.uint32Value
+        } else if transaction.txStatus.intValue == TxStatus.MempoolOutcoming.rawValue {
+            let addresses = wallet!.fetchAddresses()
+            
+            for tx in transaction.txOutputs {
+                if addresses.contains(tx.address) {
+                    sum += tx.amount.uint32Value
                 }
             }
         }
