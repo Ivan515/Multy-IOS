@@ -118,6 +118,17 @@ class WalletViewController: UIViewController {
 //        self.tableView.reloadData()
     }
     
+    func updateHistory() {
+        for cell in self.tableView.visibleCells {
+            if cell.isKind(of: TransactionWalletCell.self) {
+                (cell as! TransactionWalletCell).changeState(isEmpty: false)
+                (cell as! TransactionWalletCell).fillCell()
+            } else if cell.isKind(of: TransactionPendingCell.self) {
+                (cell as! TransactionPendingCell).fillCell()
+            }
+        }
+    }
+    
     func backUpView() {
         if self.isBackupOnScreen == false {
             return
@@ -293,7 +304,7 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
                     }
                 } else {
                     txWalletCell.changeState(isEmpty: true)
-                    fixForiPadAndiPhone5()
+                    fixForiPad()
                 }
             }
             
@@ -317,7 +328,7 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
         self.emptyArrowImg.isHidden = true
     }
     
-    func fixForiPadAndiPhone5() {
+    func fixForiPad() {
         if screenHeight == 480 { //ipad
             hideEmptyLbls()
         }
