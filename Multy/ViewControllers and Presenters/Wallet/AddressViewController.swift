@@ -32,11 +32,11 @@ class AddressViewController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
-//        if screenHeight == 480 {
-//            firstConstraint.constant = firstConstraint.constant/2
-////            seondConstraint.constant = seondConstraint.constant/2
+        if screenHeight == 480 {
+            firstConstraint.constant = firstConstraint.constant/2
+//            seondConstraint.constant = seondConstraint.constant/2
 //            thirdConstraint.constant = thirdConstraint.constant/2
-//        }
+        }
     }
     
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
