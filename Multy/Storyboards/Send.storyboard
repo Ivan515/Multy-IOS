@@ -28,7 +28,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="H94-7K-Etr">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="H94-7K-Etr">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                                 <color key="backgroundColor" red="0.93333333333333335" green="0.94083350896835327" blue="0.96952909231185913" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
@@ -59,7 +59,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TqU-bF-Cd8">
-                                <rect key="frame" x="50" y="307" width="275" height="93"/>
+                                <rect key="frame" x="50" y="327" width="275" height="93"/>
                                 <string key="text">No recent addresses yet.
 
 This feature will be in the next update.</string>
@@ -72,7 +72,7 @@ This feature will be in the next update.</string>
                         <constraints>
                             <constraint firstItem="TqU-bF-Cd8" firstAttribute="leading" secondItem="cxe-5O-fnm" secondAttribute="leading" constant="50" id="4ED-OC-uti"/>
                             <constraint firstItem="H94-7K-Etr" firstAttribute="leading" secondItem="cxe-5O-fnm" secondAttribute="leading" id="8V4-zq-Kui"/>
-                            <constraint firstItem="TqU-bF-Cd8" firstAttribute="centerY" secondItem="cxe-5O-fnm" secondAttribute="centerY" constant="20" id="AGL-D9-sSR"/>
+                            <constraint firstItem="TqU-bF-Cd8" firstAttribute="centerY" secondItem="cxe-5O-fnm" secondAttribute="centerY" constant="40" id="AGL-D9-sSR"/>
                             <constraint firstAttribute="trailing" secondItem="S0T-Fm-OmK" secondAttribute="trailing" id="EIl-6I-6V5"/>
                             <constraint firstAttribute="trailing" secondItem="TqU-bF-Cd8" secondAttribute="trailing" constant="50" id="EN3-5W-dzp"/>
                             <constraint firstItem="S0T-Fm-OmK" firstAttribute="top" secondItem="H94-7K-Etr" secondAttribute="bottom" id="Ih9-y2-L8Z"/>
@@ -85,6 +85,7 @@ This feature will be in the next update.</string>
                     <navigationItem key="navigationItem" id="JbP-Pd-3df"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
+                        <outlet property="middleConstraint" destination="AGL-D9-sSR" id="XDL-QK-GsI"/>
                         <outlet property="nextBtn" destination="S0T-Fm-OmK" id="IAc-OO-F78"/>
                         <outlet property="tableView" destination="H94-7K-Etr" id="6mf-E7-FlG"/>
                         <segue destination="3gL-lZ-1hN" kind="show" identifier="chooseWalletVC" id="o35-7A-1Zt"/>
