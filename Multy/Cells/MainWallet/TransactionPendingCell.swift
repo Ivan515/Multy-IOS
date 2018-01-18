@@ -38,8 +38,8 @@ class TransactionPendingCell: UITableViewCell {
         
         let amount = blockedAmount()
         let amountInDouble = convertSatoshiToBTC(sum: amount)
-        lockedCryptoAmountLabel.text = "\(amountInDouble.fixedFraction(digits: 8))"
-        lockedFiatAmountLabel.text = "\((amountInDouble * histObj.btcToUsd).fixedFraction(digits: 2))"
+        lockedCryptoAmountLabel.text = "\(amountInDouble.fixedFraction(digits: 8)) BTC"
+        lockedFiatAmountLabel.text = "\((amountInDouble * histObj.btcToUsd).fixedFraction(digits: 2)) USD"
     }
     
     func calculateAmount(transactions: List<TxHistoryRLM>) -> UInt32 {
@@ -50,15 +50,15 @@ class TransactionPendingCell: UITableViewCell {
         return sum
     }
     
-    func setCorners() {
-        let maskPath = UIBezierPath.init(roundedRect: bounds,
-                                         byRoundingCorners:[.topLeft, .topRight],
-                                         cornerRadii: CGSize.init(width: 15.0, height: 15.0))
-        let maskLayer = CAShapeLayer()
-        maskLayer.frame = bounds
-        maskLayer.path = maskPath.cgPath
-        layer.mask = maskLayer
-    }
+//    func setCorners() {
+//        let maskPath = UIBezierPath.init(roundedRect: bounds,
+//                                         byRoundingCorners:[.topLeft, .topRight],
+//                                         cornerRadii: CGSize.init(width: 15.0, height: 15.0))
+//        let maskLayer = CAShapeLayer()
+//        maskLayer.frame = bounds
+//        maskLayer.path = maskPath.cgPath
+//        layer.mask = maskLayer
+//    }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

@@ -73,16 +73,15 @@ class TransactionWalletCell: UITableViewCell {
         self.fiatAmountLabel.text = "\((convertSatoshiToBTC(sum: histObj.txOutAmount.uint32Value) * histObj.btcToUsd).fixedFraction(digits: 2)) USD"
     }
     
-    func setCorners() {
-        let maskPath = UIBezierPath.init(roundedRect: bounds,
-                                         byRoundingCorners:[.topLeft, .topRight],
-                                         cornerRadii: CGSize.init(width: 15.0, height: 15.0))
-        let maskLayer = CAShapeLayer()
-        maskLayer.frame = bounds
-        maskLayer.path = maskPath.cgPath
-        layer.mask = maskLayer
-    }
-    
+//    func setCorners() {
+//        let maskPath = UIBezierPath.init(roundedRect: bounds,
+//                                         byRoundingCorners:[.topLeft, .topRight],
+//                                         cornerRadii: CGSize.init(width: 15.0, height: 15.0))
+//        let maskLayer = CAShapeLayer()
+//        maskLayer.frame = bounds
+//        maskLayer.path = maskPath.cgPath
+//        layer.mask = maskLayer
+//    }
     
     func changeState(isEmpty: Bool) {
         self.transactionImage.isHidden = isEmpty
