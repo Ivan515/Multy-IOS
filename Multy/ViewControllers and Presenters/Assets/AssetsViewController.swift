@@ -28,16 +28,19 @@ class AssetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.isUserInteractionEnabled = false
         self.registerCells()
         self.presenter.assetsVC = self
         self.presenter.tabBarFrame = self.tabBarController?.tabBar.frame
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         guard isFlowPassed else {
+            self.view.isUserInteractionEnabled = true
             return
         }
         
         let isFirst = DataManager.shared.checkIsFirstLaunch()
         if isFirst {
+            self.view.isUserInteractionEnabled = true
             return
         }
         
