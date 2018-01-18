@@ -32,7 +32,10 @@ class UserWalletRLM: Object {
             var sum : UInt32 = 0
             
             for address in addresses {
-                sum += address.amount.uint32Value
+                for out in address.spendableOutput {
+                    sum += out.transactionOutAmount.uint32Value
+                }
+//                sum += address.amount.uint32Value
             }
             
             sumInCrypto = Double(sum) / 100000000.0

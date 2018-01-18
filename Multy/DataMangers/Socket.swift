@@ -52,7 +52,11 @@ class Socket: NSObject {
                 }//"BTCtoUSD"
             }
             
-            
+            self.socket.on("btcTransactionUpdate") { data, ack in
+                print("-----btcTransactionUpdate: \(data)")
+                
+                NotificationCenter.default.post(name: NSNotification.Name("transactionUpdated"), object: nil)
+            }
             
             self.socket.on("currentAmount") {data, ack in
                 guard let cur = data[0] as? Double else { return }

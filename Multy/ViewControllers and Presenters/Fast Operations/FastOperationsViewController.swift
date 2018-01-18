@@ -30,7 +30,6 @@ class FastOperationsViewController: UIViewController {
     @IBAction func closeAction(_ sender: Any) {
         if let tbc = self.tabBarController as? CustomTabBarViewController {
             tbc.setSelectIndex(from: 2, to: tbc.previousSelectedIndex)
-//            tbc.selectedIndex = tbc.previousSelectedIndex
         }
     }
     
