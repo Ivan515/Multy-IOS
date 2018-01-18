@@ -25,6 +25,8 @@ class AssetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var isFlowPassed = false
     
+    var isSocketInitiateUpdating = false
+    
     let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
     
     override func viewDidLoad() {
@@ -60,6 +62,8 @@ class AssetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.createAlert()
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateExchange), name: NSNotification.Name("exchageUpdated"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateWalletAfterSockets), name: NSNotification.Name("transactionUpdated"), object: nil)
+        
         if #available(iOS 11.0, *) {
             tableView.contentInsetAdjustmentBehavior = .never
         }
@@ -107,6 +111,21 @@ class AssetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             if cell.isKind(of: WalletTableViewCell.self) {
                 (cell as! WalletTableViewCell).fillInCell()
             }
+        }
+    }
+    
+    @objc func updateWalletAfterSockets() {
+        if isSocketInitiateUpdating {
+            return
+        }
+        
+        if !isVisible() {
+            return
+        }
+        
+        isSocketInitiateUpdating = true
+        presenter.getWalletVerbose { (_) in
+            self.isSocketInitiateUpdating = false
         }
     }
     
