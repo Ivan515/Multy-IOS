@@ -99,9 +99,14 @@ class AssetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     @objc func updateExchange() {
-        let offsetBeforeUpdate = self.tableView.contentOffset
-        self.tableView.reloadData()
-        self.tableView.setContentOffset(offsetBeforeUpdate, animated: false)
+//        let offsetBeforeUpdate = self.tableView.contentOffset
+//        self.tableView.reloadData()
+//        self.tableView.setContentOffset(offsetBeforeUpdate, animated: false)
+        for cell in self.tableView.visibleCells {
+            if cell.isKind(of: WalletTableViewCell.self) {
+                (cell as! WalletTableViewCell).fillInCell()
+            }
+        }
     }
     
     func createAlert() {

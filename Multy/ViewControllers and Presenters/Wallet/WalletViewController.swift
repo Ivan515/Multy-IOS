@@ -306,7 +306,7 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func fixForiPadAndiPhone5() {
-        if screenWidth <= 320 { //ipad, iphone 5s
+        if screenHeight == 480 { //ipad
             hideEmptyLbls()
         }
     }

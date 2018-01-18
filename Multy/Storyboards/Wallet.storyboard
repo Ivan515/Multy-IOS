@@ -75,7 +75,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You can create first operation here" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iJt-Qg-K3r">
-                                <rect key="frame" x="123" y="466" width="129" height="80"/>
+                                <rect key="frame" x="123" y="481" width="129" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="9uR-iP-M76"/>
                                     <constraint firstAttribute="width" constant="129" id="nXZ-Yb-lNp"/>
@@ -85,7 +85,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aqo-BH-hPA">
-                                <rect key="frame" x="124" y="380" width="128" height="56"/>
+                                <rect key="frame" x="124" y="410" width="128" height="56"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="128" id="D1a-OD-4Sx"/>
                                     <constraint firstAttribute="height" constant="56" id="DsX-qI-nTT"/>
@@ -97,7 +97,7 @@ operations</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow" translatesAutoresizingMaskIntoConstraints="NO" id="RHH-jh-E3C">
-                                <rect key="frame" x="180.5" y="562" width="14" height="20"/>
+                                <rect key="frame" x="180.5" y="577" width="14" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="14" id="Dnv-BG-oWC"/>
                                     <constraint firstAttribute="height" constant="20" id="YK0-KM-VgQ"/>
@@ -238,12 +238,12 @@ operations</string>
                         <constraints>
                             <constraint firstItem="RHH-jh-E3C" firstAttribute="top" secondItem="iJt-Qg-K3r" secondAttribute="bottom" constant="16" id="2rf-Qy-4v3"/>
                             <constraint firstAttribute="trailing" secondItem="3MT-QQ-iCn" secondAttribute="trailing" constant="17" id="6Fx-VE-Kt4"/>
-                            <constraint firstItem="7Jm-m5-Juj" firstAttribute="top" secondItem="RHH-jh-E3C" secondAttribute="bottom" constant="30" id="99l-6Q-6u7"/>
+                            <constraint firstItem="7Jm-m5-Juj" firstAttribute="top" secondItem="RHH-jh-E3C" secondAttribute="bottom" constant="15" id="99l-6Q-6u7"/>
                             <constraint firstItem="iJt-Qg-K3r" firstAttribute="centerX" secondItem="RHH-jh-E3C" secondAttribute="centerX" id="A4R-Ad-NvD"/>
                             <constraint firstItem="SyO-YX-XwO" firstAttribute="leading" secondItem="pbK-RX-Gb3" secondAttribute="leading" id="HXM-D8-POa"/>
                             <constraint firstAttribute="trailing" secondItem="SyO-YX-XwO" secondAttribute="trailing" id="ItC-gb-mmE"/>
                             <constraint firstItem="Puy-SH-843" firstAttribute="centerX" secondItem="pbK-RX-Gb3" secondAttribute="centerX" id="NM2-F7-iTc"/>
-                            <constraint firstItem="iJt-Qg-K3r" firstAttribute="top" secondItem="Aqo-BH-hPA" secondAttribute="bottom" constant="30" id="T26-Ns-bse"/>
+                            <constraint firstItem="iJt-Qg-K3r" firstAttribute="top" secondItem="Aqo-BH-hPA" secondAttribute="bottom" constant="15" id="T26-Ns-bse"/>
                             <constraint firstItem="6mJ-yJ-hqs" firstAttribute="leading" secondItem="pbK-RX-Gb3" secondAttribute="leading" constant="17" id="Us4-gW-CkN"/>
                             <constraint firstItem="z5W-Ap-aao" firstAttribute="centerX" secondItem="3MT-QQ-iCn" secondAttribute="centerX" id="Vvc-kl-iif"/>
                             <constraint firstItem="Aqo-BH-hPA" firstAttribute="centerX" secondItem="iJt-Qg-K3r" secondAttribute="centerX" id="WSr-wo-lZ5"/>
