@@ -35,6 +35,10 @@ class AssetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.presenter.assetsVC = self
         self.presenter.tabBarFrame = self.tabBarController?.tabBar.frame
         self.navigationController?.setNavigationBarHidden(true, animated: false)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateExchange), name: NSNotification.Name("exchageUpdated"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateWalletAfterSockets), name: NSNotification.Name("transactionUpdated"), object: nil)
+        
         guard isFlowPassed else {
             return
         }
@@ -60,9 +64,6 @@ class AssetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         presenter.auth()
         
         self.createAlert()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(self.updateExchange), name: NSNotification.Name("exchageUpdated"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.updateWalletAfterSockets), name: NSNotification.Name("transactionUpdated"), object: nil)
         
         if #available(iOS 11.0, *) {
             tableView.contentInsetAdjustmentBehavior = .never
