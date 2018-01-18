@@ -123,7 +123,7 @@ class WalletViewController: UIViewController {
             return
         }
         let view = UIView()
-        view.frame = CGRect(x: 16, y: (325 * (screenWidth / 375.0)) - 20, width: screenWidth - 32, height: 40)
+        view.frame = CGRect(x: 16, y: (325 /* (screenWidth / 375.0)*/) - 20, width: screenWidth - 32, height: 40)
         view.layer.cornerRadius = 20
         view.backgroundColor = .white
         
@@ -328,7 +328,7 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
         if indexPath == [0,0] {
             let heightForFirstCell : CGFloat = presenter.blockedAmount == 0 ? 332.0 : 332.0
             
-            return heightForFirstCell * (screenWidth / 375.0)
+            return heightForFirstCell /* (screenWidth / 375.0)*/
         } else { //if indexPath == [0,1] || self.presenter.numberOfTransactions() > 0 {
             return 70
         }
@@ -361,7 +361,7 @@ extension WalletViewController : UICollectionViewDelegateFlowLayout {
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         let heightForFirstCell : CGFloat = presenter.blockedAmount == 0 ? 210.0 : 250.0
         
-        return CGSize(width: screenWidth, height: heightForFirstCell * (screenWidth / 375.0))
+        return CGSize(width: screenWidth, height: heightForFirstCell /* (screenWidth / 375.0)*/)
     }
     
     func collectionView(_ collectionView: UICollectionView,
