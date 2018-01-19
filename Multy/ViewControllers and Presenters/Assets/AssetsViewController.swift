@@ -27,6 +27,8 @@ class AssetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var isSocketInitiateUpdating = false
     
+    var isInsetCorrect = false
+    
     let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
     
     override func viewDidLoad() {
@@ -36,6 +38,7 @@ class AssetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.presenter.assetsVC = self
         self.presenter.tabBarFrame = self.tabBarController?.tabBar.frame
         self.navigationController?.setNavigationBarHidden(true, animated: false)
+        self.createAlert()
         guard isFlowPassed else {
             self.view.isUserInteractionEnabled = true
             return
@@ -47,7 +50,7 @@ class AssetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             return
         }
         
-        let _ = MasterKeyGenerator.shared.generateMasterKey{_,_,_ in }
+        let _ = MasterKeyGenerator.shared.generateMasterKey{_,_, _ in }
         
         self.checkOSForConstraints()
         
@@ -62,7 +65,7 @@ class AssetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
 //        progressHUD.show()
         presenter.auth()
         
-        self.createAlert()
+        
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateExchange), name: NSNotification.Name("exchageUpdated"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateWalletAfterSockets), name: NSNotification.Name("transactionUpdated"), object: nil)
@@ -83,6 +86,7 @@ class AssetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         (self.tabBarController as! CustomTabBarViewController).changeViewVisibility(isHidden: true)
+        self.isInsetCorrect = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -101,8 +105,10 @@ class AssetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     override func viewDidLayoutSubviews() {
-        if presenter.account == nil {
+        if isInsetCorrect {
             self.tableView.contentInset.bottom = 0
+        } else {
+            self.tableView.contentInset.bottom = 49
         }
     }
     
@@ -133,13 +139,15 @@ class AssetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func createAlert() {
-        actionSheet.addAction(UIAlertAction(title: "Create wallet", style: .default, handler: { (result : UIAlertAction) -> Void in
-            self.performSegue(withIdentifier: "createWalletVC", sender: Any.self)
-        }))
-        //            actionSheet.addAction(UIAlertAction(title: "Import wallet", style: .default, handler: { (result: UIAlertAction) -> Void in
-        //                //go to import wallet
-        //            }))
-        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        if actionSheet.actions.count == 0 {
+            actionSheet.addAction(UIAlertAction(title: "Create wallet", style: .default, handler: { (result : UIAlertAction) -> Void in
+                self.performSegue(withIdentifier: "createWalletVC", sender: Any.self)
+            }))
+            //            actionSheet.addAction(UIAlertAction(title: "Import wallet", style: .default, handler: { (result: UIAlertAction) -> Void in
+            //                //go to import wallet
+            //            }))
+            actionSheet.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
+        }
     }
     
     func backUpView() {
