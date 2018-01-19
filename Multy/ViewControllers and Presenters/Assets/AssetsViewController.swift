@@ -71,7 +71,6 @@ class AssetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         presenter.auth()
         
         
-        
         if #available(iOS 11.0, *) {
             tableView.contentInsetAdjustmentBehavior = .never
         }
@@ -89,6 +88,7 @@ class AssetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         super.viewWillDisappear(animated)
         (self.tabBarController as! CustomTabBarViewController).changeViewVisibility(isHidden: true)
         self.isInsetCorrect = true
+        tableView.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
