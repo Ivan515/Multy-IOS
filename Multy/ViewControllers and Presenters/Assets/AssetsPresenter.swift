@@ -96,14 +96,20 @@ class AssetsPresenter: NSObject {
     }
     
     func openCreateWalletPopup() {
-        let actionSheet = UIAlertController(title: "Create or Import New Wallet",
+        let actionSheet = UIAlertController(title: Constants.AssetsScreen.createOrImportWalletString,
                                             message: nil,
                                             preferredStyle: UIAlertControllerStyle.actionSheet)
         
-        actionSheet.addAction(UIAlertAction(title: "Create wallet", style: .default, handler: { (result : UIAlertAction) -> Void in
-            self.assetsVC?.performSegue(withIdentifier: "createWalletVC", sender: Any.self)
+        actionSheet.addAction(UIAlertAction(title: Constants.AssetsScreen.createWalletString,
+                                            style: .default,
+                                            handler: { (result : UIAlertAction) -> Void in
+            self.assetsVC?.performSegue(withIdentifier: Constants.Storyboard.createWalletVCSegueID,
+                                        sender: Any.self)
         }))
-        actionSheet.addAction(UIAlertAction(title: "Import wallet", style: .default, handler: { (result: UIAlertAction) -> Void in
+        
+        actionSheet.addAction(UIAlertAction(title: "Import wallet",
+                                            style: .default,
+                                            handler: { (result: UIAlertAction) -> Void in
             //go to import wallet
         }))
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -210,75 +216,5 @@ class AssetsPresenter: NSObject {
         var binData = account!.binaryDataString.createBinaryData()!
         DataManager.shared.coreLibManager.testTransaction(from: &binData, wallet: account!.wallets[0])
     }
-//        DataManager.shared.getWalletsVerbose(account!.token) { (answer, err) in
-//            if (answer?["code"] as? NSNumber)?.intValue == 200 {
-//                print("getWalletsVerbose:\n \(answer)")
-//
-//                let walletsArray = answer!["wallets"] as! NSArray
-//            }
-//
-//                DataManager.shared.updateAccount(<#T##accountDict: NSDictionary##NSDictionary#>, completion: <#T##(AccountRLM?, NSError?) -> ()#>)
-//                DataManager.shared.updateAccount(answer!["wallets"] as! NSArray, completion: { (account, error) in
-//
-//                })
-//            print("OK")
-//            print(answer ?? "")
-//            let answDict = answer
-//            var spendDict = NSDictionary()
-//            var spendAddress = String()
-//            if answDict != nil {
-//                if answDict!["wallets"] != nil {
-//                    if answDict!["wallets"] is NSNull {
-//                        return
-//                    }
-//                    print("answer: \(answer)")
-//
-//                    let arrOfwallets = answDict!["wallets"] as! NSArray
-//                    let firstWallet = arrOfwallets.firstObject as! NSDictionary
-//                    let addressArr = firstWallet["addresses"] as! NSArray
-//                    let amount = (addressArr.firstObject as! NSDictionary)["amount"] as! UInt32
-//                    if ((addressArr.firstObject as! NSDictionary)["spendableoutputs"] is NSNull) {
-//                        return
-//                    }
-//
-//                    let spendableoutputs = (addressArr.firstObject as! NSDictionary)["spendableoutputs"] as! NSArray
-//                    spendDict = spendableoutputs.firstObject as! NSDictionary
-//
-//                    let spendObj = SpendableOutputRLM.initWithInfo(addressInfo: spendDict)
-//                }
-//            }
-//            self.assetsVC?.updateUI()
-            
-//            UserWalletRLM
-//            if spendDict["txid"] == nil {
-//                return
-//            }
-//
-//            let availableSum = spendDict["txoutamount"] as? UInt32
-//
-//            let oriBinData = DataManager.shared.coreLibManager.createSeedBinaryData(from: self.account!.seedPhrase)
-//
-//            var binData : BinaryData = self.account!.binaryDataString.createBinaryData()!
-//
-//            let dict = DataManager.shared.coreLibManager.createAddress(currencyID: 0, walletID: 0, addressID: 0, binaryData: &binData)
-//            let hexString = DataManager.shared.coreLibManager.createTransaction(addressPointer: dict!["addressPointer"] as! OpaquePointer,
-//                                                                                sendAddress: "mrPnciDNg6gSE5Uu6vJEPWN2d6tyzHV3N8",
-//                                                                                availableSum: String(describing: availableSum),
-//                                                                                sendAmountString: "259998000",
-//                                                                                feeAmountString: "2000",
-//                                                                                donationAddress: "address",
-//                                                                                donationAmount: "10",
-//                                                                                txid: spendDict["txid"] as! String,
-//                                                                                txoutid: spendDict["txoutid"] as! UInt32,
-//                                                                                txoutamount: spendDict["txoutamount"] as! UInt32,
-//                                                                                txoutscript: spendDict["txoutscript"] as! String)
-//
-//            let params = [
-//                "transaction" : hexString
-//                ] as [String : Any]
-//            DataManager.shared.apiManager.sendRawTransaction(self.account!.token, params, completion: { (dict, error) in
-//                print("---------\(dict)")
-//            })
-//        }
 }
 
