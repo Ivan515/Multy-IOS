@@ -21,7 +21,8 @@ class AssetsPresenter: NSObject {
 //            getWalletVerbose()
 //            getWalletOutputs()
             self.assetsVC?.backUpView()
-            if (self.assetsVC!.tabBarController!.viewControllers![0].childViewControllers.count == 1) {
+            
+            if !assetsVC!.isSocketInitiateUpdating && self.assetsVC!.tabBarController!.viewControllers![0].childViewControllers.count == 1 {
                 assetsVC?.tableView.reloadData()
             }
         }
@@ -169,6 +170,30 @@ class AssetsPresenter: NSObject {
                     print("wallets: \(acc?.wallets)")
                     
 //                    self.createTestTrans()
+                    
+                    completion(true)
+                    
+//                    DataManager.shared.getAccount(completion: { (acc, err) in
+//                        print("afterVerbose: \(acc!)")
+//                    })
+                })
+            }
+        }
+    }
+    
+    func getWalletVerboseForSockets(completion: @escaping (_ flag: Bool) -> ()) {
+        DataManager.shared.getWalletsVerbose(account!.token) { (walletsArrayFromApi, err) in
+            if err != nil {
+                return
+            } else {
+                let walletsArr = UserWalletRLM.initWithArray(walletsInfo: walletsArrayFromApi!)
+                print("afterVerboseForSockets:rawdata: \(walletsArrayFromApi)")
+                DataManager.shared.realmManager.updateWalletsInAcc(arrOfWallets: walletsArr, completion: { (acc, err) in
+                    self.account = acc
+                    
+                    print("wallets: \(acc?.wallets)")
+                    
+                    //                    self.createTestTrans()
                     
                     completion(true)
                     

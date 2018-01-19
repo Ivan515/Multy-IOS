@@ -299,13 +299,13 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
             
             walletCell.selectionStyle = .none
             
-            if indexPath == [0,1] {
-                walletCell.setCorners()
+//            if indexPath == [0,1] {
+//                walletCell.setCorners()
 //                walletCell.backgroundView?.backgroundColor = .red
 //                walletCell.backgroundView?.applyGradient(withColours: [UIColor(ciColor: CIColor(red: 0/255, green: 178/255, blue: 255/255)),
 //                                                                      UIColor(ciColor: CIColor(red: 0/255, green: 122/255, blue: 255/255))],
 //                                                        gradientOrientation: .topRightBottomLeft)
-            }
+//            }
             
             return walletCell
         }

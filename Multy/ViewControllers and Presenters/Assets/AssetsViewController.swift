@@ -125,8 +125,14 @@ class AssetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         
         isSocketInitiateUpdating = true
-        presenter.getWalletVerbose { (_) in
+        presenter.getWalletVerboseForSockets { (_) in
             self.isSocketInitiateUpdating = false
+            
+            for cell in self.tableView.visibleCells {
+                if cell.isKind(of: WalletTableViewCell.self) {
+                    (cell as! WalletTableViewCell).fillInCell()
+                }
+            }
         }
     }
     
