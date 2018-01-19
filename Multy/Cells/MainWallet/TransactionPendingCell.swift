@@ -23,6 +23,9 @@ class TransactionPendingCell: UITableViewCell {
     }
     
     public func fillCell() {
+        if histObj.txInputs.count == 0 {
+            return 
+        }
         self.addressLabel.text = histObj.txInputs[0].address
         
         self.cryptoAmountLabel.text = "\(convertSatoshiToBTC(sum: histObj.txOutAmount.uint32Value)) BTC"

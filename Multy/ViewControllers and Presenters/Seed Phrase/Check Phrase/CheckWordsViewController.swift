@@ -45,12 +45,11 @@ class CheckWordsViewController: UIViewController, UITextFieldDelegate {
         self.presenter.checkWordsVC = self
         self.presenter.getSeedPhrase()
         
-        self.wordTF.becomeFirstResponder()
         self.wordTF.delegate = self
         self.wordTF.text = ""
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.hideKeyboard(_:)), name: Notification.Name("hideKeyboard"), object: nil)
         (self.tabBarController as! CustomTabBarViewController).menuButton.isHidden = true
         self.tabBarController?.tabBar.frame = CGRect.zero
 
@@ -67,6 +66,7 @@ class CheckWordsViewController: UIViewController, UITextFieldDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.wordTF.becomeFirstResponder()
         if self.isRestore {
             self.titleLbl.text = "Restore Multy"
         }
@@ -78,6 +78,10 @@ class CheckWordsViewController: UIViewController, UITextFieldDelegate {
             bricksView.subviews.forEach({ $0.removeFromSuperview() })
             bricksView.addSubview(BricksView(with: bricksView.bounds, and: 0))
         }
+    }
+    
+    @objc func hideKeyboard(_ notification : Notification) {
+        self.wordTF.resignFirstResponder()
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

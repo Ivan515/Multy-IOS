@@ -32,11 +32,11 @@ class AddressViewController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
-//        if screenHeight == 480 {
-//            firstConstraint.constant = firstConstraint.constant/2
-////            seondConstraint.constant = seondConstraint.constant/2
+        if screenHeight == 480 {
+            firstConstraint.constant = firstConstraint.constant/2
+//            seondConstraint.constant = seondConstraint.constant/2
 //            thirdConstraint.constant = thirdConstraint.constant/2
-//        }
+        }
     }
     
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
@@ -64,7 +64,7 @@ class AddressViewController: UIViewController {
     }
     
     func makeQRCode() {
-        let data = self.wallet?.address.data(using: String.Encoding.isoLatin1, allowLossyConversion: false)
+        let data = self.makeStringForQRWithSumAndAdress(cryptoName: "bitcoin").data(using: String.Encoding.isoLatin1, allowLossyConversion: false)
         let filter = CIFilter(name: "CIQRCodeGenerator")
         filter?.setValue(data, forKey: "inputMessage")
         filter?.setValue("Q", forKey: "inputCorrectionLevel")

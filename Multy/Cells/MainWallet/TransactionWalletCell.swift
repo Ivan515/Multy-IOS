@@ -30,6 +30,9 @@ class TransactionWalletCell: UITableViewCell {
     }
     
     public func fillCell() {
+        if histObj.txInputs.count == 0 {
+            return
+        }
         let dateFormatter = Date.defaultGMTDateFormatter()
         
         if histObj.txStatus.intValue == TxStatus.MempoolIncoming.rawValue ||

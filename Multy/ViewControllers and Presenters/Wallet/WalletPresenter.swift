@@ -24,12 +24,15 @@ class WalletPresenter: NSObject {
     func updateWalletInfo() {
         mainVC?.titleLbl.text = wallet?.name
         mainVC?.updateUI()
+//        mainVC?.updateExchange()
+//        mainVC?.updateHistory()
     }
     
     var historyArray = List<HistoryRLM>() {
         didSet {
             blockedAmount = calculateBlockedAmount()
-            updateWalletInfo()
+//            updateWalletInfo()
+            mainVC?.updateHistory()
         }
     }
     

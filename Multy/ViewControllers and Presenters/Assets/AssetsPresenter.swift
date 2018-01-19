@@ -21,7 +21,8 @@ class AssetsPresenter: NSObject {
 //            getWalletVerbose()
 //            getWalletOutputs()
             self.assetsVC?.backUpView()
-            
+
+            self.assetsVC?.view.isUserInteractionEnabled = true
             if !assetsVC!.isSocketInitiateUpdating && self.assetsVC!.tabBarController!.viewControllers![0].childViewControllers.count == 1 {
                 assetsVC?.tableView.reloadData()
             }
