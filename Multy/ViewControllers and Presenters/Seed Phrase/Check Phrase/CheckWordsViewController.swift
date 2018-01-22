@@ -108,7 +108,7 @@ class CheckWordsViewController: UIViewController, UITextFieldDelegate {
 //        }
         
         //there are too many word
-        if wordArray.count > 1 && !isWordFinded {
+        if wordArray.count != 1 && !isWordFinded {
             return
         }
         
