@@ -43,6 +43,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             })
         }
         
+        exchangeCourse = UserDefaults.standard.double(forKey: "exchangeCourse")
+        
         //FOR TEST NOT MAIN STRORYBOARD
 //        self.window = UIWindow(frame: UIScreen.main.bounds)
 //        let storyboard = UIStoryboard(name: "Receive", bundle: nil)
@@ -75,6 +77,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 self.openedAlert?.dismiss(animated: true, completion: nil)
             }
         }
+        
+        UserDefaults.standard.set(exchangeCourse, forKey: "exchangeCourse")
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }
@@ -85,15 +89,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             presentedVC?.dismiss(animated: true, completion: nil)
             openedAlert?.dismiss(animated: true, completion: nil)
         }
+        
+        exchangeCourse = UserDefaults.standard.double(forKey: "exchangeCourse")
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         self.authorization()
+        exchangeCourse = UserDefaults.standard.double(forKey: "exchangeCourse")
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
         DataManager.shared.finishRealmSession()
+        UserDefaults.standard.set(exchangeCourse, forKey: "exchangeCourse")
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
@@ -104,7 +112,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         let assetVC = self.window?.rootViewController?.childViewControllers[0].childViewControllers[0] as! AssetsViewController
-        switch isDeviceJailbroken() {
+        switch false /*isDeviceJailbroken()*/ {
         case true:
             assetVC.presenter.isJailed = true
         case false:

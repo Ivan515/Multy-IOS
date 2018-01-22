@@ -104,8 +104,10 @@ class AssetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         (self.tabBarController as! CustomTabBarViewController).changeViewVisibility(isHidden: presenter.account == nil)
         self.tabBarController?.tabBar.frame = self.presenter.tabBarFrame!
         
-        tableView.reloadData()
-        tableView.scrollToRow(at: [0, presenter.account!.wallets.count - 1], at: .bottom, animated: false)
+        if presenter.account != nil && presenter.account!.wallets.count > 0 {
+            tableView.reloadData()
+            tableView.scrollToRow(at: [0, presenter.account!.wallets.count - 1], at: .bottom, animated: false)
+        }
     }
     
     override func viewDidLayoutSubviews() {
