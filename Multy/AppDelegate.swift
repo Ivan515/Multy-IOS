@@ -5,6 +5,7 @@
 import UIKit
 import RealmSwift
 import Firebase
+import Branch
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -30,12 +31,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print("\n\nScreennshot!\n\n")
                 //executes after screenshot
         }
-        
+
         self.performFirstEnterFlow()
-        
+
         DataManager.shared.realmManager.getAccount { (acc, err) in
             isNeedToAutorise = acc != nil
-            
+
             //MAKR: Check here isPin option from NSUserDefaults
             UserPreferences.shared.getAndDecryptCipheredMode(completion: { (pinMode, error) in
                 isNeedToAutorise = (pinMode! as NSString).boolValue
@@ -45,13 +46,51 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //FOR TEST NOT MAIN STRORYBOARD
 //        self.window = UIWindow(frame: UIScreen.main.bounds)
-//        let storyboard = UIStoryboard(name: "Receive", bundle: nil)
-//        let initialViewController = storyboard.instantiateViewController(withIdentifier: "ReceiveStart")
+//        let storyboard = UIStoryboard(name: "Send", bundle: nil)
+//        let initialViewController = storyboard.instantiateViewController(withIdentifier: "sendAmount")
 //        self.window?.rootViewController = initialViewController
 //        self.window?.makeKeyAndVisible()
-//        self.realmConfig()
+        
+        
+        let branch: Branch = Branch.getInstance()
+        branch.initSession(launchOptions: launchOptions, andRegisterDeepLinkHandler: {params, error in
+            if error == nil {
+                // params are the deep linked params associated with the link that the user clicked -> was re-directed to this app
+                // params will be empty if no data found
+                // ... insert custom logic here ...
+                print("params: %@", params as? [String: AnyObject] ?? {})
+            }
+        })
         return true
     }
+    
+    // Respond to URI scheme links
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        // pass the url to the handle deep link call
+        let branchHandled = Branch.getInstance().application(application,
+                                                             open: url,
+                                                             sourceApplication: sourceApplication,
+                                                             annotation: annotation
+        )
+        if (!branchHandled) {
+            // If not handled by Branch, do other deep link routing for the Facebook SDK, Pinterest SDK, etc
+        }
+        
+        // do other deep link routing for the Facebook SDK, Pinterest SDK, etc
+        return true
+    }
+    
+    // Respond to Universal Links
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
+        // pass the url to the handle deep link call
+        Branch.getInstance().continue(userActivity)
+        
+        return true
+    }
+    
+    
+    
+    
 
     func applicationWillResignActive(_ application: UIApplication) {
         DataManager.shared.finishRealmSession()
