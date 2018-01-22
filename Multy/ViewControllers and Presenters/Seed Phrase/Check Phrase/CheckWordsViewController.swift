@@ -27,6 +27,10 @@ class CheckWordsViewController: UIViewController, UITextFieldDelegate {
     
     let presenter = CheckWordsPresenter()
     
+    //checking word
+    var wordArray = [String]()
+    var isWordFinded = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -52,7 +56,6 @@ class CheckWordsViewController: UIViewController, UITextFieldDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(self.hideKeyboard(_:)), name: Notification.Name("hideKeyboard"), object: nil)
         (self.tabBarController as! CustomTabBarViewController).menuButton.isHidden = true
         self.tabBarController?.tabBar.frame = CGRect.zero
-
     }
     
     override func viewDidLayoutSubviews() {
@@ -98,15 +101,21 @@ class CheckWordsViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
-        if !DataManager.shared.isWordCorrect(word: self.wordTF.text!) {
-            presentAlert()
-            
+//        if !DataManager.shared.isWordCorrect(word: self.wordTF.text!) {
+//            presentAlert()
+//            
+//            return
+//        }
+        
+        //there are too many word
+        if wordArray.count != 1 && !isWordFinded {
             return
         }
         
-        if !(self.wordTF.text?.isEmpty)! {
-            self.presenter.phraseArr.append((self.wordTF.text?.lowercased())!)
+        if !self.wordTF.text!.isEmpty {
+            self.presenter.phraseArr.append(wordArray.first!)
             self.wordTF.text = ""
+            self.nextWordOrContinue.setTitle("Next Word", for: .normal)
         } else {
             return
         }
@@ -161,19 +170,42 @@ class CheckWordsViewController: UIViewController, UITextFieldDelegate {
         }))
         self.present(alert, animated: true, completion: nil)
     }
-
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if string == "" {
-            return true
-        }
+//        if string == "" {
+//            return true
+//        }
         let inverseSet = NSCharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyz")
         
         let components = string.components(separatedBy: inverseSet as CharacterSet)
         
         let filtered = components.joined(separator: "")
         
-        return string != filtered
+        if !filtered.isEmpty {
+            return false
+        }
+        
+        let textFieldText: NSString = (textField.text ?? "") as NSString
+        let textAfterUpdate = textFieldText.replacingCharacters(in: range, with: string)
+        
+        wordArray = DataManager.shared.findPrefixes(prefix: textAfterUpdate)
+        isWordFinded = wordArray.contains(textAfterUpdate)
+        
+        if wordArray.count == 0 {
+            return false
+        }
+        
+        if wordArray.count == 1 {
+            self.nextWordOrContinue.setTitle(wordArray.first!, for: .normal)
+        } else {
+            if isWordFinded {
+                self.nextWordOrContinue.setTitle(textAfterUpdate + " or " + textAfterUpdate + "..." , for: .normal)
+            } else {
+                self.nextWordOrContinue.setTitle(textAfterUpdate + "..." , for: .normal)
+            }
+        }
+        
+        return true
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

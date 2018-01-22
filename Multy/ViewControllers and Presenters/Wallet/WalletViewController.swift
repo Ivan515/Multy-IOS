@@ -10,9 +10,11 @@ class WalletViewController: UIViewController {
     @IBOutlet weak var tableViewTopConstraint: NSLayoutConstraint!
     @IBOutlet var backView: UIView!
     @IBOutlet weak var titleLbl: UILabel!
+    
     @IBOutlet weak var emptyFirstLbl: UILabel!
     @IBOutlet weak var emptySecondLbl: UILabel!
     @IBOutlet weak var emptyArrowImg: UIImageView!
+    
     @IBOutlet weak var headerView: UIView!
     
     
@@ -24,6 +26,8 @@ class WalletViewController: UIViewController {
     
     let visibleCells = 5  // iphone 6  height 667
     let gradientLayer = CAGradientLayer()
+    
+    var isSocketInitiateUpdating = false
     
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
@@ -46,6 +50,7 @@ class WalletViewController: UIViewController {
 //            print("\n\nok\n\n")
 //        }
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateExchange), name: NSNotification.Name("exchageUpdated"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateWalletAfterSockets), name: NSNotification.Name("transactionUpdated"), object: nil)
         (self.tabBarController as! CustomTabBarViewController).changeViewVisibility(isHidden: true)
         self.tableView.addSubview(self.refreshControl)
         
@@ -53,6 +58,20 @@ class WalletViewController: UIViewController {
 //        progressHUD.show()
 //        self.view.addSubview(progressHUD)
 //        self.presenter.getHistory()
+    }
+    
+    @objc func updateWalletAfterSockets() {
+        if isSocketInitiateUpdating {
+            return
+        }
+        
+        if !isVisible() {
+            return
+        }
+        
+        isSocketInitiateUpdating = true
+        
+        presenter.getHistoryAndWallet()
     }
     
     func setGradientBackground() {
@@ -119,10 +138,18 @@ class WalletViewController: UIViewController {
     }
     
     func updateHistory() {
+        if presenter.historyArray.count > 0 {
+            hideEmptyLbls()
+        }
+        
         for cell in self.tableView.visibleCells {
             if cell.isKind(of: TransactionWalletCell.self) {
-                (cell as! TransactionWalletCell).changeState(isEmpty: false)
-                (cell as! TransactionWalletCell).fillCell()
+                if let indexPath = self.tableView.indexPath(for: cell) {
+                    (cell as! TransactionWalletCell).changeState(isEmpty: indexPath.row > presenter.numberOfTransactions()) // since we begin transactions from index 1
+                    (cell as! TransactionWalletCell).fillCell()
+                } else {
+                    //How is that possible?
+                }
             } else if cell.isKind(of: TransactionPendingCell.self) {
                 (cell as! TransactionPendingCell).fillCell()
             }
@@ -239,6 +266,15 @@ class WalletViewController: UIViewController {
     @IBAction func exchangeAction(_ sender: Any) {
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "transactionVC" {
+            let vc = segue.destination as! TransactionViewController
+            vc.isForReceive = self.even
+        } else if segue.identifier == "settingsVC" {
+            let settingsVC = segue.destination as! WalletSettingsViewController
+            settingsVC.presenter.wallet = self.presenter.wallet
+        }
+    }
 }
 
 extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
@@ -274,51 +310,50 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
             headerCell.mainVC = self
             headerCell.delegate = self
             headerCell.wallet = self.presenter.wallet
-            headerCell.blockedAmount = self.presenter.blockedAmount
+            headerCell.blockedAmount = presenter.blockedAmount
             
             return headerCell
         } else {                           //  Wallet Cellx
             let countOfHistObjs = self.presenter.numberOfTransactions()
             
-            var walletCell = UITableViewCell()
-            
-            if indexPath.row < presenter.numberOfTransactions() && presenter.blockedAmount(for: presenter.historyArray[indexPath.row]) > 0 {
-                walletCell = self.tableView.dequeueReusableCell(withIdentifier: "TransactionPendingCellID") as! TransactionPendingCell
-                (walletCell as! TransactionPendingCell).histObj = self.presenter.historyArray[indexPath.row - 1]
-                (walletCell as! TransactionPendingCell).wallet = presenter.wallet
-                (walletCell as! TransactionPendingCell).fillCell()
+            if indexPath.row <= countOfHistObjs && presenter.isTherePendingMoney(for: indexPath) {
+                let walletCell = tableView.dequeueReusableCell(withIdentifier: "TransactionPendingCellID") as! TransactionPendingCell
+                walletCell.selectionStyle = .none
+                walletCell.histObj = presenter.historyArray[indexPath.row - 1]
+                walletCell.wallet = presenter.wallet
+                walletCell.fillCell()
+                
+                return walletCell
             } else {
-                walletCell = self.tableView.dequeueReusableCell(withIdentifier: "TransactionWalletCellID") as! TransactionWalletCell
-                let txWalletCell = walletCell as! TransactionWalletCell
+                let walletCell = self.tableView.dequeueReusableCell(withIdentifier: "TransactionWalletCellID") as! TransactionWalletCell
+                walletCell.selectionStyle = .none
                 if countOfHistObjs > 0 {
                     if indexPath.row > countOfHistObjs && countOfHistObjs <= visibleCells {
-                        txWalletCell.changeState(isEmpty: true)
+                        walletCell.changeState(isEmpty: true)
                     } else {
-                        txWalletCell.histObj = self.presenter.historyArray[indexPath.row - 1]
-                        txWalletCell.fillCell()
-                        txWalletCell.changeState(isEmpty: false)
+                        walletCell.histObj = presenter.historyArray[indexPath.row - 1]
+                        walletCell.fillCell()
+                        walletCell.changeState(isEmpty: false)
                         self.hideEmptyLbls()
                         if indexPath.row != 1 {
-                            txWalletCell.changeTopConstraint()
+                            walletCell.changeTopConstraint()
                         }
                     }
                 } else {
-                    txWalletCell.changeState(isEmpty: true)
+                    walletCell.changeState(isEmpty: true)
                     fixForiPad()
                 }
+                
+                return walletCell
             }
             
-            walletCell.selectionStyle = .none
-            
-            if indexPath == [0,1] {
-                walletCell.setCorners()
+//            if indexPath == [0,1] {
+//                walletCell.setCorners()
 //                walletCell.backgroundView?.backgroundColor = .red
 //                walletCell.backgroundView?.applyGradient(withColours: [UIColor(ciColor: CIColor(red: 0/255, green: 178/255, blue: 255/255)),
 //                                                                      UIColor(ciColor: CIColor(red: 0/255, green: 122/255, blue: 255/255))],
 //                                                        gradientOrientation: .topRightBottomLeft)
-            }
-            
-            return walletCell
+//            }
         }
     }
     
@@ -353,12 +388,8 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
             
             return heightForFirstCell /* (screenWidth / 375.0)*/
         } else { //if indexPath == [0,1] || self.presenter.numberOfTransactions() > 0 {
-            if indexPath.row < presenter.numberOfTransactions() {
-                if presenter.blockedAmount(for: presenter.historyArray[indexPath.row]) == 0 {
-                    return 70
-                } else {
-                    return 135
-                }
+            if indexPath.row <= presenter.numberOfTransactions() && presenter.isTherePendingMoney(for: indexPath) { // <= since we begins from 1
+                return 135
             } else {
                 return 70
             }
@@ -373,16 +404,6 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     
     func updateUI() {
         self.tableView.reloadData()
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "transactionVC" {
-            let vc = segue.destination as! TransactionViewController
-            vc.isForReceive = self.even
-        } else if segue.identifier == "settingsVC" {
-            let settingsVC = segue.destination as! WalletSettingsViewController
-            settingsVC.presenter.wallet = self.presenter.wallet
-        }
     }
 }
 

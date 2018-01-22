@@ -7,14 +7,13 @@ import UIKit
 import RealmSwift
 
 class WalletPresenter: NSObject {
-    
     var mainVC : WalletViewController?
     var blockedAmount = UInt32(0)
     var wallet : UserWalletRLM? {
         didSet {
-            blockedAmount = calculateBlockedAmount()
-            print("WalletPresenter:\n\(wallet?.addresses)")
-            updateWalletInfo()
+            mainVC?.titleLbl.text = self.wallet?.name
+//            blockedAmount = calculateBlockedAmount()
+//            updateWalletInfo()
         }
     }
     var account : AccountRLM?
@@ -22,18 +21,30 @@ class WalletPresenter: NSObject {
     var transactionsArray = [TransactionRLM]()
     
     func updateWalletInfo() {
-        mainVC?.titleLbl.text = wallet?.name
-        mainVC?.updateUI()
+//        mainVC?.titleLbl.text = wallet?.name
+//        mainVC?.updateUI()
 //        mainVC?.updateExchange()
 //        mainVC?.updateHistory()
     }
     
-    var historyArray = List<HistoryRLM>() {
+    var historyArray = [HistoryRLM]() {
         didSet {
             blockedAmount = calculateBlockedAmount()
 //            updateWalletInfo()
-            mainVC?.updateHistory()
+//            mainVC?.updateHistory()
+            reloadTableView()
         }
+    }
+    
+    func reloadTableView() {
+        if historyArray.count > 0 {
+            mainVC?.hideEmptyLbls()
+        }
+        
+        let contentOffset = mainVC!.tableView.contentOffset
+        mainVC!.tableView.reloadData()
+        mainVC!.tableView.layoutIfNeeded()
+        mainVC!.tableView.setContentOffset(contentOffset, animated: false)
     }
     
     func registerCells() {
@@ -62,6 +73,10 @@ class WalletPresenter: NSObject {
         return self.historyArray.count
     }
     
+    func isTherePendingMoney(for indexPath: IndexPath) -> Bool {
+        return blockedAmount(for: historyArray[indexPath.row - 1]) > 0
+    }
+    
     func getHistoryAndWallet() {
         DataManager.shared.getOneWalletVerbose(account!.token, walletID: wallet!.walletID) { (wallet, error) in
             if wallet != nil {
@@ -71,7 +86,9 @@ class WalletPresenter: NSObject {
         
         DataManager.shared.getTransactionHistory(token: (account?.token)!, walletID: (wallet?.walletID)!) { (histList, err) in
             if err == nil && histList != nil {
-               self.historyArray = histList!
+                self.historyArray = histList!.sorted(by: { $0.blockTime > $1.blockTime })
+                
+                self.mainVC!.isSocketInitiateUpdating = false
             }
 //            self.mainVC?.progressHUD.hide()
 //            self.mainVC?.updateUI()

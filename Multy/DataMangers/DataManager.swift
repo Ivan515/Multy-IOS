@@ -40,6 +40,10 @@ class DataManager: NSObject {
         
     }
     
+    func findPrefixes(prefix: String) -> [String] {
+        return seedWordsArray.filter{ $0.hasPrefix(prefix) }
+    }
+    
     //MARK: ApiManager Functions
     //DMApiExtension
     

@@ -4,6 +4,27 @@
 
 import UIKit
 
+struct Constants {
+    //Assets screen
+    struct AssetsScreen {
+        static let progressString = "Getting Wallets..."
+        static let createWalletString = "Create wallet"
+        static let createOrImportWalletString = "Create or Import New Wallet"
+        static let cancelString = "Cancel"
+    }
+    
+    //Scurity strings
+    struct Security {
+        static let jailbrokenDeviceWarningString = "Your Device is Jailbroken!\nSory, but we don`t support jailbroken devices."
+    }
+    
+    //StoryboardStrings
+    struct Storyboard {
+        //Assets
+        static let createWalletVCSegueID = "createWalletVC"
+    }
+}
+
 let screenSize = UIScreen.main.bounds
 let screenWidth = UIScreen.main.bounds.size.width
 let screenHeight = UIScreen.main.bounds.size.height

@@ -17,7 +17,7 @@ class AssetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     weak var backupView: UIView?
     
     let presenter = AssetsPresenter()
-    let progressHUD = ProgressHUD(text: "Getting Wallets...")
+    let progressHUD = ProgressHUD(text: Constants.AssetsScreen.progressString)
     
     var isSeedBackupOnScreen = false
     
@@ -38,7 +38,12 @@ class AssetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.presenter.assetsVC = self
         self.presenter.tabBarFrame = self.tabBarController?.tabBar.frame
         self.navigationController?.setNavigationBarHidden(true, animated: false)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateExchange), name: NSNotification.Name("exchageUpdated"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateWalletAfterSockets), name: NSNotification.Name("transactionUpdated"), object: nil)
+        
         self.createAlert()
+
         guard isFlowPassed else {
             self.view.isUserInteractionEnabled = true
             return
@@ -66,10 +71,6 @@ class AssetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         presenter.auth()
         
         
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(self.updateExchange), name: NSNotification.Name("exchageUpdated"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.updateWalletAfterSockets), name: NSNotification.Name("transactionUpdated"), object: nil)
-        
         if #available(iOS 11.0, *) {
             tableView.contentInsetAdjustmentBehavior = .never
         }
@@ -79,7 +80,7 @@ class AssetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
 //        self.presenter.updateWalletsInfo()
         (self.tabBarController as! CustomTabBarViewController).changeViewVisibility(isHidden: presenter.account == nil)
         if self.presenter.isJailed {
-            self.presentWarningAlert(message: "Your Device is Jailbroken!\nSory, but we don`t support jailbroken devices.")
+            self.presentWarningAlert(message: Constants.Security.jailbrokenDeviceWarningString)
         }
     }
     
@@ -102,6 +103,11 @@ class AssetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         (self.tabBarController as! CustomTabBarViewController).changeViewVisibility(isHidden: presenter.account == nil)
         self.tabBarController?.tabBar.frame = self.presenter.tabBarFrame!
+        
+        if presenter.account != nil && presenter.account!.wallets.count > 0 {
+            tableView.reloadData()
+            tableView.scrollToRow(at: [0, presenter.account!.wallets.count - 1], at: .bottom, animated: false)
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -133,20 +139,32 @@ class AssetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         
         isSocketInitiateUpdating = true
-        presenter.getWalletVerbose { (_) in
+        presenter.getWalletVerboseForSockets { (_) in
             self.isSocketInitiateUpdating = false
+            
+            for cell in self.tableView.visibleCells {
+                if cell.isKind(of: WalletTableViewCell.self) {
+                    (cell as! WalletTableViewCell).fillInCell()
+                }
+            }
         }
     }
     
     func createAlert() {
         if actionSheet.actions.count == 0 {
-            actionSheet.addAction(UIAlertAction(title: "Create wallet", style: .default, handler: { (result : UIAlertAction) -> Void in
-                self.performSegue(withIdentifier: "createWalletVC", sender: Any.self)
-            }))
+            actionSheet.addAction(
+                UIAlertAction(title: Constants.AssetsScreen.createWalletString,
+                              style: .default,
+                              handler: { (result : UIAlertAction) -> Void in
+                                self.performSegue(withIdentifier: Constants.Storyboard.createWalletVCSegueID,
+                                                  sender: Any.self)
+                }))
             //            actionSheet.addAction(UIAlertAction(title: "Import wallet", style: .default, handler: { (result: UIAlertAction) -> Void in
             //                //go to import wallet
             //            }))
-            actionSheet.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
+            actionSheet.addAction(UIAlertAction(title: Constants.AssetsScreen.cancelString,
+                                                style: UIAlertActionStyle.cancel,
+                                                handler: nil))
         }
     }
     
