@@ -17,6 +17,7 @@ class WalletViewController: UIViewController {
     
     @IBOutlet weak var headerView: UIView!
     
+    var backupView : UIView?
     
     var presenter = WalletPresenter()
     var even = true
@@ -110,7 +111,7 @@ class WalletViewController: UIViewController {
         (self.tabBarController as! CustomTabBarViewController).menuButton.isHidden = true
         (self.tabBarController as! CustomTabBarViewController).changeViewVisibility(isHidden: true)
         self.titleLbl.text = self.presenter.wallet?.name
-        self.backUpView()
+        self.backUpView(height: 272)
         
 //        progressHUD.show()
         self.presenter.getHistoryAndWallet()
@@ -156,27 +157,30 @@ class WalletViewController: UIViewController {
         }
     }
     
-    func backUpView() {
+    func backUpView(height: CGFloat) {
         if self.isBackupOnScreen == false {
+            if backupView != nil && backupView!.frame.origin.y + 20 != height {
+                backupView!.frame = CGRect(x: 16, y: (height /* (screenWidth / 375.0)*/) - 20, width: screenWidth - 32, height: 40)
+            }
             return
         }
-        let view = UIView()
-        view.frame = CGRect(x: 16, y: (272 /* (screenWidth / 375.0)*/) - 20, width: screenWidth - 32, height: 40)
-        view.layer.cornerRadius = 20
-        view.backgroundColor = .white
+        backupView = UIView()
+        backupView!.frame = CGRect(x: 16, y: (height /* (screenWidth / 375.0)*/) - 20, width: screenWidth - 32, height: 40)
+        backupView!.layer.cornerRadius = 20
+        backupView!.backgroundColor = .white
         
-        view.layer.shadowColor = UIColor.gray.cgColor
-        view.layer.shadowOpacity = 1
-        view.layer.shadowOffset = .zero
-        view.layer.shadowRadius = 10
+        backupView!.layer.shadowColor = UIColor.gray.cgColor
+        backupView!.layer.shadowOpacity = 1
+        backupView!.layer.shadowOffset = .zero
+        backupView!.layer.shadowRadius = 10
         
         if self.presenter.account?.seedPhrase != nil && self.presenter.account?.seedPhrase != "" {
-            view.isHidden = false
+            backupView!.isHidden = false
         } else {
-            view.isHidden = true
+            backupView!.isHidden = true
         }
         
-        if self.view.subviews.contains(view) {
+        if self.view.subviews.contains(backupView!) {
             return
         }
         
@@ -185,7 +189,7 @@ class WalletViewController: UIViewController {
         image.frame = CGRect(x: 13, y: 11, width: 22, height: 22)
         
         let btn = UIButton()
-        btn.frame = CGRect(x: 50, y: 0, width: view.frame.width - 35, height: view.frame.height)
+        btn.frame = CGRect(x: 50, y: 0, width: backupView!.frame.width - 35, height: backupView!.frame.height)
         btn.setTitle("Backup is not executed", for: .normal)
         btn.setTitleColor(.red, for: .normal)
         btn.titleLabel?.font = UIFont(name: "Avenir-Next", size: 6)
@@ -196,10 +200,10 @@ class WalletViewController: UIViewController {
         chevron.image = #imageLiteral(resourceName: "chevronRed")
         chevron.frame = CGRect(x: view.frame.width - 35, y: 15, width: 11, height: 11)
         
-        view.addSubview(chevron)
-        view.addSubview(btn)
-        view.addSubview(image)
-        self.tableView.addSubview(view)
+        backupView!.addSubview(chevron)
+        backupView!.addSubview(btn)
+        backupView!.addSubview(image)
+        self.tableView.addSubview(backupView!)
         self.isBackupOnScreen = false
     }
     
@@ -385,6 +389,8 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath == [0,0] {
             let heightForFirstCell : CGFloat = presenter.blockedAmount == 0 ? 272.0 : 332.0
+            
+            backUpView(height: heightForFirstCell)
             
             return heightForFirstCell /* (screenWidth / 375.0)*/
         } else { //if indexPath == [0,1] || self.presenter.numberOfTransactions() > 0 {

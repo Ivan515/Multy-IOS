@@ -19,7 +19,7 @@ extension DataManager {
                 
                 if answerDict!["donate"] != nil {
                     if let donate = (answerDict!["donate"] as? NSDictionary), let btcAddress = donate["BTC"] as? NSString {
-                        UserDefaults.standard.set(apiVersion, forKey: "BTCDonationAddress")
+                        UserDefaults.standard.set(btcAddress, forKey: "BTCDonationAddress")
                     }
                 }
                 
