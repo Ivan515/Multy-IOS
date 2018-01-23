@@ -178,7 +178,12 @@ class AssetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             return
         }
         let view = UIView()
-        view.frame = CGRect(x: 16, y: 25, width: screenWidth - 32, height: 44)
+        if screenHeight == 812 {
+            view.frame = CGRect(x: 16, y: 35, width: screenWidth - 32, height: 44)
+        } else {
+            view.frame = CGRect(x: 16, y: 25, width: screenWidth - 32, height: 44)
+        }
+        
         view.layer.cornerRadius = 20
         view.backgroundColor = #colorLiteral(red: 0.9229970574, green: 0.08180250973, blue: 0.2317947149, alpha: 1)
         

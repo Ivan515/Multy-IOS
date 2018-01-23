@@ -25,6 +25,7 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var constraintNextBtnBottom: NSLayoutConstraint!
     @IBOutlet weak var constratintNextBtnHeight: NSLayoutConstraint!
+    @IBOutlet weak var constraintForTitletoBtn: NSLayoutConstraint!
     
     let presenter = SendAmountPresenter()
     
@@ -44,7 +45,7 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        self.fixForIpad()
+        self.fixForIpadAndIphoneX()
         self.nextBtn.applyGradient(withColours: [UIColor(ciColor: CIColor(red: 0/255, green: 178/255, blue: 255/255)),
                                                  UIColor(ciColor: CIColor(red: 0/255, green: 122/255, blue: 255/255))],
                                    gradientOrientation: .horizontal)
@@ -295,10 +296,12 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    func fixForIpad() {
+    func fixForIpadAndIphoneX() {
         if screenHeight == 480 { 
             let bottomOffset = CGPoint(x: 0, y: scrollView.contentSize.height - scrollView.bounds.size.height - 50)
             scrollView.setContentOffset(bottomOffset, animated: true)
+        } else if screenHeight == 812 {
+            self.constraintForTitletoBtn.constant = 175
         }
     }
 }
