@@ -56,7 +56,7 @@ class SendAmountPresenter: NSObject {
                                        feeAmountString: "50",
                                        isDonationExists: donationObj?.sumInCrypto != Double(0.0),
                                        isPayCommission: self.sendAmountVC!.commissionSwitch.isOn,
-                                       addressesCount: walletAddresses!.count)
+                                       addressesCount: wallet.addresses.count)
         
 //        let feeRateOld = core.getTotalFeeAndInputs(addressPointer: addressData!["addressPointer"] as! OpaquePointer,
 //                                                sendAmountString: String(self.sumInCrypto),
@@ -76,7 +76,7 @@ class SendAmountPresenter: NSObject {
                                                                          wallet: wallet,
                                                                          binaryData: &binaryData,
                                                                          feeAmount: feeAmount,
-                                                                         inputs: walletAddresses!)
+                                                                         inputs: wallet.addresses)
         
         self.rawTransaction = trData.0
         

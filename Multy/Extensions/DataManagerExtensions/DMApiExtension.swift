@@ -17,6 +17,12 @@ extension DataManager {
                 var softVersion: Int?
                 var serverTime: NSDate?
                 
+                if answerDict!["donate"] != nil {
+                    if let donate = (answerDict!["donate"] as? NSDictionary), let btcAddress = donate["BTC"] as? NSString {
+                        UserDefaults.standard.set(apiVersion, forKey: "BTCDonationAddress")
+                    }
+                }
+                
                 
                 if answerDict!["api"] != nil {
                     apiVersion = (answerDict!["api"] as? NSString)

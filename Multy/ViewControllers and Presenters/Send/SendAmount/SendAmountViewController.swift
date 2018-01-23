@@ -38,7 +38,7 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate {
 //        self.presenter.makeMaxSumWithFeeAndDonate()
 //        self.setSumInNextBtn()
 //        
-//        self.presenter.getData()
+        self.presenter.getData()
         
     }
     
