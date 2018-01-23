@@ -19,6 +19,26 @@ private let swizzling: (AnyClass, Selector, Selector) -> () = { forClass, origin
     }
 }
 
+extension UIApplication {
+    class func topViewController(base: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
+        if let nav = base as? UINavigationController {
+            return topViewController(base: nav.visibleViewController)
+        }
+        
+        if let tab = base as? UITabBarController {
+            if let selected = tab.selectedViewController {
+                return topViewController(base: selected)
+            }
+        }
+        
+        if let presented = base?.presentedViewController {
+            return topViewController(base: presented)
+        }
+        
+        return base
+    }
+}
+
 extension UIViewController {
     func hideKeyboardWhenTappedAround() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
@@ -49,7 +69,12 @@ extension UIViewController {
             }
             let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
             let nextViewController = storyBoard.instantiateViewController(withIdentifier: "NoConnectionVC") as! NoInternetConnectionViewController
-            self.present(nextViewController, animated: true, completion: nil)
+            
+            if let tmvc = UIApplication.topViewController() {
+                tmvc.dismissKeyboard()
+                
+                tmvc.present(nextViewController, animated: true, completion: nil)
+            }
         }
         //        print("swizzled_layoutSubviews")
     }
