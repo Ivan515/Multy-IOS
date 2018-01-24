@@ -84,7 +84,7 @@ class CheckWordsViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func hideKeyboard(_ notification : Notification) {
-        self.wordTF.resignFirstResponder()
+//        self.wordTF.resignFirstResponder()
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -93,6 +93,12 @@ class CheckWordsViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func nextWordAndContinueAction(_ sender: Any) {
+        if self.presenter.phraseArr.count == 15 {
+            self.presenter.auth(seedString: self.presenter.phraseArr.joined(separator: " "))
+            
+            return
+        }
+        
         if self.wordTF.text == nil {
             return
         }
@@ -123,7 +129,7 @@ class CheckWordsViewController: UIViewController, UITextFieldDelegate {
         bricksView.subviews.forEach({ $0.removeFromSuperview() })
         bricksView.addSubview(BricksView(with: bricksView.bounds, and: currentWordNumber))
         
-        if self.currentWordNumber == 14 {
+        if self.currentWordNumber == 15 {
             self.nextWordOrContinue.setTitle("Continue", for: .normal)
         }
         
@@ -133,6 +139,7 @@ class CheckWordsViewController: UIViewController, UITextFieldDelegate {
         } else {
             if self.isRestore {
                 self.presenter.auth(seedString: self.presenter.phraseArr.joined(separator: " "))
+                
                 return
             }
             let isPhraseCorrect = presenter.isSeedPhraseCorrect()
@@ -155,7 +162,11 @@ class CheckWordsViewController: UIViewController, UITextFieldDelegate {
                     self.constraintBtnBottom.constant = inset.bottom// - 50
                 }
             } else {
-                self.constraintBtnBottom.constant = inset.bottom
+                if screenHeight == 812 {
+                    self.constraintBtnBottom.constant = inset.bottom - 35
+                } else {
+                    self.constraintBtnBottom.constant = inset.bottom
+                }
             }
         }
     }
@@ -172,6 +183,9 @@ class CheckWordsViewController: UIViewController, UITextFieldDelegate {
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if self.presenter.phraseArr.count == 15 {
+            return false
+        }
 //        if string == "" {
 //            return true
 //        }
@@ -188,11 +202,11 @@ class CheckWordsViewController: UIViewController, UITextFieldDelegate {
         let textFieldText: NSString = (textField.text ?? "") as NSString
         let textAfterUpdate = textFieldText.replacingCharacters(in: range, with: string)
         
-        wordArray = DataManager.shared.findPrefixes(prefix: textAfterUpdate)
-        isWordFinded = wordArray.contains(textAfterUpdate)
-        
-        if wordArray.count == 0 {
+        if DataManager.shared.findPrefixes(prefix: textAfterUpdate).count == 0 {
             return false
+        } else {
+            wordArray = DataManager.shared.findPrefixes(prefix: textAfterUpdate)
+            isWordFinded = wordArray.contains(textAfterUpdate)
         }
         
         if wordArray.count == 1 {

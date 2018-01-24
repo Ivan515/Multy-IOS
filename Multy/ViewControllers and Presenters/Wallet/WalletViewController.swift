@@ -198,7 +198,7 @@ class WalletViewController: UIViewController {
         
         let chevron = UIImageView()
         chevron.image = #imageLiteral(resourceName: "chevronRed")
-        chevron.frame = CGRect(x: view.frame.width - 35, y: 15, width: 11, height: 11)
+        chevron.frame = CGRect(x: backupView!.frame.width - 35, y: 15, width: 11, height: 11)
         
         backupView!.addSubview(chevron)
         backupView!.addSubview(btn)

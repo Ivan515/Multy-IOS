@@ -139,7 +139,7 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate {
     
     
     @objc func hideKeyboard() {
-        self.amountTF.resignFirstResponder()
+//        self.amountTF.resignFirstResponder()
     }
     
     @objc func showKeyboard() {

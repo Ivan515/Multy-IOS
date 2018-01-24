@@ -489,7 +489,11 @@ class AssetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if indexPath == [0,0] {
 //            return 283  //portfolio height
             if self.presenter.account?.seedPhrase != nil && self.presenter.account?.seedPhrase != "" {
-                return 225 //logo height
+                if screenHeight == 812 {
+                    return 255 //logo height
+                } else {
+                    return 245
+                }
             } else {
                 return 220
             }

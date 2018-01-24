@@ -80,6 +80,8 @@ class SendDetailsViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func nextAction(_ sender: Any) {
+        self.view.endEditing(true)
+        
         if self.presenter.selectedIndexOfSpeed != nil {
             if isDonateAvailableSW.isOn {
                 self.presenter.createDonation()

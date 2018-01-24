@@ -27,6 +27,18 @@ class SendStartPresenter: NSObject, CancelProtocol, SendAddressProtocol, GoToQrP
         }
     }
     
+    func presentNoInternet() {
+        if !(ConnectionCheck.isConnectedToNetwork()) {
+            if self.isKind(of: NoInternetConnectionViewController.self) || self.isKind(of: UIAlertController.self) {
+                return
+            }
+            
+            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+            let nextViewController = storyBoard.instantiateViewController(withIdentifier: "NoConnectionVC") as! NoInternetConnectionViewController
+            self.sendStartVC!.present(nextViewController, animated: true, completion: nil)
+        }
+    }
+    
     func sendAddress(address: String) {
         self.adressSendTo = address
         self.sendStartVC?.makeAvailableNextBtn()
