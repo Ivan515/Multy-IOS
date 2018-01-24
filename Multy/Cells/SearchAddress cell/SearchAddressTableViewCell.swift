@@ -47,6 +47,12 @@ class SearchAddressTableViewCell: UITableViewCell {
 }
 
 extension SearchAddressTableViewCell: UITextFieldDelegate {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        cancelDelegate?.presentNoInternet()
+        
+        return ConnectionCheck.isConnectedToNetwork()
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.addressTF.resignFirstResponder()
         self.sendAddressDelegate?.sendAddress(address: textField.text!)
