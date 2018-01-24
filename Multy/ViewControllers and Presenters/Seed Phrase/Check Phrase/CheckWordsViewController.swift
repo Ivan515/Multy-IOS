@@ -162,7 +162,11 @@ class CheckWordsViewController: UIViewController, UITextFieldDelegate {
                     self.constraintBtnBottom.constant = inset.bottom// - 50
                 }
             } else {
-                self.constraintBtnBottom.constant = inset.bottom
+                if screenHeight == 812 {
+                    self.constraintBtnBottom.constant = inset.bottom - 35
+                } else {
+                    self.constraintBtnBottom.constant = inset.bottom
+                }
             }
         }
     }
