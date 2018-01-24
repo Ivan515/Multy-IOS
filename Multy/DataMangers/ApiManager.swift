@@ -346,12 +346,12 @@ class ApiManager: NSObject, RequestRetrier {
         }
     }
     
-    func getTransactionHistory(_ token: String, walletID: NSNumber, completion: @escaping(_ answer: NSDictionary?,_ error: Error?) -> ()) {
+    func getTransactionHistory(_ token: String, currencyID: NSNumber, walletID: NSNumber, completion: @escaping(_ answer: NSDictionary?,_ error: Error?) -> ()) {
         let header: HTTPHeaders = [
             "Authorization" : "Bearer \(token)"
         ]
         
-        requestManager.request("\(apiUrl)api/v1/wallets/transactions/\(walletID)", method: .get, parameters: nil, encoding: JSONEncoding.default, headers: header).debugLog().responseJSON { (response: DataResponse<Any>) in
+        requestManager.request("\(apiUrl)api/v1/wallets/transactions/\(currencyID)/\(walletID)", method: .get, parameters: nil, encoding: JSONEncoding.default, headers: header).debugLog().responseJSON { (response: DataResponse<Any>) in
             switch response.result {
             case .success(_):
                 if response.result.value != nil {

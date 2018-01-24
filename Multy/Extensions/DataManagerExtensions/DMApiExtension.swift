@@ -240,8 +240,8 @@ extension DataManager {
         }
     }
     
-    func getTransactionHistory(token: String, walletID: NSNumber, completion: @escaping(_ historyArr: List<HistoryRLM>?,_ error: Error?) ->()) {
-        apiManager.getTransactionHistory(token, walletID: walletID) { (answer, err) in
+    func getTransactionHistory(token: String, currencyID: NSNumber, walletID: NSNumber, completion: @escaping(_ historyArr: List<HistoryRLM>?,_ error: Error?) ->()) {
+        apiManager.getTransactionHistory(token, currencyID: currencyID, walletID: walletID) { (answer, err) in
             switch err {
             case nil:
                 if answer!["code"] as! Int == 200 {
@@ -253,6 +253,10 @@ extension DataManager {
                     if answer!["history"] as? NSArray != nil {
                         let historyArr = answer!["history"] as! NSArray
                         let initializedArr = HistoryRLM.initWithArray(historyArr: historyArr)
+                        
+                        self.realmManager.saveHistoryForWallet(historyArr: initializedArr, completion: { (histList) in
+                        })
+                        
                         completion(initializedArr, nil)
                     }
                 }

@@ -7,7 +7,11 @@ import RealmSwift
 
 class HistoryRLM: Object {
     
-    @objc dynamic var address = String()
+    @objc dynamic var addresses = String() {
+        didSet {
+            addressesArray = addresses.components(separatedBy: " ")
+        }
+    }
     @objc dynamic var blockHeight = Int()
     @objc dynamic var blockTime = Date()
     @objc dynamic var btcToUsd = Double()
@@ -21,7 +25,15 @@ class HistoryRLM: Object {
     @objc dynamic var txOutScript = String()
     @objc dynamic var txStatus = NSNumber(value: 0)
     @objc dynamic var walletIndex = NSNumber(value: 0)
+    @objc dynamic var mempoolTime = Date()
     
+    
+    @objc dynamic var addressesArray = [String]()
+    @objc dynamic var exchangeRates = [StockExchangeRateRLM]()
+    
+    override static func ignoredProperties() -> [String] {
+        return ["addressesArray"]
+    }
     
     public class func initWithArray(historyArr: NSArray) -> List<HistoryRLM> {
         let history = List<HistoryRLM>()
@@ -40,8 +52,8 @@ class HistoryRLM: Object {
 //        if let address = txHistory["address"] {
 //            txHist.address = address as! String
 //        }
-        if let address = historyDict["address"] {
-            hist.address = address as! String
+        if let addresses = historyDict["addresses"] {
+            hist.addresses = (addresses as! NSArray).componentsJoined(by: " ")
         }
         
         if let blockheight = historyDict["blockheight"] {
@@ -52,9 +64,11 @@ class HistoryRLM: Object {
             hist.blockTime = NSDate(timeIntervalSince1970: (blocktime as! Double)) as Date
         }
         
-        if let btctousd = historyDict["btctousd"] {
-            hist.btcToUsd = btctousd as! Double
+        if let rates = historyDict["stockexchangerate"] as? NSDictionary {
+            hist.exchangeRates = StockExchangeRateRLM.initWithInfo(stockInfo: rates)
         }
+        
+        stockexchangerate
         
         if let txfee = historyDict["txfee"] {
             hist.txFee = txfee as! NSNumber

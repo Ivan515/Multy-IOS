@@ -158,6 +158,7 @@
 		FA8C8783200E65E900F8D5D9 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8C8782200E65E900F8D5D9 /* Date+Extension.swift */; };
 		FA8C87852010B44300F8D5D9 /* UITableViewCell+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8C87842010B44300F8D5D9 /* UITableViewCell+Extension.swift */; };
 		FA8C87872010E59200F8D5D9 /* CreateNewWalletProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8C87862010E59200F8D5D9 /* CreateNewWalletProtocol.swift */; };
+		FAB0E6AA20189AE300EB53E2 /* StockExchangeRateRLM.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB0E6A920189AE300EB53E2 /* StockExchangeRateRLM.swift */; };
 		FACEB5A1200A46F600055788 /* TransactionPendingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACEB59F200A46F600055788 /* TransactionPendingCell.swift */; };
 		FACEB5A2200A46F600055788 /* TransactionPendingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FACEB5A0200A46F600055788 /* TransactionPendingCell.xib */; };
 		FADC00461FC3231A00182E45 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADC00451FC3231A00182E45 /* DataManager.swift */; };
@@ -349,6 +350,7 @@
 		FA8C8782200E65E900F8D5D9 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		FA8C87842010B44300F8D5D9 /* UITableViewCell+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Extension.swift"; sourceTree = "<group>"; };
 		FA8C87862010E59200F8D5D9 /* CreateNewWalletProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewWalletProtocol.swift; sourceTree = "<group>"; };
+		FAB0E6A920189AE300EB53E2 /* StockExchangeRateRLM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockExchangeRateRLM.swift; sourceTree = "<group>"; };
 		FACEB59F200A46F600055788 /* TransactionPendingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionPendingCell.swift; sourceTree = "<group>"; };
 		FACEB5A0200A46F600055788 /* TransactionPendingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransactionPendingCell.xib; sourceTree = "<group>"; };
 		FADC00451FC3231A00182E45 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
@@ -944,6 +946,7 @@
 				FA8835911FD856F4007694A2 /* UserWalletRLM.swift */,
 				458FD4C61FE3C2CB001C25BA /* SpendableOutputRLM.swift */,
 				FA0B618C1FEBC1DD00ED0CE6 /* RecentAddressesRLM.swift */,
+				FAB0E6A920189AE300EB53E2 /* StockExchangeRateRLM.swift */,
 			);
 			path = Realm;
 			sourceTree = "<group>";
@@ -1322,6 +1325,7 @@
 				FA4E559F1FE00F63000FA1A1 /* Double+Extension.swift in Sources */,
 				45A949441FC5C0F4003C3A23 /* SendAddressProtocol.swift in Sources */,
 				45B9CB071FBB51AE00AA2A31 /* WalletTableViewCell.swift in Sources */,
+				FAB0E6AA20189AE300EB53E2 /* StockExchangeRateRLM.swift in Sources */,
 				4583ACA31FBCAC60001991AA /* UIView+Extension.swift in Sources */,
 				45A6D62B1FE01CAA00491446 /* SecureViewController.swift in Sources */,
 				455CDCFB1FC8537200EA5ACE /* CreateWalletViewController.swift in Sources */,

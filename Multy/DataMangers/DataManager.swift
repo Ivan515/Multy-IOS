@@ -79,18 +79,18 @@ class DataManager: NSObject {
 //        }
 //    }
     
-    func getHistoryOfWalletAndSaveToDB(token: String, walletID: NSNumber, completion: @escaping(_ historyArr: List<HistoryRLM>?,_ error: Error?) -> ()) {
-        DataManager.shared.getTransactionHistory(token: token, walletID: walletID) { (historyList, err) in
-            if err != nil || historyList == nil {
-                //do something with it
-                return
-            }
-            DataManager.shared.realmManager.saveHistoryForWallet(historyArr: historyList!, completion: { (histList) in
-                completion(histList, nil)
-            })
-            
-        }
-    }
+//    func getHistoryOfWalletAndSaveToDB(token: String, currencyID: NSNumber, walletID: NSNumber, completion: @escaping(_ historyArr: List<HistoryRLM>?,_ error: Error?) -> ()) {
+//        DataManager.shared.getTransactionHistory(token: token, currencyID: currencyID, walletID: walletID) { (historyList, err) in
+//            if err != nil || historyList == nil {
+//                //do something with it
+//                return
+//            }
+//            DataManager.shared.realmManager.saveHistoryForWallet(historyArr: historyList!, completion: { (histList) in
+//                completion(histList, nil)
+//            })
+//            
+//        }
+//    }
     
     func checkIsFirstLaunch() -> Bool {
         if let isFirst = UserDefaults.standard.value(forKey: "isFirstLaunch") {

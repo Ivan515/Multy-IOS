@@ -58,7 +58,7 @@ class UserWalletRLM: Object {
     public class func initWithInfo(walletInfo: NSDictionary) -> UserWalletRLM {
         let wallet = UserWalletRLM()
         
-        if let chain = walletInfo["CurrencyID"]  {
+        if let chain = walletInfo["currencyid"]  {
             wallet.chain = NSNumber(value: chain as! UInt32)
         }
         

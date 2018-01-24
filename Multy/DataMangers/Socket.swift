@@ -30,7 +30,7 @@ class Socket: NSObject {
                 "deviceType": "\(account!.deviceType)",
                 "jwtToken": "\(account!.token)"]
             
-            self.manager = SocketManager(socketURL: URL(string: "http://88.198.47.112:7780")!, config: [.log(true), .compress, .forceWebsockets(true), .reconnectAttempts(3), .forcePolling(false), .extraHeaders(header)])
+            self.manager = SocketManager(socketURL: URL(string: "http://88.198.47.112:5580")!, config: [.log(true), .compress, .forceWebsockets(true), .reconnectAttempts(3), .forcePolling(false), .extraHeaders(header)])
             self.socket = self.manager.defaultSocket
             
             
@@ -48,7 +48,8 @@ class Socket: NSObject {
             self.socket.on("exchangePoloniex") {data, ack in
                 print("-----exchangeUpdate: \(data)")
                 if !(data is NSNull) {
-                    exchangeCourse = ((data[0] as! NSDictionary)["btc_usd"] as! NSNumber).doubleValue
+                    //MARK: uncomment
+//                    exchangeCourse = ((data[0] as! NSDictionary)["btc_usd"] as! NSNumber).doubleValue
                 }//"BTCtoUSD"
             }
             
