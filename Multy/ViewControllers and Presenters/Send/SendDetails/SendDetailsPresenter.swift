@@ -136,7 +136,7 @@ class SendDetailsPresenter: NSObject, CustomFeeRateProtocol {
             self.trasactionObj.speedTimeString = ""
             self.trasactionObj.sumInCrypto = Double(self.customFee)
             self.trasactionObj.sumInFiat = 0.0
-            self.trasactionObj.cryptoName = "Satoshi per Byte"
+            self.trasactionObj.cryptoName = "BTC"
             self.trasactionObj.fiatName = "USD"
             self.trasactionObj.numberOfBlocks = 0
         default:
@@ -169,6 +169,8 @@ class SendDetailsPresenter: NSObject, CustomFeeRateProtocol {
         
         if !sendDetailsVC!.isDonateAvailableSW.isOn {
             self.sendDetailsVC?.performSegue(withIdentifier: "sendAmountVC", sender: Any.self)
+            
+            return
         }
         
         self.maxAllowedToSpend = self.availableSumInCrypto!

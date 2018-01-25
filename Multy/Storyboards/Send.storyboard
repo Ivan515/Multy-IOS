@@ -1005,8 +1005,8 @@ This feature will be in the next update.</string>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3DA28WCp4Cu5LQiddJnDJJmKWvmmZAKP5K" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="j2L-wX-UIu">
-                                                <rect key="frame" x="41" y="151.5" width="267.5" height="16.5"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3DA28WCp4Cu5LQiddJnDJJmKWvmmZAKP5K" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="j2L-wX-UIu">
+                                                <rect key="frame" x="41" y="151.5" width="261" height="33"/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="12"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1014,6 +1014,7 @@ This feature will be in the next update.</string>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
+                                            <constraint firstItem="j2L-wX-UIu" firstAttribute="centerX" secondItem="iHg-A2-nCQ" secondAttribute="centerX" id="CEr-xG-mSZ"/>
                                             <constraint firstItem="Ed2-gG-ZRs" firstAttribute="top" secondItem="Cba-NB-csm" secondAttribute="bottom" constant="12" id="Ku1-DL-ECB"/>
                                             <constraint firstItem="AkA-WX-ZNe" firstAttribute="top" secondItem="Ycp-p1-sYK" secondAttribute="bottom" constant="10" id="PXE-Gl-2zx"/>
                                             <constraint firstItem="RI9-ER-ncF" firstAttribute="centerX" secondItem="iHg-A2-nCQ" secondAttribute="centerX" id="T1K-Cb-URs"/>
@@ -1022,7 +1023,7 @@ This feature will be in the next update.</string>
                                             <constraint firstItem="j2L-wX-UIu" firstAttribute="top" secondItem="Cba-NB-csm" secondAttribute="bottom" constant="11" id="aL7-4U-yqm"/>
                                             <constraint firstAttribute="trailing" secondItem="Cba-NB-csm" secondAttribute="trailing" id="oiz-Xu-gsg"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="j2L-wX-UIu" secondAttribute="trailing" constant="10" id="onQ-tQ-OR2"/>
-                                            <constraint firstItem="j2L-wX-UIu" firstAttribute="leading" secondItem="Ed2-gG-ZRs" secondAttribute="trailing" constant="8" id="q4I-iw-hnA"/>
+                                            <constraint firstItem="j2L-wX-UIu" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ed2-gG-ZRs" secondAttribute="trailing" constant="8" id="q4I-iw-hnA"/>
                                             <constraint firstItem="Cba-NB-csm" firstAttribute="leading" secondItem="iHg-A2-nCQ" secondAttribute="leading" id="uGn-f2-JhA"/>
                                             <constraint firstItem="Cba-NB-csm" firstAttribute="top" secondItem="AkA-WX-ZNe" secondAttribute="bottom" constant="7" id="uQo-QP-TGP"/>
                                             <constraint firstItem="AkA-WX-ZNe" firstAttribute="centerX" secondItem="iHg-A2-nCQ" secondAttribute="centerX" id="yXQ-J9-Hhv"/>
