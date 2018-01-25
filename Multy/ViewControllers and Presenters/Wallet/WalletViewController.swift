@@ -17,6 +17,7 @@ class WalletViewController: UIViewController {
     
     @IBOutlet weak var headerView: UIView!
     
+    @IBOutlet weak var heightOfBottomBar: NSLayoutConstraint!
     
     var presenter = WalletPresenter()
     var even = true
@@ -53,7 +54,7 @@ class WalletViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateWalletAfterSockets), name: NSNotification.Name("transactionUpdated"), object: nil)
         (self.tabBarController as! CustomTabBarViewController).changeViewVisibility(isHidden: true)
         self.tableView.addSubview(self.refreshControl)
-        
+        self.fixForX()
 //        progressHUD.backgroundColor = .gray
 //        progressHUD.show()
 //        self.view.addSubview(progressHUD)
@@ -370,6 +371,12 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     func fixForiPad() {
         if screenHeight == 480 { //ipad
             hideEmptyLbls()
+        }
+    }
+    
+    func fixForX() {
+        if screenHeight == 812 {
+            self.heightOfBottomBar.constant = 83
         }
     }
     
