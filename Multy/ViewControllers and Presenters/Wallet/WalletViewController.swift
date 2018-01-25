@@ -289,6 +289,10 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
         if countOfHistObjects > 0 {
             if countOfHistObjects < visibleCells {
                 self.tableView.isScrollEnabled = false
+                if screenHeight == 480 {   //ipad
+                    self.tableView.isScrollEnabled = true
+                    return countOfHistObjects + 1
+                }
                 
                 return 10
             } else {

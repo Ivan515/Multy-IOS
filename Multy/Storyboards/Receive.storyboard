@@ -261,8 +261,8 @@ Book</string>
                                                     <action selector="requestSumAction:" destination="Ci5-VC-rpK" eventType="touchUpInside" id="MZ0-zu-cnD"/>
                                                 </connections>
                                             </button>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="chevron" translatesAutoresizingMaskIntoConstraints="NO" id="d7q-S5-bpY">
-                                                <rect key="frame" x="319" y="286.5" width="15" height="15"/>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron" translatesAutoresizingMaskIntoConstraints="NO" id="d7q-S5-bpY">
+                                                <rect key="frame" x="323" y="286.5" width="15" height="15"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="15" id="aFh-UD-9hC"/>
                                                     <constraint firstAttribute="height" constant="15" id="l3E-2O-F7K"/>
@@ -290,8 +290,8 @@ Book</string>
                                                 <color key="textColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="chevron" translatesAutoresizingMaskIntoConstraints="NO" id="Aws-8s-3F6">
-                                                <rect key="frame" x="319" y="379" width="15" height="15"/>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron" translatesAutoresizingMaskIntoConstraints="NO" id="Aws-8s-3F6">
+                                                <rect key="frame" x="323" y="379" width="15" height="15"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="15" id="V7j-ak-utR"/>
                                                     <constraint firstAttribute="width" constant="15" id="lko-1a-2fy"/>
@@ -338,6 +338,7 @@ Book</string>
                                             <constraint firstAttribute="height" constant="434" id="B3G-iD-VJq"/>
                                             <constraint firstItem="Aj5-6E-t5v" firstAttribute="leading" secondItem="WdU-vV-Cb8" secondAttribute="leading" id="BJz-Mn-AJD"/>
                                             <constraint firstItem="SXI-5J-BlV" firstAttribute="leading" secondItem="WdU-vV-Cb8" secondAttribute="leading" id="D6L-2j-rsR"/>
+                                            <constraint firstItem="d7q-S5-bpY" firstAttribute="trailing" secondItem="SXI-5J-BlV" secondAttribute="trailing" id="F2c-0v-py0"/>
                                             <constraint firstAttribute="bottom" secondItem="AXb-Qw-h0b" secondAttribute="bottom" id="LY1-T8-rDW"/>
                                             <constraint firstItem="WPa-6H-9ZB" firstAttribute="centerX" secondItem="SXI-5J-BlV" secondAttribute="centerX" constant="-20" id="N4d-5t-p6f"/>
                                             <constraint firstItem="SXI-5J-BlV" firstAttribute="top" secondItem="6a8-cd-Cp7" secondAttribute="bottom" id="N7L-rc-GLi"/>
