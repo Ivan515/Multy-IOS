@@ -25,11 +25,14 @@ class HistoryRLM: Object {
     @objc dynamic var txOutScript = String()
     @objc dynamic var txStatus = NSNumber(value: 0)
     @objc dynamic var walletIndex = NSNumber(value: 0)
-    @objc dynamic var mempoolTime = Date()
     
+    @objc dynamic var mempoolTime = Date()
+    @objc dynamic var confirmations = Int()
     
     @objc dynamic var addressesArray = [String]()
-    @objc dynamic var exchangeRates = [StockExchangeRateRLM]()
+    var exchangeRates = List<StockExchangeRateRLM>()
+    var walletInput = List<UserWalletRLM>()
+    var walletOutput = List<UserWalletRLM>()
     
     override static func ignoredProperties() -> [String] {
         return ["addressesArray"]
@@ -60,15 +63,21 @@ class HistoryRLM: Object {
             hist.blockHeight = blockheight as! Int
         }
         
-        if let blocktime = historyDict["blocktime"] {
-            hist.blockTime = NSDate(timeIntervalSince1970: (blocktime as! Double)) as Date
+        if let confirmations = historyDict["confirmations"] as? Int {
+            hist.confirmations = confirmations
         }
         
-        if let rates = historyDict["stockexchangerate"] as? NSDictionary {
-            hist.exchangeRates = StockExchangeRateRLM.initWithInfo(stockInfo: rates)
+        if let blocktime = historyDict["mempoolTime"] {
+            hist.mempoolTime = NSDate(timeIntervalSince1970: (blocktime as! Double)) as Date
         }
         
-        stockexchangerate
+        if let rates = historyDict["stockexchangerate"] as? NSArray {
+            hist.exchangeRates = StockExchangeRateRLM.initWithArray(stockArray: rates)
+            if hist.exchangeRates.count > 0 {
+                hist.btcToUsd = hist.exchangeRates.first!.btc2usd.doubleValue
+            }
+        }
+        
         
         if let txfee = historyDict["txfee"] {
             hist.txFee = txfee as! NSNumber
@@ -108,6 +117,14 @@ class HistoryRLM: Object {
         
         if let walletindex = historyDict["walletindex"] {
             hist.walletIndex = walletindex as! NSNumber
+        }
+        
+        if let walletIndex = historyDict["walletsinput"] as? NSArray {
+            hist.walletInput = UserWalletRLM.initWithArray(walletsInfo: walletIndex)
+        }
+        
+        if let walletOutput = historyDict["walletsoutput"] as? NSArray{
+            hist.walletOutput = UserWalletRLM.initWithArray(walletsInfo: walletOutput)
         }
         
         return hist

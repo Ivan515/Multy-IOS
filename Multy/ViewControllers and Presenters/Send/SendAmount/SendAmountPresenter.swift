@@ -12,6 +12,21 @@ class SendAmountPresenter: NSObject {
     
     //MARK: fix addresses in wallet and delete second ivar
     var wallet: UserWalletRLM?
+    var historyArray : List<HistoryRLM>? {
+        didSet {
+            self.blockedAmount = calculateBlockedAmount()
+        }
+    }
+    
+    var blockedAmount           : UInt32? {
+        didSet {
+            availableSumInCrypto = self.wallet!.sumInCrypto - convertSatoshiToBTC(sum: calculateBlockedAmount())
+            availableSumInFiat = availableSumInCrypto! * exchangeCourse
+        }
+    }
+    var availableSumInCrypto    : Double?
+    var availableSumInFiat      : Double?
+    
     var walletAddresses: List<AddressRLM>?
     
     var transactionObj: TransactionRLM?
@@ -39,7 +54,13 @@ class SendAmountPresenter: NSObject {
     func getData() {
         DataManager.shared.getAccount { (account, error) in
             self.account = account
-        } 
+            
+            DataManager.shared.getTransactionHistory(token: account!.token, currencyID: self.wallet!.chain, walletID: self.wallet!.walletID) { (histList, err) in
+                if err == nil && histList != nil {
+                    self.historyArray = histList!
+                }
+            }
+        }
     }
     
     func estimateTransaction() -> Double {
@@ -105,15 +126,15 @@ class SendAmountPresenter: NSObject {
     
     func cryptoToUsd() {
         self.sumInFiat = self.sumInCrypto * exchangeCourse
-        self.sumInFiat = Double(round(100*self.sumInFiat)/100)
+        self.sumInFiat = Double(round(100 * self.sumInFiat)/100)
         self.sendAmountVC?.bottomSumLbl.text = "\(self.sumInFiat) "
     }
     
     func usdToCrypto() {
         self.sumInCrypto = self.sumInFiat/exchangeCourse
-        self.sumInCrypto = Double(round(100000000*self.sumInCrypto)/100000000)
-        if self.sumInCrypto > (self.wallet?.sumInCrypto)! {
-            self.sendAmountVC?.bottomSumLbl.text = "\(self.wallet?.sumInCrypto ?? 0.0)"
+        self.sumInCrypto = Double(round(100000000 * self.sumInCrypto)/100000000)
+        if self.sumInCrypto > self.availableSumInCrypto! {
+            self.sendAmountVC?.bottomSumLbl.text = "\(self.availableSumInCrypto ?? 0.0)"
         } else {
             self.sendAmountVC?.bottomSumLbl.text = "\(self.sumInCrypto)"
         }
@@ -121,9 +142,9 @@ class SendAmountPresenter: NSObject {
     
     func setSpendableAmountText() {
         if self.isCrypto {
-            self.sendAmountVC?.spendableSumAndCurrencyLbl.text = "\(self.wallet?.sumInCrypto ?? 0.0) \(self.cryptoName)"
+            self.sendAmountVC?.spendableSumAndCurrencyLbl.text = "\((self.availableSumInCrypto ?? 0.0).fixedFraction(digits: 8)) \(self.cryptoName)"
         } else {
-            self.sendAmountVC?.spendableSumAndCurrencyLbl.text = "\(self.wallet?.sumInFiat ?? 0.0) \(self.fiatName)"
+            self.sendAmountVC?.spendableSumAndCurrencyLbl.text = "\((self.availableSumInFiat ?? 0.0).fixedFraction(digits: 2)) \(self.fiatName)"
         }
     }
     
@@ -143,10 +164,10 @@ class SendAmountPresenter: NSObject {
             } else {  //pay for commision off
                 self.sumInNextBtn = self.sumInCrypto
             }
-            if self.sumInNextBtn > (self.wallet?.sumInCrypto)! {
-                self.sumInNextBtn = self.wallet?.sumInCrypto ?? 0.0
+            if self.sumInNextBtn > self.availableSumInCrypto! {
+                self.sumInNextBtn = self.availableSumInCrypto ?? 0.0
             }
-            return Double(round(100000000*self.sumInNextBtn)/100000000)
+            return Double(round(100000000 * self.sumInNextBtn)/100000000)
         case false:
             if (self.sendAmountVC?.commissionSwitch.isOn)! {
                 if self.donationObj != nil {
@@ -157,8 +178,8 @@ class SendAmountPresenter: NSObject {
             } else {  //pay for commision off
                 self.sumInNextBtn = self.sumInFiat
             }
-            if self.sumInNextBtn > (self.wallet?.sumInFiat)! {
-                self.sumInNextBtn = self.wallet?.sumInFiat ?? 0.0
+            if self.sumInNextBtn > self.availableSumInFiat! {
+                self.sumInNextBtn = self.availableSumInFiat ?? 0.0
             }
             
             return self.sumInNextBtn
@@ -170,22 +191,22 @@ class SendAmountPresenter: NSObject {
         case true:
             if (self.sendAmountVC?.commissionSwitch.isOn)! {
                 if self.donationObj != nil {
-                    self.maxAllowedToSpend = (self.wallet?.sumInCrypto)! - (self.transactionObj?.sumInCrypto)! - (self.donationObj?.sumInCrypto)!
+                    self.maxAllowedToSpend = self.availableSumInCrypto! - (self.transactionObj?.sumInCrypto)! - (self.donationObj?.sumInCrypto)!
                 } else {
-                    self.maxAllowedToSpend = (self.wallet?.sumInCrypto)! - (self.transactionObj?.sumInCrypto)!
+                    self.maxAllowedToSpend = self.availableSumInCrypto! - (self.transactionObj?.sumInCrypto)!
                 }
             } else {
-                self.maxAllowedToSpend = (self.wallet?.sumInCrypto)!
+                self.maxAllowedToSpend = self.availableSumInCrypto!
             }
         case false:
             if (self.sendAmountVC?.commissionSwitch.isOn)! {
                 if self.donationObj != nil {
-                    self.maxAllowedToSpend = (self.wallet?.sumInFiat)! - (self.transactionObj?.sumInFiat)! - (self.donationObj?.sumInFiat)!
+                    self.maxAllowedToSpend = self.availableSumInFiat! - self.transactionObj!.sumInFiat - self.donationObj!.sumInFiat!
                 } else {
-                    self.maxAllowedToSpend = (self.wallet?.sumInFiat)! - (self.transactionObj?.sumInFiat)!
+                    self.maxAllowedToSpend = self.availableSumInFiat! - self.transactionObj!.sumInFiat
                 }
             } else {
-                self.maxAllowedToSpend = (self.wallet?.sumInFiat)!
+                self.maxAllowedToSpend = (self.availableSumInFiat)!
             }
         }
     }
@@ -194,7 +215,7 @@ class SendAmountPresenter: NSObject {
         if self.isCrypto {
             self.sumInCrypto = ((self.sendAmountVC?.topSumLbl.text!)! as NSString).doubleValue
             self.sumInFiat = self.sumInCrypto * exchangeCourse
-            self.sumInFiat = Double(round(100*self.sumInFiat)/100)
+            self.sumInFiat = Double(round(100 * self.sumInFiat)/100)
             if self.sumInFiat > (self.wallet?.sumInFiat)! {
                 self.sendAmountVC?.bottomSumLbl.text = "\(self.wallet?.sumInFiat ?? 0.0) "
             } else {
@@ -204,9 +225,9 @@ class SendAmountPresenter: NSObject {
         } else {
             self.sumInFiat = ((self.sendAmountVC?.topSumLbl.text!)! as NSString).doubleValue
             self.sumInCrypto = self.sumInFiat / exchangeCourse
-            self.sumInCrypto = Double(round(100000000*self.sumInCrypto)/100000000)
-            if self.sumInCrypto > (self.wallet?.sumInCrypto)! {
-                self.sendAmountVC?.bottomSumLbl.text = "\(self.wallet?.sumInCrypto ?? 0.0) "
+            self.sumInCrypto = Double(round(100000000 * self.sumInCrypto)/100000000)
+            if self.sumInCrypto > self.availableSumInCrypto! {
+                self.sendAmountVC?.bottomSumLbl.text = "\(self.availableSumInCrypto ?? 0.0) "
             } else {
                 self.sendAmountVC?.bottomSumLbl.text = "\(self.sumInCrypto) "
             }
@@ -226,7 +247,7 @@ class SendAmountPresenter: NSObject {
                     self.isMaxEntered = false
                 }
             case false?:
-                if self.sumInCrypto >= (self.wallet?.sumInCrypto)!  {
+                if self.sumInCrypto >= self.availableSumInCrypto!  {
                     self.isMaxEntered = true
                 } else {
                     self.isMaxEntered = false
@@ -243,7 +264,7 @@ class SendAmountPresenter: NSObject {
                     self.isMaxEntered = false
                 }
             case false?:
-                if self.sumInFiat >= (self.wallet?.sumInFiat)!  {
+                if self.sumInFiat >= self.availableSumInFiat!  {
                     self.isMaxEntered = true
                 } else {
                     self.isMaxEntered = false
@@ -257,15 +278,15 @@ class SendAmountPresenter: NSObject {
     func makeMaxSumWithFeeAndDonate() {
         if self.isCrypto {
             if self.donationObj != nil {
-                self.cryptoMaxSumWithFeeAndDonate = (self.wallet?.sumInCrypto)! - (self.transactionObj?.sumInCrypto)! - (self.donationObj?.sumInCrypto)!
+                self.cryptoMaxSumWithFeeAndDonate = self.availableSumInCrypto! - (self.transactionObj?.sumInCrypto)! - (self.donationObj?.sumInCrypto)!
             } else {
-                self.cryptoMaxSumWithFeeAndDonate = (self.wallet?.sumInCrypto)! - (self.transactionObj?.sumInCrypto)!
+                self.cryptoMaxSumWithFeeAndDonate = self.availableSumInCrypto! - (self.transactionObj?.sumInCrypto)!
             }
         } else {
             if self.donationObj != nil {
-                self.cryptoMaxSumWithFeeAndDonate = (self.wallet?.sumInFiat)! - (self.transactionObj?.sumInFiat)! - (self.donationObj?.sumInFiat)!
+                self.cryptoMaxSumWithFeeAndDonate = self.availableSumInFiat! - (self.transactionObj?.sumInFiat)! - (self.donationObj?.sumInFiat)!
             } else {
-                self.cryptoMaxSumWithFeeAndDonate = (self.wallet?.sumInFiat)! - (self.transactionObj?.sumInFiat)!
+                self.cryptoMaxSumWithFeeAndDonate = self.availableSumInFiat! - self.transactionObj!.sumInFiat
             }
         }
     }
@@ -287,5 +308,51 @@ class SendAmountPresenter: NSObject {
             }
         }
         return message
+    }
+    
+    func calculateBlockedAmount() -> UInt32 {
+        var sum = UInt32(0)
+        
+        if wallet == nil {
+            return sum
+        }
+        
+        if historyArray?.count == 0 {
+            return sum
+        }
+        
+        //        for address in wallet!.addresses {
+        //            for out in address.spendableOutput {
+        //                if out.transactionStatus.intValue == TxStatus.MempoolIncoming.rawValue {
+        //                    sum += out.transactionOutAmount.uint32Value
+        //                } else if out.transactionStatus.intValue == TxStatus.MempoolOutcoming.rawValue {
+        //                    out.
+        //                }
+        //            }
+        //        }
+        
+        for history in historyArray! {
+            sum += blockedAmount(for: history)
+        }
+        
+        return sum
+    }
+    
+    func blockedAmount(for transaction: HistoryRLM) -> UInt32 {
+        var sum = UInt32(0)
+        
+        if transaction.txStatus.intValue == TxStatus.MempoolIncoming.rawValue {
+            sum += transaction.txOutAmount.uint32Value
+        } else if transaction.txStatus.intValue == TxStatus.MempoolOutcoming.rawValue {
+            let addresses = wallet!.fetchAddresses()
+            
+            for tx in transaction.txOutputs {
+                if addresses.contains(tx.address) {
+                    sum += tx.amount.uint32Value
+                }
+            }
+        }
+        
+        return sum
     }
 }

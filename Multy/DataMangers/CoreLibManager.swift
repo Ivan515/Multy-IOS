@@ -7,7 +7,7 @@ import RealmSwift
 
 class CoreLibManager: NSObject {
     static let shared = CoreLibManager()
-    let donationAddress = "n165LkPsBxDVeztbT3SYmVAxckfXoS6k7X"
+    let donationAddress = UserDefaults.standard.string(forKey: "BTCDonationAddress")!
     
     func testTransaction(from binaryData: inout BinaryData, wallet: UserWalletRLM) {
         
@@ -576,6 +576,8 @@ class CoreLibManager: NSObject {
             let errrString = String(cString: pointer!.pointee.message)
             
             print("tu: \(errrString))")
+            
+            return (errrString, -1)
         }
         
         let tSign = transaction_sign(transactionPointer.pointee)
@@ -585,6 +587,8 @@ class CoreLibManager: NSObject {
             let errrString = String(cString: pointer!.pointee.message)
             
             print("tSign: \(errrString))")
+            
+            return (errrString, -1)
         }
         
         let tSer = transaction_serialize(transactionPointer.pointee, serializedTransaction)
@@ -594,6 +598,8 @@ class CoreLibManager: NSObject {
             let errrString = String(cString: pointer!.pointee.message)
             
             print("tSer: \(errrString))")
+            
+            return (errrString, -1)
         }
         
         print("\(tu) -- \(tSign) -- \(tSer)")

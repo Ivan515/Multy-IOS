@@ -254,8 +254,8 @@ extension DataManager {
                         let historyArr = answer!["history"] as! NSArray
                         let initializedArr = HistoryRLM.initWithArray(historyArr: historyArr)
                         
-                        self.realmManager.saveHistoryForWallet(historyArr: initializedArr, completion: { (histList) in
-                        })
+//                        self.realmManager.saveHistoryForWallet(historyArr: initializedArr, completion: { (histList) in
+//                        })
                         
                         completion(initializedArr, nil)
                     }

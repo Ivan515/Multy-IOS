@@ -11,6 +11,20 @@ class SendDetailsPresenter: NSObject, CustomFeeRateProtocol {
     
     var choosenWallet: UserWalletRLM?
     var walletAddresses: List<AddressRLM>?
+    var historyArray : List<HistoryRLM>? {
+        didSet {
+            self.blockedAmount = calculateBlockedAmount()
+        }
+    }
+    
+    var blockedAmount           : UInt32? {
+        didSet {
+            availableSumInCrypto = self.choosenWallet!.sumInCrypto - convertSatoshiToBTC(sum: calculateBlockedAmount())
+            availableSumInFiat = availableSumInCrypto! * exchangeCourse
+        }
+    }
+    var availableSumInCrypto    : Double?
+    var availableSumInFiat      : Double?
     
     var selectedIndexOfSpeed: Int?
     
@@ -31,7 +45,6 @@ class SendDetailsPresenter: NSObject, CustomFeeRateProtocol {
 
     var customFee = 0
     
-    
     var feeRate: NSDictionary?{
         didSet {
             sendDetailsVC?.tableView.reloadData()
@@ -40,6 +53,20 @@ class SendDetailsPresenter: NSObject, CustomFeeRateProtocol {
 
     
 //    self.sumInFiat = Double(round(100*self.sumInFiat)/100)
+    
+    func getData() {
+        DataManager.shared.getAccount { (account, error) in
+            if error != nil {
+                return
+            }
+            
+            DataManager.shared.getTransactionHistory(token: account!.token, currencyID: self.choosenWallet!.chain, walletID: self.choosenWallet!.walletID) { (histList, err) in
+                if err == nil && histList != nil {
+                    self.historyArray = histList!
+                }
+            }
+        }
+    }
     
     func getWalletVerbose() {
         //MARK: implement changes
@@ -135,17 +162,26 @@ class SendDetailsPresenter: NSObject, CustomFeeRateProtocol {
     }
     
     func setMaxAllowed() {
-        self.maxAllowedToSpend = (self.choosenWallet?.sumInCrypto)! - self.trasactionObj.sumInCrypto
+//        self.maxAllowedToSpend = (self.choosenWallet?.availableSumInCrypto)! - self.trasactionObj.sumInCrypto
     }
     
     func checkMaxEvelable() {
-        self.maxAllowedToSpend = (self.choosenWallet?.sumInCrypto)!
+        if self.availableSumInCrypto == nil {
+            return
+        }
+        
+        if !sendDetailsVC!.isDonateAvailableSW.isOn {
+            self.sendDetailsVC?.performSegue(withIdentifier: "sendAmountVC", sender: Any.self)
+        }
+        
+        self.maxAllowedToSpend = self.availableSumInCrypto!
+
 //        self.maxAllowedToSpend = (self.choosenWallet?.sumInCrypto)! - self.trasactionObj.sumInCrypto
         if self.donationObj.sumInCrypto! > self.maxAllowedToSpend  {
 //            self.sendDetailsVC?.presentWarning(message: "Your donation sum and fee cost more than you have in wallet.\n\n Fee cost: \(self.trasactionObj.sumInCrypto) \(self.trasactionObj.cryptoName)\n Donation sum: \(self.donationObj.sumInCrypto ?? 0.0) \(self.cryptoName)\n Sum in Wallet: \(self.choosenWallet?.sumInCrypto ?? 0.0) \(self.cryptoName)")
-            self.sendDetailsVC?.presentWarning(message: "Your donation more than you have in wallet.\n\nDonation sum: \(self.donationObj.sumInCrypto ?? 0.0) \(self.cryptoName)\n Sum in Wallet: \(self.choosenWallet?.sumInCrypto ?? 0.0) \(self.cryptoName)")
+            self.sendDetailsVC?.presentWarning(message: "Your donation more than you have in wallet.\n\nDonation sum: \((self.donationObj.sumInCrypto ?? 0.0).fixedFraction(digits: 8)) \(self.cryptoName)\n Sum in Wallet: \((self.availableSumInCrypto ?? 0.0).fixedFraction(digits: 8)) \(self.cryptoName)")
         } else if self.donationObj.sumInCrypto! == self.maxAllowedToSpend {
-            self.sendDetailsVC?.presentWarning(message: "Your donation is equal your wallet sum.\n\nDonation sum: \(self.donationObj.sumInCrypto ?? 0.0) \(self.cryptoName)\n Sum in Wallet: \(self.choosenWallet?.sumInCrypto ?? 0.0) \(self.cryptoName)")
+            self.sendDetailsVC?.presentWarning(message: "Your donation is equal your wallet sum.\n\nDonation sum: \((self.donationObj.sumInCrypto ?? 0.0).fixedFraction(digits: 8)) \(self.cryptoName)\n Sum in Wallet: \((self.availableSumInCrypto ?? 0.0).fixedFraction(digits: 2)) \(self.cryptoName)")
         } else {
             self.sendDetailsVC?.performSegue(withIdentifier: "sendAmountVC", sender: Any.self)
         }
@@ -161,5 +197,53 @@ class SendDetailsPresenter: NSObject, CustomFeeRateProtocol {
         cell.setupUIForBtc()
         self.customFee = Int(firstValue)
         self.sendDetailsVC?.tableView.reloadData()
+    }
+    
+    //==============================
+    
+    func calculateBlockedAmount() -> UInt32 {
+        var sum = UInt32(0)
+        
+        if choosenWallet == nil {
+            return sum
+        }
+        
+        if historyArray?.count == 0 {
+            return sum
+        }
+        
+        //        for address in wallet!.addresses {
+        //            for out in address.spendableOutput {
+        //                if out.transactionStatus.intValue == TxStatus.MempoolIncoming.rawValue {
+        //                    sum += out.transactionOutAmount.uint32Value
+        //                } else if out.transactionStatus.intValue == TxStatus.MempoolOutcoming.rawValue {
+        //                    out.
+        //                }
+        //            }
+        //        }
+        
+        for history in historyArray! {
+            sum += blockedAmount(for: history)
+        }
+        
+        return sum
+    }
+    
+    func blockedAmount(for transaction: HistoryRLM) -> UInt32 {
+        var sum = UInt32(0)
+        
+        if transaction.txStatus.intValue == TxStatus.MempoolIncoming.rawValue {
+            sum += transaction.txOutAmount.uint32Value
+        } else if transaction.txStatus.intValue == TxStatus.MempoolOutcoming.rawValue {
+            let addresses = choosenWallet!.fetchAddresses()
+            
+            for tx in transaction.txOutputs {
+                if addresses.contains(tx.address) {
+                    sum += tx.amount.uint32Value
+                }
+            }
+        }
+        
+        return sum
     }
 }

@@ -32,13 +32,13 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.presenter.sendAmountVC = self
-//        self.presenter.setAmountFromQr()
-//        self.presenter.cryptoToUsd()
-//        self.presenter.setSpendableAmountText()
-//        self.presenter.setMaxAllowed()
-//        self.presenter.makeMaxSumWithFeeAndDonate()
-//        self.setSumInNextBtn()
-//        
+        self.presenter.setAmountFromQr()
+        self.presenter.cryptoToUsd()
+        self.presenter.setSpendableAmountText()
+        self.presenter.setMaxAllowed()
+        self.presenter.makeMaxSumWithFeeAndDonate()
+        self.setSumInNextBtn()
+//
         self.presenter.getData()
         
     }
@@ -93,15 +93,15 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate {
         if self.presenter.isCrypto {
             self.presenter.isCrypto = !self.presenter.isCrypto
             self.presenter.makeMaxSumWithFeeAndDonate()
-            if self.presenter.sumInFiat > (self.presenter.wallet?.sumInFiat)! {
-                self.amountTF.text = "\(self.presenter.wallet?.sumInFiat ?? 0.0)"
-                self.topSumLbl.text = "\(self.presenter.wallet?.sumInFiat ?? 0.0)"
+            if self.presenter.sumInFiat > (self.presenter.availableSumInFiat)! {
+                self.amountTF.text = "\(self.presenter.availableSumInFiat ?? 0.0)"
+                self.topSumLbl.text = "\(self.presenter.availableSumInFiat ?? 0.0)"
             } else {
                 self.amountTF.text = "\(self.presenter.sumInFiat)"
                 self.topSumLbl.text = "\(self.presenter.sumInFiat)"
             }
-            if self.presenter.sumInCrypto > (self.presenter.wallet?.sumInCrypto)! {
-                self.bottomSumLbl.text = "\(self.presenter.wallet?.sumInCrypto ?? 0.0) "
+            if self.presenter.sumInCrypto > (self.presenter.availableSumInCrypto)! {
+                self.bottomSumLbl.text = "\(self.presenter.availableSumInCrypto ?? 0.0) "
             } else {
                 self.bottomSumLbl.text = "\(self.presenter.sumInCrypto) "
             }
@@ -110,22 +110,22 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate {
         } else {
             self.presenter.isCrypto = !self.presenter.isCrypto
             self.presenter.makeMaxSumWithFeeAndDonate()
-            if self.presenter.sumInCrypto > (self.presenter.wallet?.sumInCrypto)! || self.presenter.sumInCrypto > self.presenter.cryptoMaxSumWithFeeAndDonate {
+            if self.presenter.sumInCrypto > (self.presenter.availableSumInCrypto)! || self.presenter.sumInCrypto > self.presenter.cryptoMaxSumWithFeeAndDonate {
                 switch self.commissionSwitch.isOn {
                 case true:
                     self.amountTF.text = "\(self.presenter.cryptoMaxSumWithFeeAndDonate)"
                     self.topSumLbl.text = "\(self.presenter.cryptoMaxSumWithFeeAndDonate)"
                 case false:
-                    self.amountTF.text = "\(self.presenter.wallet?.sumInCrypto ?? 0.0)"
-                    self.topSumLbl.text = "\(self.presenter.wallet?.sumInCrypto ?? 0.0)"
+                    self.amountTF.text = "\(self.presenter.availableSumInCrypto ?? 0.0)"
+                    self.topSumLbl.text = "\(self.presenter.availableSumInCrypto ?? 0.0)"
                 }
             } else {
                 self.amountTF.text = "\(self.presenter.sumInCrypto)"
                 self.topSumLbl.text = "\(self.presenter.sumInCrypto)"
             }
             
-            if self.presenter.sumInFiat > (self.presenter.wallet?.sumInFiat)! {
-                self.bottomSumLbl.text = "\(self.presenter.wallet?.sumInFiat ?? 0.0) "
+            if self.presenter.sumInFiat > (self.presenter.availableSumInFiat)! {
+                self.bottomSumLbl.text = "\(self.presenter.availableSumInFiat ?? 0.0) "
             } else {
                  self.bottomSumLbl.text = "\(self.presenter.sumInFiat) "
             }
@@ -153,23 +153,21 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    
-    
     @IBAction func maxAction(_ sender: Any) {
         if self.presenter.isCrypto {
             self.commissionSwitch.isOn = false
             self.presenter.setMaxAllowed()
-            self.amountTF.text = "\(self.presenter.wallet?.sumInCrypto ?? 0.0)"
-            self.topSumLbl.text = "\(self.presenter.wallet?.sumInCrypto ?? 0.0)"
-            self.presenter.sumInCrypto = self.presenter.wallet?.sumInCrypto ?? 0.0
+            self.amountTF.text = "\(self.presenter.availableSumInCrypto ?? 0.0)"
+            self.topSumLbl.text = "\(self.presenter.availableSumInCrypto ?? 0.0)"
+            self.presenter.sumInCrypto = self.presenter.availableSumInCrypto ?? 0.0
             self.presenter.cryptoToUsd()
             self.setSumInNextBtn()
         } else {
             self.commissionSwitch.isOn = false
             self.presenter.setMaxAllowed()
-            self.amountTF.text = "\(self.presenter.wallet?.sumInFiat ?? 0.0)"
-            self.topSumLbl.text = "\(self.presenter.wallet?.sumInFiat ?? 0.0)"
-            self.presenter.sumInFiat = self.presenter.wallet?.sumInFiat ?? 0.0
+            self.amountTF.text = "\(self.presenter.availableSumInFiat ?? 0.0)"
+            self.topSumLbl.text = "\(self.presenter.availableSumInFiat ?? 0.0)"
+            self.presenter.sumInFiat = self.presenter.availableSumInFiat ?? 0.0
             self.presenter.usdToCrypto()
             self.setSumInNextBtn()
         }
@@ -247,6 +245,7 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate {
 //        self.presenter.setMaxAllowed()
         self.presenter.checkMaxEntered()
         self.setSumInNextBtn()
+        
         return newLength <= self.presenter.maxLengthForSum
     }
     

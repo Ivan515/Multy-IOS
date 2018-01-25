@@ -13,7 +13,7 @@ class StockExchangeRateRLM: Object {
     
     @objc dynamic var id = NSNumber(value: 1)   //
     @objc dynamic var name = String()
-    @objc dynamic var exchanges = Dictionary<String, Double>()
+//    @objc dynamic var exchanges = Dictionary<String, Double>()
     @objc dynamic var btc2usd = NSNumber(value: 0) //Double//MARK: to be deleted
     @objc dynamic var date = Date()
     

@@ -21,11 +21,15 @@ class UserWalletRLM: Object {
             sumInFiat = sumInCrypto * exchangeCourse
         }
     }
+    
     @objc dynamic var sumInFiat: Double = 0.0
+    
     @objc dynamic var fiatName = String()
     @objc dynamic var fiatSymbol = String()
     
     @objc dynamic var address = String()
+    
+    @objc dynamic var historyAddress : AddressRLM?
     
     var addresses = List<AddressRLM>() {
         didSet {
@@ -93,6 +97,10 @@ class UserWalletRLM: Object {
             self.addresses = AddressRLM.initWithArray(addressesInfo: addresses as! NSArray)
         }
         
+        if let address = walletInfo["address"] as? NSDictionary {
+            self.historyAddress = AddressRLM.initWithInfo(addressInfo: address)
+        }
+        
         if let addresses = walletInfo["addresses"] {
             if !(addresses is NSNull) {
                 self.addresses = AddressRLM.initWithArray(addressesInfo: addresses as! NSArray)
@@ -137,6 +145,10 @@ class UserWalletRLM: Object {
     
     override class func primaryKey() -> String? {
         return "id"
+    }
+    
+    override static func ignoredProperties() -> [String] {
+        return ["availableSumInCrypto", "availableSumInFiat"]
     }
     
 //    public func updateWallet(walletInfo: NSDictionary) {
