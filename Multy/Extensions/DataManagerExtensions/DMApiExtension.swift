@@ -18,8 +18,9 @@ extension DataManager {
                 var serverTime: NSDate?
                 
                 if answerDict!["donate"] != nil {
-                    if let donate = (answerDict!["donate"] as? NSDictionary), let btcAddress = donate["BTC"] as? NSString {
+                    if let donate = (answerDict!["donate"] as? NSDictionary), let btcAddress = donate["BTC"] as? String {
                         UserDefaults.standard.set(btcAddress, forKey: "BTCDonationAddress")
+                        self.coreLibManager.donationAddress = btcAddress
                     }
                 }
                 

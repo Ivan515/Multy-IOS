@@ -31,16 +31,15 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.presenter.sendAmountVC = self
-        self.presenter.setAmountFromQr()
-        self.presenter.cryptoToUsd()
-        self.presenter.setSpendableAmountText()
-        self.presenter.setMaxAllowed()
-        self.presenter.makeMaxSumWithFeeAndDonate()
-        self.setSumInNextBtn()
+        presenter.sendAmountVC = self
+        presenter.setAmountFromQr()
+        presenter.cryptoToUsd()
+        presenter.setSpendableAmountText()
+        presenter.setMaxAllowed()
+        presenter.makeMaxSumWithFeeAndDonate()
+        setSumInNextBtn()
 //
-        self.presenter.getData()
-        
+        presenter.getData()
     }
     
     override func viewDidLayoutSubviews() {
@@ -273,17 +272,18 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "sendFinishVC" {
             let sendFinishVC = segue.destination as! SendFinishViewController
-            sendFinishVC.presenter.addressToStr = self.presenter.addressToStr
-            sendFinishVC.presenter.walletFrom = self.presenter.wallet
-            sendFinishVC.presenter.sumInFiat = self.presenter.sumInFiat
-            sendFinishVC.presenter.cryptoName = self.presenter.cryptoName
-            sendFinishVC.presenter.fiatName = self.presenter.fiatName
-            sendFinishVC.presenter.transactionObj = self.presenter.transactionObj
-            sendFinishVC.presenter.sumInCrypto = self.presenter.sumInCrypto
-            sendFinishVC.presenter.isCrypto = self.presenter.isCrypto
-            sendFinishVC.presenter.endSum = self.presenter.getNextBtnSum()
-            sendFinishVC.presenter.rawTransaction = self.presenter.rawTransaction
-            sendFinishVC.presenter.account = self.presenter.account
+            sendFinishVC.presenter.addressToStr =   presenter.addressToStr
+            sendFinishVC.presenter.walletFrom =     presenter.wallet
+            sendFinishVC.presenter.sumInFiat =      presenter.sumInFiat
+            sendFinishVC.presenter.cryptoName =     presenter.cryptoName
+            sendFinishVC.presenter.fiatName =       presenter.fiatName
+            sendFinishVC.presenter.transactionObj = presenter.transactionObj
+            sendFinishVC.presenter.sumInCrypto =    presenter.sumInCrypto
+            sendFinishVC.presenter.isCrypto =       presenter.isCrypto
+            sendFinishVC.presenter.endSum =         presenter.getNextBtnSum()
+            sendFinishVC.presenter.rawTransaction = presenter.rawTransaction
+            sendFinishVC.presenter.account =        presenter.account
+            sendFinishVC.presenter.addressData =    presenter.addressData
             
             test()
         }

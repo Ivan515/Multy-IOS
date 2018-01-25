@@ -123,9 +123,6 @@ class WalletViewController: UIViewController {
     
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
         self.presenter.getHistoryAndWallet()
-        
-        self.tableView.reloadData()
-        refreshControl.endRefreshing()
     }
     
     @objc func updateExchange() {

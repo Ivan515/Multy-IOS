@@ -51,9 +51,17 @@ class SendAmountPresenter: NSObject {
     
     var rawTransaction: String?
     
+    var customFee : Int?
+    
+    //for creating transaction
+    var binaryData : BinaryData?
+    var addressData : Dictionary<String, Any>?
+    
     func getData() {
         DataManager.shared.getAccount { (account, error) in
             self.account = account
+            
+            self.createPreliminaryData()
             
             DataManager.shared.getTransactionHistory(token: account!.token, currencyID: self.wallet!.chain, walletID: self.wallet!.walletID) { (histList, err) in
                 if err == nil && histList != nil {
@@ -63,21 +71,35 @@ class SendAmountPresenter: NSObject {
         }
     }
     
-    func estimateTransaction() -> Double {
+    func createPreliminaryData() {
         let core = DataManager.shared.coreLibManager
         let wallet = self.wallet!
-        var binaryData = account!.binaryDataString.createBinaryData()!
+        binaryData = account!.binaryDataString.createBinaryData()!
         
-        let addressData = core.createAddress(currencyID: wallet.chain.uint32Value,
-                                             walletID: wallet.walletID.uint32Value,
-                                             addressID: 0,
-                                             binaryData: &binaryData)
         
-        let feeAmount = core.getTotalFee(addressPointer: addressData!["addressPointer"] as! OpaquePointer,
-                                       feeAmountString: "50",
-                                       isDonationExists: donationObj?.sumInCrypto != Double(0.0),
-                                       isPayCommission: self.sendAmountVC!.commissionSwitch.isOn,
-                                       addressesCount: wallet.addresses.count)
+        //Example for addressData
+        //        ["privateKey": "2bdeccJBhnRiDz5cSaHhxfiAoACGaQzfbZizmK7KNqbvtP4Bmc",
+        //         "addressIndex": 0,
+        //         "addressPrivateKeyPointer": 0x0000000174456560,
+        //         "addressPointer": 0x0000000174289ce0,
+        //         "address": "mzNZBhim9XGy66FkdzrehHwdWNgbiTYXCQ",
+        //         "walletIndex": 0,
+        //         "currencyID": 0,
+        //         "publicKey": "NkWaWtGAq2MA2wkQaZ4s66HttE598b3Bqc7CueS9J3ry7zvBLG76us11eTxkpVYH7th1z5SKDP3oNMJxGyZe8zRv"]
+        addressData = core.createAddress(currencyID:    wallet.chain.uint32Value,
+                                         walletID:      wallet.walletID.uint32Value,
+                                         addressID:     UInt32(wallet.addresses.count),
+                                         binaryData:    &binaryData!)
+    }
+    
+    func estimateTransaction() -> Double {
+
+        
+        let feeAmount = DataManager.shared.coreLibManager.getTotalFee(addressPointer: addressData!["addressPointer"] as! OpaquePointer,
+                                                                      feeAmountString: "\(customFee!)",
+                                                                      isDonationExists: donationObj?.sumInCrypto != Double(0.0),
+                                                                      isPayCommission: self.sendAmountVC!.commissionSwitch.isOn,
+                                                                      inputsCount: DataManager.shared.realmManager.spendableOutput(addresses: wallet!.addresses).count)
         
 //        let feeRateOld = core.getTotalFeeAndInputs(addressPointer: addressData!["addressPointer"] as! OpaquePointer,
 //                                                sendAmountString: String(self.sumInCrypto),
@@ -90,14 +112,14 @@ class SendAmountPresenter: NSObject {
         let trData = DataManager.shared.coreLibManager.createTransaction(addressPointer: addressData!["addressPointer"] as! OpaquePointer,
                                                                          sendAddress: self.addressToStr!,
                                                                          sendAmountString: String(self.sumInCrypto),
-                                                                         feeAmountString: "50",
+                                                                         feePerByteAmount: "\(customFee!)",
                                                                          isDonationExists: true,
                                                                          donationAmount: String(describing: self.donationObj!.sumInCrypto!),
                                                                          isPayCommission: self.sendAmountVC!.commissionSwitch.isOn,
-                                                                         wallet: wallet,
-                                                                         binaryData: &binaryData,
+                                                                         wallet: wallet!,
+                                                                         binaryData: &binaryData!,
                                                                          feeAmount: feeAmount,
-                                                                         inputs: wallet.addresses)
+                                                                         inputs: wallet!.addresses)
         
         self.rawTransaction = trData.0
         
@@ -149,7 +171,8 @@ class SendAmountPresenter: NSObject {
     }
     
     func getNextBtnSum() -> Double {
-        let estimate = estimateTransaction()
+        let satoshiAmount = UInt32(sumInCrypto * pow(10, 8))
+        let estimate = satoshiAmount == 0 ? 0.0 : estimateTransaction()
         self.transactionObj?.sumInCrypto = estimate
         self.transactionObj?.sumInFiat = estimate * exchangeCourse
         

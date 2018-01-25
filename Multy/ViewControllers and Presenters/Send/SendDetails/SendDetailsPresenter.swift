@@ -14,15 +14,12 @@ class SendDetailsPresenter: NSObject, CustomFeeRateProtocol {
     var historyArray : List<HistoryRLM>? {
         didSet {
             self.blockedAmount = calculateBlockedAmount()
-        }
-    }
-    
-    var blockedAmount           : UInt32? {
-        didSet {
             availableSumInCrypto = self.choosenWallet!.sumInCrypto - convertSatoshiToBTC(sum: calculateBlockedAmount())
             availableSumInFiat = availableSumInCrypto! * exchangeCourse
         }
     }
+    
+    var blockedAmount           : UInt32?
     var availableSumInCrypto    : Double?
     var availableSumInFiat      : Double?
     
@@ -43,7 +40,7 @@ class SendDetailsPresenter: NSObject, CustomFeeRateProtocol {
     let donationObj = DonationObj()
     
 
-    var customFee = 0
+    var customFee = 20
     
     var feeRate: NSDictionary?{
         didSet {
@@ -165,7 +162,7 @@ class SendDetailsPresenter: NSObject, CustomFeeRateProtocol {
 //        self.maxAllowedToSpend = (self.choosenWallet?.availableSumInCrypto)! - self.trasactionObj.sumInCrypto
     }
     
-    func checkMaxEvelable() {
+    func checkMaxAvailable() {
         if self.availableSumInCrypto == nil {
             return
         }

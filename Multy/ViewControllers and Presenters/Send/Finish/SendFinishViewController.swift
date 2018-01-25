@@ -64,18 +64,37 @@ class SendFinishViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func nextAction(_ sender: Any) {
-        let params = [
-            "transaction" : presenter.rawTransaction!
+        let newAddressParams = [
+            "walletIndex" : presenter.walletFrom!.walletID.intValue,
+            "address" : presenter.addressData!["address"] as! String,
+            "addressIndex" : presenter.walletFrom!.addresses.count,
+            "currencyID" : presenter.walletFrom!.chain.intValue
             ] as [String : Any]
         
-        //MARK: add transaction
-        DataManager.shared.apiManager.sendRawTransaction(presenter.account!.token,
-                                                         walletID: presenter.walletFrom!.walletID,
-                                                         params, completion: { (dict, error) in
-            print("---------\(dict)")
-        })
+        //        parameters["walletIndex"] = wallet.walletID
+        //        parameters["address"] = newAddressDict!["address"] as! String
+        //        parameters["addressIndex"] = UInt32(wallet.addresses.count)
         
-        self.performSegue(withIdentifier: "sendingAnimationVC", sender: sender)
+        //MARK: add transaction
+        DataManager.shared.addAddress(presenter.account!.token, params: newAddressParams) { (dict, error) in
+            if error != nil {
+                
+                
+                return
+            }
+            
+            let params = [
+                "transaction" : self.presenter.rawTransaction!
+                ] as [String : Any]
+            
+            DataManager.shared.apiManager.sendRawTransaction(self.presenter.account!.token,
+                                                             walletID: self.presenter.walletFrom!.walletID,
+                                                             transactionParameters: params,
+                                                             completion: { (dict, error) in
+                                                                print("---------\(dict)")
+                                                                self.performSegue(withIdentifier: "sendingAnimationVC", sender: sender)
+            })
+        }
     }
 
 }

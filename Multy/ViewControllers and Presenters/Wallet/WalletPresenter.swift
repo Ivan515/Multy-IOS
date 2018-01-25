@@ -45,6 +45,8 @@ class WalletPresenter: NSObject {
         mainVC!.tableView.reloadData()
         mainVC!.tableView.layoutIfNeeded()
         mainVC!.tableView.setContentOffset(contentOffset, animated: false)
+        
+        self.mainVC!.refreshControl.endRefreshing()
     }
     
     func registerCells() {
@@ -90,6 +92,7 @@ class WalletPresenter: NSObject {
                 
                 self.mainVC!.isSocketInitiateUpdating = false
             }
+            
 //            self.mainVC?.progressHUD.hide()
 //            self.mainVC?.updateUI()
         }

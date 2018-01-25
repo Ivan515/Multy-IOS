@@ -89,9 +89,9 @@ class SendDetailsViewController: UIViewController, UITextFieldDelegate {
                 self.presenter.createDonation()
             }
             self.presenter.createTransaction(index: self.presenter.selectedIndexOfSpeed!)
-            self.presenter.checkMaxEvelable()
+            self.presenter.checkMaxAvailable()
         } else {
-            let alert = UIAlertController(title: "Transaction speed not selected!", message: "Please choose one or set cuctom", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Transaction speed not selected!", message: "Please choose one or set custom", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
@@ -234,6 +234,7 @@ class SendDetailsViewController: UIViewController, UITextFieldDelegate {
             sendAmountVC.presenter.transactionObj = self.presenter.trasactionObj
             sendAmountVC.presenter.walletAddresses = self.presenter.walletAddresses
             sendAmountVC.presenter.historyArray = self.presenter.historyArray
+            sendAmountVC.presenter.customFee = presenter.customFee
             if self.presenter.amountFromQr != nil {
                 sendAmountVC.presenter.sumInCrypto = self.presenter.amountFromQr!
             }

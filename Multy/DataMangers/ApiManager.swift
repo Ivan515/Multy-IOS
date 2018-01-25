@@ -307,7 +307,7 @@ class ApiManager: NSObject, RequestRetrier {
         }
     }
     
-    func sendRawTransaction(_ token: String, walletID: NSNumber, _ transactionParameters: Parameters, completion: @escaping (_ answer: NSDictionary?,_ error: Error?) -> ()) {
+    func sendRawTransaction(_ token: String, walletID: NSNumber, transactionParameters: Parameters, completion: @escaping (_ answer: NSDictionary?,_ error: Error?) -> ()) {
         
         let header: HTTPHeaders = [
             "Content-Type": "application/json",
