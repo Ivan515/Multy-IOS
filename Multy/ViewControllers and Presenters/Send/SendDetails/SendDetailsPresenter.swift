@@ -163,7 +163,9 @@ class SendDetailsPresenter: NSObject, CustomFeeRateProtocol {
     }
     
     func checkMaxAvailable() {
-        if self.availableSumInCrypto == nil {
+        if self.availableSumInCrypto == nil || availableSumInCrypto! < 0.0 {
+            self.sendDetailsVC?.presentWarning(message: "Wrong wallet data. Please download wallet data again.")
+            
             return
         }
         
