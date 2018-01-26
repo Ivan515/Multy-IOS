@@ -52,6 +52,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="mgy-Do-dmy"/>
+                    <nil key="simulatedTopBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PMc-n8-FmC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -266,6 +267,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="u4f-01-75E"/>
+                    <nil key="simulatedTopBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d3Q-Ma-B8L" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

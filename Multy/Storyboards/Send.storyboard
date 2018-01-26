@@ -567,12 +567,13 @@ This feature will be in the next update.</string>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="MXS-yj-hGB" secondAttribute="trailing" id="81J-mp-pAa"/>
                             <constraint firstItem="MXS-yj-hGB" firstAttribute="leading" secondItem="7QJ-UA-aaR" secondAttribute="leading" id="NCD-aI-Jbk"/>
-                            <constraint firstItem="CoE-mk-MVK" firstAttribute="top" secondItem="MXS-yj-hGB" secondAttribute="bottom" id="OnT-UF-okz"/>
+                            <constraint firstAttribute="bottom" secondItem="MXS-yj-hGB" secondAttribute="bottom" id="OnT-UF-okz"/>
                             <constraint firstItem="MXS-yj-hGB" firstAttribute="top" secondItem="7QJ-UA-aaR" secondAttribute="top" id="RZB-In-AtV"/>
                         </constraints>
                     </view>
                     <size key="freeformSize" width="375" height="1010"/>
                     <connections>
+                        <outlet property="bottomBtnConstraint" destination="oxO-oN-TlI" id="5Xu-8T-ako"/>
                         <outlet property="constraintDonationHeight" destination="UZx-4s-uXi" id="6dS-td-Pze"/>
                         <outlet property="donationCryptoNameLbl" destination="gdi-l2-max" id="rRJ-QF-W5L"/>
                         <outlet property="donationFiatNameLbl" destination="sEm-BU-U5Q" id="nCt-z7-mye"/>
