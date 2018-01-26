@@ -173,6 +173,19 @@ class SendAmountPresenter: NSObject {
     func getNextBtnSum() -> Double {
         let satoshiAmount = UInt32(sumInCrypto * pow(10, 8))
         let estimate = satoshiAmount == 0 ? 0.0 : estimateTransaction()
+        
+        if estimate < 0 {
+            
+            let message = "Please, check destination bitcoin address and enter correct one"
+            let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action) in }))
+            sendAmountVC!.present(alert, animated: true, completion: nil)
+            
+            sendAmountVC?.amountTF.text = "0.0"
+            
+            return 0.0
+        }
+        
         self.transactionObj?.sumInCrypto = estimate
         self.transactionObj?.sumInFiat = estimate * exchangeCourse
         

@@ -176,7 +176,7 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate {
     
     
     @IBAction func nextAction(_ sender: Any) {
-        if self.presenter.sumInCrypto != 0.0 || self.presenter.donationObj != nil {
+        if self.presenter.sumInCrypto != 0.0 && self.presenter.donationObj != nil && !amountTF.text!.isEmpty && convertBTCStringToSatoshi(sum: amountTF.text!) != 0 {
             self.performSegue(withIdentifier: "sendFinishVC", sender: sender)
         } else {
             self.presentWarning(message: "You try to send 0.0 \(self.presenter.cryptoName).\nPlease enter the correct value")

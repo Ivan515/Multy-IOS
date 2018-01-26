@@ -156,7 +156,7 @@ class CoreLibManager: NSObject {
             addressString = String(cString: newAddressStringPointer.pointee!)
             print("addressString: \(addressString)")
             
-            walletDict["address"] = addressString
+            walletDict["address"] = addressString!
         }
         
         let gakPRIV = get_account_key(newAddressPointer.pointee, KEY_TYPE_PRIVATE, addressPrivateKeyPointer)
@@ -279,7 +279,7 @@ class CoreLibManager: NSObject {
             addressString = String(cString: newAddressStringPointer.pointee!)
             print("addressString: \(addressString)")
             
-            addressDict["address"] = addressString
+            addressDict["address"] = addressString!
         }
         
         let gakPRIV = get_account_key(newAddressPointer.pointee, KEY_TYPE_PRIVATE, addressPrivateKeyPointer)
