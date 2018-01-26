@@ -60,6 +60,10 @@ class SendDetailsViewController: UIViewController, UITextFieldDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.presenter.nullifyDonation()
+        
+        if screenHeight == 812 {
+            bottomBtnConstraint.constant = 0
+        }
     }
     
     func setupDonationUI() {
@@ -124,7 +128,7 @@ class SendDetailsViewController: UIViewController, UITextFieldDelegate {
             if self.view.frame.origin.y != 0{
                 self.view.frame.origin.y += keyboardSize.height
                 if screenHeight == 812 {
-                    bottomBtnConstraint.constant += 35
+                    bottomBtnConstraint.constant = 0
                 }
             }
         }
