@@ -190,8 +190,8 @@ class RealmManager: NSObject {
                         accountRLM.binaryDataString = accountDict["binaryData"] as! String
                     }
                     
-                    if accountDict["topindex"] != nil {
-                        accountRLM.topIndex = accountDict["topindex"] as! NSNumber
+                    if accountDict["topindexes"] != nil {
+                        accountRLM.topIndexes = TopIndexRLM.initWithArray(indexesArray: accountDict["topindexes"] as! NSArray)
                     }
                     
                     if accountDict["wallets"] != nil && !(accountDict["wallets"] is NSNull) {

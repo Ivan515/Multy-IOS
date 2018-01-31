@@ -414,7 +414,7 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath == [0, 1] {
-            cell.setCorners()
+//            cell.setCorners()
         }
     }
     

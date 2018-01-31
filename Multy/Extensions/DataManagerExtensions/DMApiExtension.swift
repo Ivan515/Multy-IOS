@@ -189,7 +189,7 @@ extension DataManager {
         apiManager.getWalletsVerbose(token) { (answer, err) in
             if err == nil {
                 let dict = NSMutableDictionary()
-                dict["topindex"] = answer!["topindex"]
+                dict["topindexes"] = answer!["topindexes"]
                 
                 DataManager.shared.realmManager.updateAccount(dict, completion: { (_, _) in })
                 
@@ -268,8 +268,8 @@ extension DataManager {
         }
     }
     
-    func changeWalletName(_ token: String, walletID: NSNumber, newName: String, completion: @escaping(_ answer: NSDictionary?,_ error: Error?) -> ()) {
-        apiManager.changeWalletName(token, walletID: walletID, newName: newName) { (answer, error) in
+    func changeWalletName(_ token: String, currencyID: NSNumber, walletID: NSNumber, newName: String, completion: @escaping(_ answer: NSDictionary?,_ error: Error?) -> ()) {
+        apiManager.changeWalletName(token, currencyID: currencyID, walletID: walletID, newName: newName) { (answer, error) in
             if error == nil {
                 if answer != nil {
                     
@@ -278,6 +278,12 @@ extension DataManager {
             } else {
                 completion(nil, error)
             }
+        }
+    }
+    
+    func sendHDTransaction(_ token: String, transactionParameters: Parameters, completion: @escaping (_ answer: NSDictionary?,_ error: Error?) -> ()) {
+        apiManager.sendHDTransaction(token, transactionParameters: transactionParameters) { (answer, error) in
+            completion(answer, error)
         }
     }
 }
