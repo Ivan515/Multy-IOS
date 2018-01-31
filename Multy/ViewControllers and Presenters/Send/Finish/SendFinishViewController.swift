@@ -31,6 +31,9 @@ class SendFinishViewController: UIViewController, UITextFieldDelegate {
         self.presenter.sendFinishVC = self
         self.hideKeyboardWhenTappedAround()
         self.presenter.makeEndSum()
+        
+        self.noteTF.delegate = self
+        
         self.setupUI()
     }
     
@@ -63,36 +66,47 @@ class SendFinishViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func nextAction(_ sender: Any) {
         let newAddressParams = [
-            "walletIndex" : presenter.walletFrom!.walletID.intValue,
-            "address" : presenter.addressData!["address"] as! String,
-            "addressIndex" : presenter.walletFrom!.addresses.count,
-            "currencyID" : presenter.walletFrom!.chain.intValue
+            "walletindex"   : presenter.walletFrom!.walletID.intValue,
+            "address"       : presenter.addressData!["address"] as! String,
+            "addressindex"  : presenter.walletFrom!.addresses.count,
+            "transaction"   : self.presenter.rawTransaction!,
+            "ishd"          : NSNumber(booleanLiteral: true)
             ] as [String : Any]
         
-        //        parameters["walletIndex"] = wallet.walletID
-        //        parameters["address"] = newAddressDict!["address"] as! String
-        //        parameters["addressIndex"] = UInt32(wallet.addresses.count)
+        let params = [
+            "currencyid": presenter.walletFrom!.chain,
+            "payload"   : newAddressParams
+            ] as [String : Any]
         
-        //MARK: add transaction
-        DataManager.shared.addAddress(presenter.account!.token, params: newAddressParams) { (dict, error) in
-            if error != nil {
-                
-                
-                return
-            }
-            
-            let params = [
-                "transaction" : self.presenter.rawTransaction!
-                ] as [String : Any]
-            
-            DataManager.shared.apiManager.sendRawTransaction(self.presenter.account!.token,
-                                                             walletID: self.presenter.walletFrom!.walletID,
-                                                             transactionParameters: params,
-                                                             completion: { (dict, error) in
-                                                                print("---------\(dict)")
-                                                                self.performSegue(withIdentifier: "sendingAnimationVC", sender: sender)
-            })
+        DataManager.shared.sendHDTransaction(presenter.account!.token, transactionParameters: params) { (dict, error) in
+            print("---------\(dict)")
+            self.performSegue(withIdentifier: "sendingAnimationVC", sender: sender)
         }
+        
+//        DataManager.shared.addAddress(presenter.account!.token, params: newAddressParams) { (dict, error) in
+//            if error != nil {
+//
+//
+//                return
+//            }
+//
+//            let params = [
+//                "transaction" : self.presenter.rawTransaction!
+//                ] as [String : Any]
+//
+//            DataManager.shared.apiManager.sendRawTransaction(self.presenter.account!.token,
+//                                                             walletID: self.presenter.walletFrom!.walletID,
+//                                                             transactionParameters: params,
+//                                                             completion: { (dict, error) in
+//                                                                print("---------\(dict)")
+//                                                                self.performSegue(withIdentifier: "sendingAnimationVC", sender: sender)
+//            })
+//        }
     }
 
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        
+        return true
+    }
 }

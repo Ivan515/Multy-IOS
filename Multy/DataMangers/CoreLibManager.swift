@@ -508,7 +508,7 @@ class CoreLibManager: NSObject {
         
         
         let maxFee = UInt32(feePerByteAmount)!
-        let maxFeeString = String(maxFee + (maxFee / 20))
+        let maxFeeString = String(maxFee + (maxFee / 5))// 20% error
         //Amount
         setAmountValue(key: "amount_per_byte", value: feePerByteAmount, pointer: fee.pointee!)
         setAmountValue(key: "max_amount_per_byte", value: maxFeeString, pointer: fee.pointee!) // optional

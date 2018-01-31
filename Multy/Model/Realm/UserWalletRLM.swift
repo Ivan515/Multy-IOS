@@ -36,10 +36,10 @@ class UserWalletRLM: Object {
             var sum : UInt32 = 0
             
             for address in addresses {
-                for out in address.spendableOutput {
-                    sum += out.transactionOutAmount.uint32Value
-                }
-//                sum += address.amount.uint32Value
+//                for out in address.spendableOutput {
+//                    sum += out.transactionOutAmount.uint32Value
+//                }
+                sum += address.amount.uint32Value
             }
             
             sumInCrypto = Double(sum) / 100000000.0
@@ -66,6 +66,7 @@ class UserWalletRLM: Object {
             wallet.chain = NSNumber(value: chain as! UInt32)
         }
         
+        //MARK: to be deleted
         if let walletID = walletInfo["WalletIndex"]  {
             wallet.walletID = NSNumber(value: walletID as! UInt32)
         }
@@ -92,7 +93,7 @@ class UserWalletRLM: Object {
     
     public func updateWalletWithInfo(walletInfo: NSDictionary) {
         
-        
+        //MARK: to be deleted
         if let addresses = walletInfo["Adresses"] {
             self.addresses = AddressRLM.initWithArray(addressesInfo: addresses as! NSArray)
         }
