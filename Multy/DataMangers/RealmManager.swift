@@ -191,7 +191,12 @@ class RealmManager: NSObject {
                     }
                     
                     if accountDict["topindexes"] != nil {
-                        accountRLM.topIndexes = TopIndexRLM.initWithArray(indexesArray: accountDict["topindexes"] as! NSArray)
+                        let newTopIndexes = TopIndexRLM.initWithArray(indexesArray: accountDict["topindexes"] as! NSArray)
+                        accountRLM.topIndexes.removeAll()
+                        for newIndex in newTopIndexes {
+                            accountRLM.topIndexes.append(newIndex)
+                        }
+//                        accountRLM.topIndexes = TopIndexRLM.initWithArray(indexesArray: accountDict["topindexes"] as! NSArray)
                     }
                     
                     if accountDict["wallets"] != nil && !(accountDict["wallets"] is NSNull) {
