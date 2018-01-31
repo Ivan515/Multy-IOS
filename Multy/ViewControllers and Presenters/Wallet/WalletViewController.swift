@@ -94,10 +94,15 @@ class WalletViewController: UIViewController {
 //
         if #available(iOS 11.0, *) {
             tableView.contentInsetAdjustmentBehavior = .never
+            if self.tableView.cellForRow(at: [0,0]) == nil {
+                return
+            }
             let headerCell = self.tableView.cellForRow(at: [0,0]) as! MainWalletHeaderCell
-            headerCell.applyGradient(withColours: [UIColor(ciColor: CIColor(red: 0/255, green: 178/255, blue: 255/255)),
-                                                   UIColor(ciColor: CIColor(red: 0/255, green: 122/255, blue: 255/255))],
-                                     gradientOrientation: .topRightBottomLeft)
+//            headerCell.backView.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "gradientForWallet"))
+//            headerCell.applyGradient(withColours: [UIColor(ciColor: CIColor(red: 0/255, green: 178/255, blue: 255/255)),
+//                                                   UIColor(ciColor: CIColor(red: 0/255, green: 122/255, blue: 255/255))],
+//                                     gradientOrientation: .topRightBottomLeft)
+//            headerCell.backgroundColor = .red
         } else {
             self.tableView.applyGradient(withColours: [UIColor(ciColor: CIColor(red: 0/255, green: 178/255, blue: 255/255)),
                                                        UIColor(ciColor: CIColor(red: 0/255, green: 122/255, blue: 255/255))],
@@ -230,22 +235,22 @@ class WalletViewController: UIViewController {
                                                        UIColor(ciColor: CIColor(red: 0/255, green: 122/255, blue: 255/255))],
                                          gradientOrientation: .topRightBottomLeft)
         }
+//
+//        self.view.applyGradient(withColours: [UIColor(ciColor: CIColor(red: 0/255, green: 178/255, blue: 255/255)),
+//                                                   UIColor(ciColor: CIColor(red: 0/255, green: 122/255, blue: 255/255))],
+//                                     gradientOrientation: .topRightBottomLeft)
+//
+//
+//        self.backView.applyGradient(withColours: [UIColor(ciColor: CIColor(red: 0/255, green: 178/255, blue: 255/255)),
+//                                                  UIColor(ciColor: CIColor(red: 0/255, green: 122/255, blue: 255/255))],
+//                                    gradientOrientation: .topRightBottomLeft)
         
-        self.view.applyGradient(withColours: [UIColor(ciColor: CIColor(red: 0/255, green: 178/255, blue: 255/255)),
-                                                   UIColor(ciColor: CIColor(red: 0/255, green: 122/255, blue: 255/255))],
-                                     gradientOrientation: .topRightBottomLeft)
-
-        
-        self.backView.applyGradient(withColours: [UIColor(ciColor: CIColor(red: 0/255, green: 178/255, blue: 255/255)),
-                                                  UIColor(ciColor: CIColor(red: 0/255, green: 122/255, blue: 255/255))],
-                                    gradientOrientation: .topRightBottomLeft)
-        
-        let headerCell = tableView.cellForRow(at:IndexPath(row: 0, section: 0)) as! MainWalletHeaderCell
+//        let headerCell = tableView.cellForRow(at:IndexPath(row: 0, section: 0)) as! MainWalletHeaderCell
         
 //        headerCell.backView.applyGradient(withColours: [UIColor(ciColor: CIColor(red: 0/255, green: 178/255, blue: 255/255)),
 //                                                        UIColor(ciColor: CIColor(red: 0/255, green: 122/255, blue: 255/255))],
 //                                          gradientOrientation: .topRightBottomLeft)
-        headerCell.backgroundColor = .clear
+//        headerCell.backView.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "gradientForWallet"))
 //        headerCell.podlojkaView.applyGradient(withColours: [UIColor(ciColor: CIColor(red: 0/255, green: 178/255, blue: 255/255)),
 //                                                            UIColor(ciColor: CIColor(red: 0/255, green: 122/255, blue: 255/255))],
 //                                              gradientOrientation: .topRightBottomLeft)
@@ -401,6 +406,9 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
             let heightForFirstCell : CGFloat = presenter.blockedAmount == 0 ? 272.0 : 332.0
             
             backUpView(height: heightForFirstCell)
+            if heightForFirstCell == 332 {
+                setGradientBackground()
+            }
             
             return heightForFirstCell /* (screenWidth / 375.0)*/
         } else { //if indexPath == [0,1] || self.presenter.numberOfTransactions() > 0 {

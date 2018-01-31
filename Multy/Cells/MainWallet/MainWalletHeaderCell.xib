@@ -25,6 +25,9 @@
                 <rect key="frame" x="0.0" y="0.0" width="375" height="331.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gradientForWallet" translatesAutoresizingMaskIntoConstraints="NO" id="V9a-Am-ouD">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="331.5"/>
+                    </imageView>
                     <pageControl hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="Rya-sD-JBP">
                         <rect key="frame" x="168" y="294.5" width="39" height="37"/>
                     </pageControl>
@@ -92,13 +95,17 @@
                     <constraint firstItem="prT-1y-lyc" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="FPP-iW-WVh"/>
                     <constraint firstItem="Rya-sD-JBP" firstAttribute="top" secondItem="oci-Q7-YYq" secondAttribute="bottom" constant="-15" id="PSk-jr-XJ2"/>
                     <constraint firstItem="oci-Q7-YYq" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Poa-UB-qZs"/>
+                    <constraint firstAttribute="bottom" secondItem="V9a-Am-ouD" secondAttribute="bottom" id="Ppe-Vi-YiX"/>
                     <constraint firstAttribute="trailing" secondItem="oci-Q7-YYq" secondAttribute="trailing" id="R4B-1h-vCr"/>
                     <constraint firstItem="oci-Q7-YYq" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="64" id="VZY-yx-uG7"/>
                     <constraint firstItem="oci-Q7-YYq" firstAttribute="top" secondItem="SDL-hS-0qY" secondAttribute="bottom" constant="12" id="Wz2-Ga-9S1"/>
                     <constraint firstItem="Rya-sD-JBP" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="YNr-Eq-xVI"/>
                     <constraint firstItem="oci-Q7-YYq" firstAttribute="top" secondItem="bew-sY-tZZ" secondAttribute="bottom" constant="10" id="Yhj-yo-x1g"/>
+                    <constraint firstItem="V9a-Am-ouD" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="ahM-MU-HTm"/>
                     <constraint firstItem="bew-sY-tZZ" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="gPX-6n-bH0"/>
                     <constraint firstAttribute="trailing" secondItem="57B-xg-IGV" secondAttribute="trailing" id="iUM-j6-ut7"/>
+                    <constraint firstAttribute="trailing" secondItem="V9a-Am-ouD" secondAttribute="trailing" id="sQo-Lh-nVX"/>
+                    <constraint firstItem="V9a-Am-ouD" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="vG5-tq-WFU"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -112,6 +119,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="gradientForWallet" width="332" height="375"/>
         <image name="settings" width="25" height="20"/>
     </resources>
 </document>
