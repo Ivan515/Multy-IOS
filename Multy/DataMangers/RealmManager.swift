@@ -196,7 +196,11 @@ class RealmManager: NSObject {
                         for newIndex in newTopIndexes {
                             accountRLM.topIndexes.append(newIndex)
                         }
-//                        accountRLM.topIndexes = TopIndexRLM.initWithArray(indexesArray: accountDict["topindexes"] as! NSArray)
+                    }
+                    
+                    //MARK: create topIndexes for all currencies
+                    if accountRLM.topIndexes.count == 0 {
+                        accountRLM.topIndexes.append(TopIndexRLM.createDefaultIndex(currencyID: 0, topIndex: 0))
                     }
                     
                     if accountDict["wallets"] != nil && !(accountDict["wallets"] is NSNull) {

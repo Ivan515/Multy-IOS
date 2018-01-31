@@ -20,6 +20,14 @@ class TopIndexRLM: Object {
         return topIndexes
     }
     
+    public class func createDefaultIndex(currencyID: NSNumber, topIndex: NSNumber) -> TopIndexRLM {
+        let newTopIndex = TopIndexRLM()
+        newTopIndex.currencyID = currencyID
+        newTopIndex.topIndex = topIndex
+        
+        return newTopIndex
+    }
+    
     public class func initWithInfo(indexDict: NSDictionary) -> TopIndexRLM {
         let topIndexRLM = TopIndexRLM()
         
@@ -28,7 +36,7 @@ class TopIndexRLM: Object {
         }
         
         if let index = indexDict["topindex"] as? UInt32 {
-            topIndexRLM.topIndex = NSNumber(value: index as! UInt32)
+            topIndexRLM.topIndex = NSNumber(value: index)
         }
         
         return topIndexRLM
