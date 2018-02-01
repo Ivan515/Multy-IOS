@@ -24,6 +24,12 @@ class TransactionViewController: UIViewController {
     @IBOutlet weak var viewInBlockchainBtn: UIButton!
     @IBOutlet weak var constraintNoteFiatSum: NSLayoutConstraint! // set 20 if note == "
     
+    @IBOutlet weak var donationView: UIView!
+    @IBOutlet weak var donationCryptoSum: UILabel!
+    @IBOutlet weak var donationCryptoName: UILabel!
+    @IBOutlet weak var donationFiatSumAndName: UILabel!
+    @IBOutlet weak var constraintDonationHeight: NSLayoutConstraint!
+    
     let presenter = TransactionPresenter()
     
     var isForReceive = true
@@ -33,6 +39,8 @@ class TransactionViewController: UIViewController {
     var fiatSum = 1255.23
     var fiatName = "USD"
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.presenter.transctionVC = self
@@ -40,12 +48,15 @@ class TransactionViewController: UIViewController {
         self.tabBarController?.tabBar.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
         self.checkHeightForSrollAvailability()
         self.checkForSendOrReceive()
+        self.constraintDonationHeight.constant = 0
+        self.donationView.isHidden = true
+        self.updateUI()
     }
 
     func checkHeightForSrollAvailability() {
-        if screenHeight >= 667 {
-            self.scrollView.isScrollEnabled = false
-        }
+//        if screenHeight >= 667 {
+//            self.scrollView.isScrollEnabled = false
+//        }
     }
     
     func checkForSendOrReceive() {
@@ -69,6 +80,30 @@ class TransactionViewController: UIViewController {
         }
     }
     
+    func updateUI() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm, d MMMM yyyy"
+        
+        let cryptoSumInBTC = convertSatoshiToBTC(sum: UInt32(truncating: presenter.histObj.txOutAmount))
+        
+        self.dateLbl.text = dateFormatter.string(from: presenter.histObj.blockTime)
+        self.transctionSumLbl.text = "+\(cryptoSumInBTC.fixedFraction(digits: 8))"
+//        self.transactionCurencyLbl.text = presenter.histObj.     // check currencyID
+        self.sumInFiatLbl.text = "+\((cryptoSumInBTC * presenter.histObj.btcToUsd).fixedFraction(digits: 2)) USD"
+        self.noteLbl.text = "" // NOTE FROM HIST OBJ
+        self.noteLbl.frame.size.height = 0
+        var addressFromArr = String()
+        for output in presenter.histObj.txOutputs {
+            if output.address != presenter.histObj.addresses {
+                addressFromArr.append(output.address)
+            }
+        }
+        self.walletFromAddressLbl.text = addressFromArr
+        self.personNameLbl.text = ""   // before we don`t have address book
+        self.walletToAddressLbl.text = presenter.histObj.addresses
+        self.numberOfConfirmationLbl.text = "\(presenter.histObj.confirmations) Confirmation"
+    }
+    
     func makeBackColor(color: UIColor) {
         self.backView.backgroundColor = color
         self.scrollView.backgroundColor = color
@@ -77,4 +112,16 @@ class TransactionViewController: UIViewController {
     @IBAction func closeAction() {
         self.navigationController?.popViewController(animated: true)
     }
+    
+    @IBAction func viewInBlockchainAction(_ sender: Any) {
+        self.performSegue(withIdentifier: "viewInBlockchain", sender: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "viewInBlockchain" {
+            let blockchainVC = segue.destination as! ViewInBlockchainViewController
+            blockchainVC.presenter.txId = presenter.histObj.txId
+        }
+    }
+    
 }

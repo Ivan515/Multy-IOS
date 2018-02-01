@@ -290,7 +290,7 @@ operations</string>
         <!--Transaction View Controller-->
         <scene sceneID="jGO-jn-49b">
             <objects>
-                <viewController id="ckJ-B1-hh7" customClass="TransactionViewController" customModule="Multy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="transaction" id="ckJ-B1-hh7" customClass="TransactionViewController" customModule="Multy" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ZB8-eH-QIS"/>
                         <viewControllerLayoutGuide type="bottom" id="SKe-xc-jl5"/>
@@ -412,6 +412,9 @@ operations</string>
                                                 <state key="normal" title="View in Blockchain">
                                                     <color key="titleColor" red="0.52941176470588236" green="0.63137254901960782" blue="0.77254901960784317" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="viewInBlockchainAction:" destination="ckJ-B1-hh7" eventType="touchUpInside" id="1Xy-Bd-7v3"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+1 174.23 USD" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qh1-1f-JrE">
                                                 <rect key="frame" x="115" y="193" width="114.5" height="22"/>
@@ -434,6 +437,7 @@ operations</string>
                                             <constraint firstItem="rfk-4F-99R" firstAttribute="centerX" secondItem="IJm-Zq-RUr" secondAttribute="centerX" id="JJB-0I-TgL"/>
                                             <constraint firstItem="Qh1-1f-JrE" firstAttribute="top" secondItem="UbC-Ss-oxD" secondAttribute="bottom" id="KK7-4Q-8vX"/>
                                             <constraint firstItem="MEE-0Q-sGQ" firstAttribute="centerX" secondItem="IJm-Zq-RUr" secondAttribute="centerX" id="LHk-tx-fqk"/>
+                                            <constraint firstItem="gD8-96-tqJ" firstAttribute="top" secondItem="6Xm-oq-X8u" secondAttribute="bottom" constant="20" id="LTc-ZC-RGv"/>
                                             <constraint firstItem="9hc-Ew-5Gb" firstAttribute="top" secondItem="gD8-96-tqJ" secondAttribute="bottom" id="RHq-NU-Q5L"/>
                                             <constraint firstItem="sT9-uh-D9q" firstAttribute="centerX" secondItem="FwO-hi-BCf" secondAttribute="centerX" id="Rxm-Cf-oGZ"/>
                                             <constraint firstItem="hp0-QC-1aO" firstAttribute="top" secondItem="Qh1-1f-JrE" secondAttribute="bottom" constant="51.5" id="UH7-bo-PC2"/>
@@ -451,7 +455,6 @@ operations</string>
                                             <constraint firstItem="at1-D3-zOM" firstAttribute="centerX" secondItem="IJm-Zq-RUr" secondAttribute="centerX" id="gz3-o2-qaW"/>
                                             <constraint firstItem="9hc-Ew-5Gb" firstAttribute="leading" secondItem="IJm-Zq-RUr" secondAttribute="leading" id="ium-7Q-NNL"/>
                                             <constraint firstItem="ewV-6V-pAK" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="IJm-Zq-RUr" secondAttribute="leading" constant="10" id="lRL-vt-Nwq"/>
-                                            <constraint firstAttribute="height" constant="530" id="lWX-1P-aUn"/>
                                             <constraint firstItem="6Xm-oq-X8u" firstAttribute="centerX" secondItem="IJm-Zq-RUr" secondAttribute="centerX" id="m59-w7-dVy"/>
                                             <constraint firstItem="Rbf-Dw-blV" firstAttribute="top" secondItem="Qh1-1f-JrE" secondAttribute="bottom" constant="20" id="nFQ-zR-dHe"/>
                                             <constraint firstItem="FwO-hi-BCf" firstAttribute="centerX" secondItem="IJm-Zq-RUr" secondAttribute="centerX" id="qEt-Qs-r1V"/>
@@ -551,7 +554,7 @@ operations</string>
                                     <constraint firstItem="Ssb-nB-rPb" firstAttribute="leading" secondItem="IJm-Zq-RUr" secondAttribute="leading" id="9YI-8e-9gP"/>
                                     <constraint firstItem="IJm-Zq-RUr" firstAttribute="top" secondItem="I4U-wc-DLI" secondAttribute="bottom" constant="14" id="Cbb-QZ-dKZ"/>
                                     <constraint firstItem="I4U-wc-DLI" firstAttribute="centerX" secondItem="2bc-PL-C8n" secondAttribute="centerX" id="FHC-t0-bUP"/>
-                                    <constraint firstAttribute="bottom" secondItem="Ssb-nB-rPb" secondAttribute="bottom" constant="16" id="Gr2-Hd-lVh"/>
+                                    <constraint firstAttribute="bottom" secondItem="Ssb-nB-rPb" secondAttribute="bottom" constant="20" id="Gr2-Hd-lVh"/>
                                     <constraint firstItem="Ssb-nB-rPb" firstAttribute="top" secondItem="IJm-Zq-RUr" secondAttribute="bottom" constant="16" id="NnG-Gd-Zr8"/>
                                     <constraint firstItem="uDZ-qU-zHH" firstAttribute="leading" secondItem="2bc-PL-C8n" secondAttribute="leading" id="OSy-j6-RMI"/>
                                     <constraint firstItem="uDZ-qU-zHH" firstAttribute="trailing" secondItem="j41-bT-TYo" secondAttribute="trailing" constant="50" id="QPA-4w-ehU"/>
@@ -578,8 +581,13 @@ operations</string>
                         <outlet property="arrowImg" destination="FwO-hi-BCf" id="LVG-NK-ccR"/>
                         <outlet property="backView" destination="CHj-pJ-c9i" id="pMB-NL-Jac"/>
                         <outlet property="blockchainImg" destination="sT9-uh-D9q" id="ufj-ax-oOb"/>
+                        <outlet property="constraintDonationHeight" destination="0og-eb-YdS" id="NR2-Zr-NNJ"/>
                         <outlet property="constraintNoteFiatSum" destination="UH7-bo-PC2" id="zi0-De-c9M"/>
                         <outlet property="dateLbl" destination="ewV-6V-pAK" id="1OL-Va-Qfb"/>
+                        <outlet property="donationCryptoName" destination="SDr-Di-etU" id="cQ6-Mi-3Sr"/>
+                        <outlet property="donationCryptoSum" destination="jBc-LF-5Kf" id="Ug8-Kl-dNj"/>
+                        <outlet property="donationFiatSumAndName" destination="Nai-av-9HA" id="KAz-Ta-5Tg"/>
+                        <outlet property="donationView" destination="Ssb-nB-rPb" id="MFB-oK-tmB"/>
                         <outlet property="noteLbl" destination="Rbf-Dw-blV" id="Wd6-hm-ELT"/>
                         <outlet property="numberOfConfirmationLbl" destination="6Xm-oq-X8u" id="Zca-Ph-czt"/>
                         <outlet property="personNameLbl" destination="Dgq-hX-nSS" id="GVJ-NF-6qn"/>
@@ -592,11 +600,63 @@ operations</string>
                         <outlet property="viewInBlockchainBtn" destination="9hc-Ew-5Gb" id="Xfo-iY-cpV"/>
                         <outlet property="walletFromAddressLbl" destination="hp0-QC-1aO" id="R8r-MI-Hrm"/>
                         <outlet property="walletToAddressLbl" destination="rfk-4F-99R" id="QV9-NW-zwh"/>
+                        <segue destination="aaV-AB-1NL" kind="show" identifier="viewInBlockchain" id="Dzf-cO-OrY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3kP-nK-IcC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="684" y="-339.13043478260875"/>
+        </scene>
+        <!--View In Blockchain View Controller-->
+        <scene sceneID="BTL-Ke-rS8">
+            <objects>
+                <viewController id="aaV-AB-1NL" customClass="ViewInBlockchainViewController" customModule="Multy" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="JkB-6E-Jqa"/>
+                        <viewControllerLayoutGuide type="bottom" id="exA-CS-1fw"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="6SZ-SU-G7x">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6p7-Q6-H26">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </webView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="backGrey" translatesAutoresizingMaskIntoConstraints="NO" id="GfT-DZ-979">
+                                <rect key="frame" x="16" y="40" width="12" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="12" id="UYV-Ar-uAr"/>
+                                    <constraint firstAttribute="height" constant="21" id="v6f-1Q-9cG"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JED-BP-ugC">
+                                <rect key="frame" x="0.0" y="40" width="48" height="30"/>
+                                <connections>
+                                    <action selector="backAction:" destination="aaV-AB-1NL" eventType="touchUpInside" id="Yhy-YE-4Ep"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="6p7-Q6-H26" firstAttribute="top" secondItem="JkB-6E-Jqa" secondAttribute="bottom" id="2jW-G4-tgp"/>
+                            <constraint firstItem="GfT-DZ-979" firstAttribute="leading" secondItem="6SZ-SU-G7x" secondAttribute="leading" constant="16" id="3fj-0v-wGf"/>
+                            <constraint firstItem="6p7-Q6-H26" firstAttribute="leading" secondItem="6SZ-SU-G7x" secondAttribute="leading" id="Gr4-eY-Neu"/>
+                            <constraint firstItem="JED-BP-ugC" firstAttribute="top" secondItem="GfT-DZ-979" secondAttribute="top" id="HCr-i6-6Wt"/>
+                            <constraint firstItem="exA-CS-1fw" firstAttribute="top" secondItem="6p7-Q6-H26" secondAttribute="bottom" id="KtG-O7-KBq"/>
+                            <constraint firstItem="JED-BP-ugC" firstAttribute="leading" secondItem="6SZ-SU-G7x" secondAttribute="leading" id="VQl-Hc-Rcc"/>
+                            <constraint firstItem="JED-BP-ugC" firstAttribute="trailing" secondItem="GfT-DZ-979" secondAttribute="trailing" constant="20" id="YPe-l9-kCV"/>
+                            <constraint firstItem="GfT-DZ-979" firstAttribute="top" secondItem="JkB-6E-Jqa" secondAttribute="bottom" constant="20" id="syE-eO-Bom"/>
+                            <constraint firstAttribute="trailing" secondItem="6p7-Q6-H26" secondAttribute="trailing" id="vmV-4d-maJ"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="webView" destination="6p7-Q6-H26" id="Bfx-bp-ZXk"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Hgj-A6-Rqv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1598" y="-417"/>
         </scene>
         <!--Address View Controller-->
         <scene sceneID="lsk-9P-QHz">

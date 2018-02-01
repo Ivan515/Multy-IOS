@@ -97,7 +97,7 @@ class WalletViewController: UIViewController {
             if self.tableView.cellForRow(at: [0,0]) == nil {
                 return
             }
-            let headerCell = self.tableView.cellForRow(at: [0,0]) as! MainWalletHeaderCell
+//            let headerCell = self.tableView.cellForRow(at: [0,0]) as! MainWalletHeaderCell
 //            headerCell.backView.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "gradientForWallet"))
 //            headerCell.applyGradient(withColours: [UIColor(ciColor: CIColor(red: 0/255, green: 178/255, blue: 255/255)),
 //                                                   UIColor(ciColor: CIColor(red: 0/255, green: 122/255, blue: 255/255))],
@@ -277,8 +277,9 @@ class WalletViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "transactionVC" {
-            let vc = segue.destination as! TransactionViewController
-            vc.isForReceive = self.even
+            let transactionVc = segue.destination as! TransactionViewController
+            transactionVc.isForReceive = self.even
+            
         } else if segue.identifier == "settingsVC" {
             let settingsVC = segue.destination as! WalletSettingsViewController
             settingsVC.presenter.wallet = self.presenter.wallet
@@ -399,6 +400,11 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
 //            self.even = false
 //        }x
 //        self.performSegue(withIdentifier: "transactionVC", sender: Any.self)
+        let storyBoard = UIStoryboard(name: "Wallet", bundle: nil)
+        let transactionVC = storyBoard.instantiateViewController(withIdentifier: "transaction") as! TransactionViewController
+        transactionVC.presenter.histObj = presenter.historyArray[indexPath.row - 1]
+        
+        self.navigationController?.pushViewController(transactionVC, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
