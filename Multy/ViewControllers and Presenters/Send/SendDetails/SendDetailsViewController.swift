@@ -153,7 +153,10 @@ class SendDetailsViewController: UIViewController, UITextFieldDelegate {
                 self.constraintDonationHeight.constant
         }
         self.hideOrShowDonationBottom()
-        self.scrollView.scrollRectToVisible(self.nextBtn.frame, animated: true)
+//        self.scrollView.scrollRectToVisible(self.nextBtn.frame, animated: true)
+        var offset = scrollView.contentOffset
+        offset.y = scrollView.contentSize.height + scrollView.contentInset.bottom - scrollView.bounds.size.height - 75
+        scrollView.setContentOffset(offset, animated: true)
     }
     
     func hideOrShowDonationBottom() {
