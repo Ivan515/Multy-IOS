@@ -26,20 +26,22 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var constraintNextBtnBottom: NSLayoutConstraint!
     @IBOutlet weak var constratintNextBtnHeight: NSLayoutConstraint!
     @IBOutlet weak var constraintForTitletoBtn: NSLayoutConstraint!
+    @IBOutlet weak var constraintSpendableViewBottom: NSLayoutConstraint!
+    @IBOutlet weak var constraintTop: NSLayoutConstraint!
     
     let presenter = SendAmountPresenter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        presenter.sendAmountVC = self
-        presenter.setAmountFromQr()
-        presenter.cryptoToUsd()
-        presenter.setSpendableAmountText()
-        presenter.setMaxAllowed()
-        presenter.makeMaxSumWithFeeAndDonate()
-        setSumInNextBtn()
-//
-        presenter.getData()
+//        presenter.sendAmountVC = self
+//        presenter.setAmountFromQr()
+//        presenter.cryptoToUsd()
+//        presenter.setSpendableAmountText()
+//        presenter.setMaxAllowed()
+//        presenter.makeMaxSumWithFeeAndDonate()
+//        setSumInNextBtn()
+////
+//        presenter.getData()
     }
     
     override func viewDidLayoutSubviews() {
@@ -299,8 +301,17 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate {
         if screenHeight == 480 { 
             let bottomOffset = CGPoint(x: 0, y: scrollView.contentSize.height - scrollView.bounds.size.height - 50)
             scrollView.setContentOffset(bottomOffset, animated: true)
+            self.constraintSpendableViewBottom.constant = 0
+            self.constraintForTitletoBtn.constant = 10
         } else if screenHeight == 812 {
             self.constraintForTitletoBtn.constant = 175
+        } else if screenHeight == 736 {
+            self.constraintForTitletoBtn.constant = 165
+        } else if screenHeight == 568 {
+            self.constraintForTitletoBtn.constant = 20
+            self.constraintSpendableViewBottom.constant = 0
+            self.constraintTop.constant = 20
+            self.scrollView.isScrollEnabled = false
         }
     }
 }
