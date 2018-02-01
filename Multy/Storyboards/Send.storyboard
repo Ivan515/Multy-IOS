@@ -664,18 +664,18 @@ This feature will be in the next update.</string>
                                 <color key="textColor" red="0.97647058819999999" green="0.98039215690000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uDq-Td-EBb">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uDq-Td-EBb">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="backGrey" translatesAutoresizingMaskIntoConstraints="NO" id="Lm1-SW-8dk">
-                                        <rect key="frame" x="16" y="33" width="13" height="21"/>
+                                        <rect key="frame" x="16" y="34.5" width="13" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="13" id="AQA-gx-oJL"/>
                                             <constraint firstAttribute="height" constant="21" id="XaL-VO-3Mc"/>
                                         </constraints>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D9i-dd-7eI" userLabel="back">
-                                        <rect key="frame" x="0.0" y="28" width="60" height="30"/>
+                                        <rect key="frame" x="0.0" y="34.5" width="60" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="60" id="Yd4-uV-FWa"/>
                                         </constraints>
@@ -827,7 +827,7 @@ This feature will be in the next update.</string>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="70x-BQ-w30" firstAttribute="centerX" secondItem="uDq-Td-EBb" secondAttribute="centerX" id="1QK-ib-Lcm"/>
-                                    <constraint firstItem="Lm1-SW-8dk" firstAttribute="top" secondItem="uDq-Td-EBb" secondAttribute="top" constant="33" id="4cR-QQ-rXn"/>
+                                    <constraint firstItem="Lm1-SW-8dk" firstAttribute="centerY" secondItem="VhT-01-bTB" secondAttribute="centerY" id="3Un-QL-QAD"/>
                                     <constraint firstItem="fOo-l7-Vq8" firstAttribute="bottom" secondItem="gfE-Vc-rTR" secondAttribute="bottom" constant="-15" id="8jK-nA-1j1"/>
                                     <constraint firstItem="bZE-Cd-gDu" firstAttribute="centerX" secondItem="uDq-Td-EBb" secondAttribute="centerX" id="9GC-nw-scf"/>
                                     <constraint firstItem="gfE-Vc-rTR" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="uDq-Td-EBb" secondAttribute="leading" priority="990" constant="20" id="AcU-fU-Vdt"/>
@@ -845,16 +845,16 @@ This feature will be in the next update.</string>
                                     <constraint firstAttribute="trailing" secondItem="Rnf-u0-7bX" secondAttribute="trailing" id="adX-vI-BAa"/>
                                     <constraint firstItem="1r8-E7-NF8" firstAttribute="top" secondItem="tyQ-1e-aWF" secondAttribute="bottom" constant="15" id="apj-dr-7vC"/>
                                     <constraint firstItem="Rnf-u0-7bX" firstAttribute="top" secondItem="1r8-E7-NF8" secondAttribute="bottom" constant="10" id="bIm-zv-uGT"/>
-                                    <constraint firstAttribute="bottom" secondItem="Rnf-u0-7bX" secondAttribute="bottom" id="bYx-4N-Wrh"/>
+                                    <constraint firstAttribute="bottom" secondItem="Rnf-u0-7bX" secondAttribute="bottom" constant="-44" id="bYx-4N-Wrh"/>
                                     <constraint firstItem="D9i-dd-7eI" firstAttribute="leading" secondItem="uDq-Td-EBb" secondAttribute="leading" id="ecU-Nu-VjJ"/>
-                                    <constraint firstItem="cLW-Qu-SGI" firstAttribute="top" secondItem="uDq-Td-EBb" secondAttribute="top" constant="26" id="fwq-Es-Uak"/>
                                     <constraint firstItem="70x-BQ-w30" firstAttribute="leading" secondItem="A45-fp-vZe" secondAttribute="trailing" constant="4" id="fyP-uk-opF"/>
                                     <constraint firstItem="70x-BQ-w30" firstAttribute="top" secondItem="gfE-Vc-rTR" secondAttribute="bottom" constant="-0.5" id="hM2-TY-UoJ"/>
                                     <constraint firstItem="bZE-Cd-gDu" firstAttribute="top" secondItem="gfE-Vc-rTR" secondAttribute="bottom" constant="-13.5" id="iaO-Yg-kxv"/>
                                     <constraint firstItem="Rnf-u0-7bX" firstAttribute="centerX" secondItem="uDq-Td-EBb" secondAttribute="centerX" id="j5Q-Vh-VM2"/>
-                                    <constraint firstItem="D9i-dd-7eI" firstAttribute="top" secondItem="uDq-Td-EBb" secondAttribute="top" constant="28" id="kCW-8y-aAT"/>
                                     <constraint firstItem="1r8-E7-NF8" firstAttribute="centerX" secondItem="uDq-Td-EBb" secondAttribute="centerX" id="nFa-j9-Aef"/>
+                                    <constraint firstItem="cLW-Qu-SGI" firstAttribute="centerY" secondItem="VhT-01-bTB" secondAttribute="centerY" id="pZx-21-J9n"/>
                                     <constraint firstAttribute="trailing" secondItem="cLW-Qu-SGI" secondAttribute="trailing" constant="16" id="pge-lL-wGL"/>
+                                    <constraint firstItem="D9i-dd-7eI" firstAttribute="top" secondItem="Lm1-SW-8dk" secondAttribute="top" id="sjW-UI-ksN"/>
                                     <constraint firstItem="fOo-l7-Vq8" firstAttribute="leading" secondItem="gfE-Vc-rTR" secondAttribute="trailing" id="szT-6r-cTL"/>
                                     <constraint firstItem="VhT-01-bTB" firstAttribute="centerX" secondItem="uDq-Td-EBb" secondAttribute="centerX" id="ttK-o3-4ti"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="fOo-l7-Vq8" secondAttribute="trailing" constant="20" id="xQ0-88-ytT"/>
@@ -886,6 +886,8 @@ This feature will be in the next update.</string>
                         <outlet property="commissionSwitch" destination="Bvb-dk-gfb" id="RCd-v2-the"/>
                         <outlet property="constraintForTitletoBtn" destination="RJ1-gs-5mw" id="gAI-bs-ePt"/>
                         <outlet property="constraintNextBtnBottom" destination="Bq3-lI-q8R" id="fiG-mw-0Dd"/>
+                        <outlet property="constraintSpendableViewBottom" destination="bYx-4N-Wrh" id="Sp0-OA-Alr"/>
+                        <outlet property="constraintTop" destination="M0o-zY-FNM" id="7YX-3a-m9m"/>
                         <outlet property="constratintNextBtnHeight" destination="RGo-sn-svA" id="YXL-gK-NCu"/>
                         <outlet property="maxBtn" destination="6NZ-xx-Nqv" id="pUa-8A-pPb"/>
                         <outlet property="maxLbl" destination="Xhi-Qs-0Ca" id="ArQ-Ci-rlc"/>
