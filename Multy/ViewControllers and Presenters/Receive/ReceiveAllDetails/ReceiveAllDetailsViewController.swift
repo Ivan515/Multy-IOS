@@ -80,7 +80,7 @@ class ReceiveAllDetailsViewController: UIViewController {
     func updateUIWithWallet() {
         self.walletNameLbl.text = self.presenter.wallet?.name
         self.walletCryptoSumBtn.setTitle("\((self.presenter.wallet?.sumInCrypto ?? 0.0).fixedFraction(digits: 8)) \(self.presenter.wallet?.cryptoName ?? "")", for: .normal)
-        self.walletFiatSumLbl.text = "\((self.presenter.wallet?.sumInFiat ?? 0.0).fixedFraction(digits: 2)) \(self.presenter.wallet?.fiatSymbol ?? "")"
+        self.walletFiatSumLbl.text = "\((self.presenter.wallet!.sumInCrypto * exchangeCourse).fixedFraction(digits: 2)) \(self.presenter.wallet?.fiatSymbol ?? "")"
         self.presenter.walletAddress = (self.presenter.wallet?.address)!
         self.addressLbl.text = self.presenter.walletAddress
     }

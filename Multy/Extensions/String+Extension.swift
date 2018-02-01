@@ -44,7 +44,11 @@ extension String {
         let formatter = NumberFormatter()
         formatter.numberStyle = NumberFormatter.Style.decimal
         formatter.decimalSeparator = ","
-        
-        return formatter.number(from: self)!.doubleValue
+        if let number = formatter.number(from: self) {
+            return number.doubleValue
+        } else {
+            return 0
+        }
+
     }
 }
