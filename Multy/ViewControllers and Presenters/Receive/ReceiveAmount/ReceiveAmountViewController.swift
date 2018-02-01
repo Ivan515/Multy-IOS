@@ -27,7 +27,7 @@ class ReceiveAmountViewController: UIViewController, UITextFieldDelegate {
     var fiatName = "USD"
     var cryptoName = "BTC"
     
-    var maxLengthForSum = 18
+    var maxLengthForSum = 20
     
     var delegate: ReceiveSumTransferProtocol?
     

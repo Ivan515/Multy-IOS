@@ -80,14 +80,14 @@ class WalletPresenter: NSObject {
     }
     
     func getHistoryAndWallet() {
-        DataManager.shared.getOneWalletVerbose(account!.token, walletID: wallet!.walletID) { (wallet, error) in
+        DataManager.shared.getOneWalletVerbose(walletID: wallet!.walletID) { (wallet, error) in
             if wallet != nil {
                 self.wallet = wallet
             }
         }
         
         
-        DataManager.shared.getTransactionHistory(token: account!.token, currencyID: wallet!.chain, walletID: wallet!.walletID) { (histList, err) in
+        DataManager.shared.getTransactionHistory(currencyID: wallet!.chain, walletID: wallet!.walletID) { (histList, err) in
             if err == nil && histList != nil {
                 self.historyArray = histList!.sorted(by: { $0.blockTime > $1.blockTime })
                 print("transaction history:\n\(histList)")

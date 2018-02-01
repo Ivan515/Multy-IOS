@@ -78,7 +78,7 @@ class SendFinishViewController: UIViewController, UITextFieldDelegate {
             "payload"   : newAddressParams
             ] as [String : Any]
         
-        DataManager.shared.sendHDTransaction(presenter.account!.token, transactionParameters: params) { (dict, error) in
+        DataManager.shared.sendHDTransaction(transactionParameters: params) { (dict, error) in
             print("---------\(dict)")
             
             if error != nil {

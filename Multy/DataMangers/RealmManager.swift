@@ -11,6 +11,8 @@ class RealmManager: NSObject {
     private var realm : Realm? = nil
     let schemaVersion : UInt64 = 12
     
+    var account: AccountRLM?
+    
     private override init() {
         super.init()
         
@@ -296,7 +298,8 @@ class RealmManager: NSObject {
             if let realm = realmOpt {
                 let acc = realm.object(ofType: AccountRLM.self, forPrimaryKey: 1)
                 if acc != nil {
-                    completion(acc, nil)
+                    self.account = acc!
+                    completion(acc!, nil)
                 } else {
                     completion(nil, nil)
                 }

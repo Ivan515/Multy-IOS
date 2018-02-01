@@ -50,7 +50,7 @@ class CreateWalletPresenter: NSObject {
             "walletName"      : cell.walletNameTF.text ?? "Wallet"
             ] as [String : Any]
         
-        DataManager.shared.addWallet(self.account!.token, params: params) { (dict, error) in
+        DataManager.shared.addWallet(params: params) { (dict, error) in
             if error == nil {
                 print(dict as Any)
                 self.mainVC?.cancleAction(UIButton())

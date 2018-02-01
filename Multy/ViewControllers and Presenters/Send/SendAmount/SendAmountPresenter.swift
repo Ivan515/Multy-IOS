@@ -63,7 +63,7 @@ class SendAmountPresenter: NSObject {
             
             self.createPreliminaryData()
             
-            DataManager.shared.getTransactionHistory(token: account!.token, currencyID: self.wallet!.chain, walletID: self.wallet!.walletID) { (histList, err) in
+            DataManager.shared.getTransactionHistory(currencyID: self.wallet!.chain, walletID: self.wallet!.walletID) { (histList, err) in
                 if err == nil && histList != nil {
                     self.historyArray = histList!
                 }
@@ -249,23 +249,23 @@ class SendAmountPresenter: NSObject {
     
     func saveTfValue() {
         if self.isCrypto {
-            self.sumInCrypto = ((self.sendAmountVC?.topSumLbl.text!)! as NSString).doubleValue
+            self.sumInCrypto = self.sendAmountVC!.topSumLbl.text!.toStringWithComma()
             self.sumInFiat = self.sumInCrypto * exchangeCourse
             self.sumInFiat = Double(round(100 * self.sumInFiat)/100)
-            if self.sumInFiat > (self.wallet?.sumInFiat)! {
-                self.sendAmountVC?.bottomSumLbl.text = "\(self.wallet?.sumInFiat ?? 0.0) "
+            if self.sumInFiat > self.wallet!.sumInFiat {
+                self.sendAmountVC?.bottomSumLbl.text = "\((self.wallet?.sumInFiat ?? 0.0).fixedFraction(digits: 2)) "
             } else {
-                self.sendAmountVC?.bottomSumLbl.text = "\(self.sumInFiat) "
+                self.sendAmountVC?.bottomSumLbl.text = "\(self.sumInFiat.fixedFraction(digits: 2)) "
             }
             self.sendAmountVC?.bottomCurrencyLbl.text = self.fiatName
         } else {
-            self.sumInFiat = ((self.sendAmountVC?.topSumLbl.text!)! as NSString).doubleValue
+            self.sumInFiat = self.sendAmountVC!.topSumLbl.text!.toStringWithComma()
             self.sumInCrypto = self.sumInFiat / exchangeCourse
             self.sumInCrypto = Double(round(100000000 * self.sumInCrypto)/100000000)
             if self.sumInCrypto > self.availableSumInCrypto! {
-                self.sendAmountVC?.bottomSumLbl.text = "\(self.availableSumInCrypto ?? 0.0) "
+                self.sendAmountVC?.bottomSumLbl.text = "\((self.availableSumInCrypto ?? 0.0).fixedFraction(digits: 8)) "
             } else {
-                self.sendAmountVC?.bottomSumLbl.text = "\(self.sumInCrypto) "
+                self.sendAmountVC?.bottomSumLbl.text = "\(self.sumInCrypto.fixedFraction(digits: 8)) "
             }
             
             self.sendAmountVC?.bottomCurrencyLbl.text = self.cryptoName

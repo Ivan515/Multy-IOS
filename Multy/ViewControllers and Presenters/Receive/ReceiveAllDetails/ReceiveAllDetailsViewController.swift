@@ -20,7 +20,6 @@ class ReceiveAllDetailsViewController: UIViewController {
     @IBOutlet weak var walletCryptoSumBtn: UIButton! //set title with sum here
     @IBOutlet weak var walletFiatSumLbl: UILabel!
     
-    
     let presenter = ReceiveAllDetailsPresenter()
     
 //    var testWallet = "3DA28WCp4Cu5LQiddJnDJJmKWvmmZAKP5K"
@@ -80,7 +79,8 @@ class ReceiveAllDetailsViewController: UIViewController {
     func updateUIWithWallet() {
         self.walletNameLbl.text = self.presenter.wallet?.name
         self.walletCryptoSumBtn.setTitle("\((self.presenter.wallet?.sumInCrypto ?? 0.0).fixedFraction(digits: 8)) \(self.presenter.wallet?.cryptoName ?? "")", for: .normal)
-        self.walletFiatSumLbl.text = "\((self.presenter.wallet?.sumInFiat ?? 0.0).fixedFraction(digits: 2)) \(self.presenter.wallet?.fiatSymbol ?? "")"
+        let sum = (presenter.wallet!.sumInCrypto * exchangeCourse).fixedFraction(digits: 2)
+        self.walletFiatSumLbl.text = "\(sum) \(self.presenter.wallet?.fiatSymbol ?? "")"
         self.presenter.walletAddress = (self.presenter.wallet?.address)!
         self.addressLbl.text = self.presenter.walletAddress
     }

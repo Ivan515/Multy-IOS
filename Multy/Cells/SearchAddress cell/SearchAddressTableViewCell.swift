@@ -18,7 +18,7 @@ class SearchAddressTableViewCell: UITableViewCell {
         super.awakeFromNib()
         self.selectionStyle = .none
         self.addressTV.delegate = self
-        (self.addressTV.value(forKey: "textInputTraits") as AnyObject).setValue(UIColor.clear , forKey:"insertionPointColor")
+//        (self.addressTV.value(forKey: "textInputTraits") as AnyObject).setValue(UIColor.clear , forKey:"insertionPointColor")
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

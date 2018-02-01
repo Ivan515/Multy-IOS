@@ -130,24 +130,8 @@ extension DataManager {
         }
     }
     
-    func fetchAssets(_ token: String, completion: @escaping (_ assets: List<UserWalletRLM>?,_ error: Error?) -> ()) {
-        apiManager.getAssets(token) { (holdingsOpt, error) in
-            if let holdings = holdingsOpt {
-                if let wallets = holdings["userWallets"] as? NSArray {
-                    completion(UserWalletRLM.initWithArray(walletsInfo: wallets), nil)
-                } else {
-                    completion(nil, nil)
-                }
-                
-                completion(nil, nil)
-            } else {
-                completion(nil, error)
-            }
-        }
-    }
-    
-    func addWallet(_ token: String, params: Parameters, completion: @escaping (_ answer: NSDictionary?,_ error: Error?) -> ()) {
-        apiManager.addWallet(token, params) { (responceDict, error) in
+    func addWallet(params: Parameters, completion: @escaping (_ answer: NSDictionary?,_ error: Error?) -> ()) {
+        apiManager.addWallet(params) { (responceDict, error) in
             if error != nil {
                 completion(NSDictionary(), nil)
             } else {
@@ -156,27 +140,14 @@ extension DataManager {
         }
     }
     
-    func addAddress(_ token: String, params: Parameters, completion: @escaping (_ dict: NSDictionary?,_ error: Error?) -> ()) {
-        apiManager.addAddress(token, params) { (dict, error) in
+    func addAddress(params: Parameters, completion: @escaping (_ dict: NSDictionary?,_ error: Error?) -> ()) {
+        apiManager.addAddress(params) { (dict, error) in
             completion(dict, error)
         }
     }
     
-//    func getExhanchgeCourse(_ token: String, completion: @escaping (_ dictionary: NSDictionary?, _ error: Error?) -> ()) {
-//        apiManager.getExchangePrice(token, direction: "BTC/USD") { (dict, err) in
-//            if err == nil {
-//                if dict != nil {
-//                    
-//                }
-//                completion(dict!, nil)
-//            } else {
-//                completion(nil, err)
-//            }
-//        }
-//    }
-    
-    func getFeeRate(_ token: String, currencyID: UInt32, completion: @escaping (_ feeRateDict: NSDictionary?,_ error: Error?) -> ()) {
-        apiManager.getFeeRate(token, currencyID: currencyID) { (answer, error) in
+    func getFeeRate(currencyID: UInt32, completion: @escaping (_ feeRateDict: NSDictionary?,_ error: Error?) -> ()) {
+        apiManager.getFeeRate(currencyID: currencyID) { (answer, error) in
             if error != nil || (answer!["code"] as! NSNumber).intValue != 200  {
                 completion(nil, error)
             } else {
@@ -185,8 +156,8 @@ extension DataManager {
         }
     }
     
-    func getWalletsVerbose(_ token: String, completion: @escaping (_ walletsArr: NSArray?,_ error: Error?) -> ()) {
-        apiManager.getWalletsVerbose(token) { (answer, err) in
+    func getWalletsVerbose(completion: @escaping (_ walletsArr: NSArray?,_ error: Error?) -> ()) {
+        apiManager.getWalletsVerbose() { (answer, err) in
             if err == nil {
                 let dict = NSMutableDictionary()
                 dict["topindexes"] = answer!["topindexes"]
@@ -218,8 +189,8 @@ extension DataManager {
         }
     }
     
-    func getOneWalletVerbose(_ token: String, walletID: NSNumber, completion: @escaping (_ answer: UserWalletRLM?,_ error: Error?) -> ()) {
-        apiManager.getOneWalletVerbose(token, walletID: walletID) { (dict, error) in
+    func getOneWalletVerbose(walletID: NSNumber, completion: @escaping (_ answer: UserWalletRLM?,_ error: Error?) -> ()) {
+        apiManager.getOneWalletVerbose(walletID: walletID) { (dict, error) in
             if dict != nil && dict!["wallet"] != nil && !(dict!["wallet"] is NSNull) {
                 let wallet = UserWalletRLM.initWithInfo(walletInfo: (dict!["wallet"] as! NSArray)[0] as! NSDictionary)
 //                let addressesInfo = ((dict!["wallet"] as! NSArray)[0] as! NSDictionary)["addresses"]!
@@ -235,14 +206,14 @@ extension DataManager {
         }
     }
     
-    func getWalletOutputs(_ token: String, currencyID: UInt32, address: String, completion: @escaping (_ answer: NSDictionary?,_ error: Error?) -> ()) {
-        apiManager.getWalletOutputs(token, currencyID: currencyID, address: address) { (dict, error) in
+    func getWalletOutputs(currencyID: UInt32, address: String, completion: @escaping (_ answer: NSDictionary?,_ error: Error?) -> ()) {
+        apiManager.getWalletOutputs(currencyID: currencyID, address: address) { (dict, error) in
             completion(dict, error)
         }
     }
     
-    func getTransactionHistory(token: String, currencyID: NSNumber, walletID: NSNumber, completion: @escaping(_ historyArr: List<HistoryRLM>?,_ error: Error?) ->()) {
-        apiManager.getTransactionHistory(token, currencyID: currencyID, walletID: walletID) { (answer, err) in
+    func getTransactionHistory(currencyID: NSNumber, walletID: NSNumber, completion: @escaping(_ historyArr: List<HistoryRLM>?,_ error: Error?) ->()) {
+        apiManager.getTransactionHistory(currencyID: currencyID, walletID: walletID) { (answer, err) in
             switch err {
             case nil:
                 if answer!["code"] as! Int == 200 {
@@ -268,8 +239,8 @@ extension DataManager {
         }
     }
     
-    func changeWalletName(_ token: String, currencyID: NSNumber, walletID: NSNumber, newName: String, completion: @escaping(_ answer: NSDictionary?,_ error: Error?) -> ()) {
-        apiManager.changeWalletName(token, currencyID: currencyID, walletID: walletID, newName: newName) { (answer, error) in
+    func changeWalletName(currencyID: NSNumber, walletID: NSNumber, newName: String, completion: @escaping(_ answer: NSDictionary?,_ error: Error?) -> ()) {
+        apiManager.changeWalletName(currencyID: currencyID, walletID: walletID, newName: newName) { (answer, error) in
             if error == nil {
                 if answer != nil {
                     
@@ -281,8 +252,8 @@ extension DataManager {
         }
     }
     
-    func sendHDTransaction(_ token: String, transactionParameters: Parameters, completion: @escaping (_ answer: NSDictionary?,_ error: Error?) -> ()) {
-        apiManager.sendHDTransaction(token, transactionParameters: transactionParameters) { (answer, error) in
+    func sendHDTransaction(transactionParameters: Parameters, completion: @escaping (_ answer: NSDictionary?,_ error: Error?) -> ()) {
+        apiManager.sendHDTransaction(transactionParameters: transactionParameters) { (answer, error) in
             completion(answer, error)
         }
     }

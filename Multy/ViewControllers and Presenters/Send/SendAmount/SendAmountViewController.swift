@@ -33,15 +33,15 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        presenter.sendAmountVC = self
-//        presenter.setAmountFromQr()
-//        presenter.cryptoToUsd()
-//        presenter.setSpendableAmountText()
-//        presenter.setMaxAllowed()
-//        presenter.makeMaxSumWithFeeAndDonate()
-//        setSumInNextBtn()
-////
-//        presenter.getData()
+        presenter.sendAmountVC = self
+        presenter.setAmountFromQr()
+        presenter.cryptoToUsd()
+        presenter.setSpendableAmountText()
+        presenter.setMaxAllowed()
+        presenter.makeMaxSumWithFeeAndDonate()
+        setSumInNextBtn()
+        
+        presenter.getData()
     }
     
     override func viewDidLayoutSubviews() {
@@ -95,16 +95,16 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate {
             self.presenter.isCrypto = !self.presenter.isCrypto
             self.presenter.makeMaxSumWithFeeAndDonate()
             if self.presenter.sumInFiat > (self.presenter.availableSumInFiat)! {
-                self.amountTF.text = "\(self.presenter.availableSumInFiat ?? 0.0)"
-                self.topSumLbl.text = "\(self.presenter.availableSumInFiat ?? 0.0)"
+                self.amountTF.text = "\((self.presenter.availableSumInFiat ?? 0.0).fixedFraction(digits: 2))"
+                self.topSumLbl.text = "\((self.presenter.availableSumInFiat ?? 0.0).fixedFraction(digits: 2))"
             } else {
-                self.amountTF.text = "\(self.presenter.sumInFiat)"
-                self.topSumLbl.text = "\(self.presenter.sumInFiat)"
+                self.amountTF.text = "\((self.presenter.sumInFiat).fixedFraction(digits: 2))"
+                self.topSumLbl.text = "\((self.presenter.sumInFiat).fixedFraction(digits: 2))"
             }
             if self.presenter.sumInCrypto > (self.presenter.availableSumInCrypto)! {
-                self.bottomSumLbl.text = "\(self.presenter.availableSumInCrypto ?? 0.0) "
+                self.bottomSumLbl.text = "\((self.presenter.availableSumInCrypto ?? 0.0).fixedFraction(digits: 8)) "
             } else {
-                self.bottomSumLbl.text = "\(self.presenter.sumInCrypto) "
+                self.bottomSumLbl.text = "\((self.presenter.sumInCrypto).fixedFraction(digits: 8)) "
             }
             self.bottomCurrencyLbl.text = "\(self.presenter.cryptoName)"
             self.topCurrencyNameLbl.text = "\(self.presenter.fiatName)"
@@ -114,25 +114,30 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate {
             if self.presenter.sumInCrypto > (self.presenter.availableSumInCrypto)! || self.presenter.sumInCrypto > self.presenter.cryptoMaxSumWithFeeAndDonate {
                 switch self.commissionSwitch.isOn {
                 case true:
-                    self.amountTF.text = "\(self.presenter.cryptoMaxSumWithFeeAndDonate)"
-                    self.topSumLbl.text = "\(self.presenter.cryptoMaxSumWithFeeAndDonate)"
+                    self.amountTF.text = self.presenter.cryptoMaxSumWithFeeAndDonate.fixedFraction(digits: 8)
+                    self.topSumLbl.text = self.presenter.cryptoMaxSumWithFeeAndDonate.fixedFraction(digits: 8)
                 case false:
-                    self.amountTF.text = "\(self.presenter.availableSumInCrypto ?? 0.0)"
-                    self.topSumLbl.text = "\(self.presenter.availableSumInCrypto ?? 0.0)"
+                    self.amountTF.text = "\((self.presenter.availableSumInCrypto ?? 0.0).fixedFraction(digits: 8))"
+                    self.topSumLbl.text = "\((self.presenter.availableSumInCrypto ?? 0.0).fixedFraction(digits: 8))"
                 }
             } else {
-                self.amountTF.text = "\(self.presenter.sumInCrypto)"
-                self.topSumLbl.text = "\(self.presenter.sumInCrypto)"
+                self.amountTF.text = self.presenter.sumInCrypto.fixedFraction(digits: 8)
+                self.topSumLbl.text = self.presenter.sumInCrypto.fixedFraction(digits: 8)
             }
             
             if self.presenter.sumInFiat > (self.presenter.availableSumInFiat)! {
-                self.bottomSumLbl.text = "\(self.presenter.availableSumInFiat ?? 0.0) "
+                self.bottomSumLbl.text = "\((self.presenter.availableSumInFiat ?? 0.0).fixedFraction(digits: 2)) "
             } else {
-                 self.bottomSumLbl.text = "\(self.presenter.sumInFiat) "
+                 self.bottomSumLbl.text = "\((self.presenter.sumInFiat).fixedFraction(digits: 2)) "
             }
             self.topCurrencyNameLbl.text = self.presenter.cryptoName
-            self.bottomCurrencyLbl.text = "\(self.presenter.fiatName)"
+            self.bottomCurrencyLbl.text = self.presenter.fiatName
         }
+        
+        self.amountTF.text = self.amountTF.text?.replacingOccurrences(of: ".", with: ",")
+        self.bottomSumLbl.text = self.bottomSumLbl.text?.replacingOccurrences(of: ".", with: ",")
+        self.topSumLbl.text = self.topSumLbl.text?.replacingOccurrences(of: ".", with: ",")
+        
         self.presenter.setSpendableAmountText()
         self.presenter.setMaxAllowed()
         self.setSumInNextBtn()
@@ -208,13 +213,13 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate {
         let newLength = text.count + string.count - range.length
         
         if newLength <= self.presenter.maxLengthForSum {
-            self.amountTF.text = self.amountTF.text?.replacingOccurrences(of: ",", with: ".")
-            if string == "," && (self.amountTF.text?.contains("."))!{
+            self.amountTF.text = self.amountTF.text?.replacingOccurrences(of: ".", with: ",")
+            if (string == "," || string == ".") && (self.amountTF.text?.contains(","))!{
                 return false
             }
             
-            if (self.amountTF.text?.contains("."))! && string != "" {
-                let strAfterDot: [String?] = (self.amountTF.text?.components(separatedBy: "."))!
+            if (self.amountTF.text?.contains(","))! && string != "" {
+                let strAfterDot: [String?] = (self.amountTF.text?.components(separatedBy: ","))!
                 if self.presenter.isCrypto {
                     if strAfterDot[1]?.count == 8 {
                         return false
@@ -232,8 +237,8 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate {
                 }
             }
             
-            if string == "," {
-                self.topSumLbl.text = self.amountTF.text! + "."
+            if string == "," || string == "." {
+                self.topSumLbl.text = self.amountTF.text! + ","
             } else {
                 if string != "" {
                     self.topSumLbl.text = self.amountTF.text! + string

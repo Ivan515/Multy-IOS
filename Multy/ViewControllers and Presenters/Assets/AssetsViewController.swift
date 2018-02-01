@@ -232,24 +232,13 @@ class AssetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             return
         }
         
-        DataManager.shared.apiManager.getAssets(presenter.account!.token, completion: { (assetsDict, error) in
+        DataManager.shared.apiManager.getAssets(completion: { (assetsDict, error) in
              print(assetsDict as Any)
         })
     }
     
-    func fetchTickets() {
-        DataManager.shared.apiManager.getTickets(presenter.account!.token, direction: "") { (dict, error) in
-            guard dict != nil  else {
-                return
-            }
-            
-            print(dict!)
-        }
-    }
-    
     func getTransInfo() {
-        DataManager.shared.apiManager.getTransactionInfo(presenter.account!.token,
-                                                         transactionString: "d83a5591585f05dc367d5e68579ece93240a6b4646133a38106249cadea53b77") { (transDict, error) in
+        DataManager.shared.apiManager.getTransactionInfo(transactionString: "d83a5591585f05dc367d5e68579ece93240a6b4646133a38106249cadea53b77") { (transDict, error) in
                                                             guard transDict != nil else {
                                                                 return
                                                             }

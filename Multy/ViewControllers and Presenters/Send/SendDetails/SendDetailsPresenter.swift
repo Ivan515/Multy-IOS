@@ -57,7 +57,7 @@ class SendDetailsPresenter: NSObject, CustomFeeRateProtocol {
                 return
             }
             
-            DataManager.shared.getTransactionHistory(token: account!.token, currencyID: self.choosenWallet!.chain, walletID: self.choosenWallet!.walletID) { (histList, err) in
+            DataManager.shared.getTransactionHistory(currencyID: self.choosenWallet!.chain, walletID: self.choosenWallet!.walletID) { (histList, err) in
                 if err == nil && histList != nil {
                     self.historyArray = histList!
                 }
@@ -78,15 +78,13 @@ class SendDetailsPresenter: NSObject, CustomFeeRateProtocol {
     }
     
     func requestFee() {
-        DataManager.shared.getAccount { (account, error) in
-            DataManager.shared.getFeeRate(account!.token, currencyID: 0, completion: { (dict, error) in
-                if dict != nil {
-                    self.feeRate = dict
-                } else {
-                    print("Did failed getting feeRate")
-                }
-            })
-        }
+        DataManager.shared.getFeeRate(currencyID: 0, completion: { (dict, error) in
+            if dict != nil {
+                self.feeRate = dict
+            } else {
+                print("Did failed getting feeRate")
+            }
+        })
     }
     
     func createTransaction(index: Int) {
