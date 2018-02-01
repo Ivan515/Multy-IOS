@@ -51,7 +51,7 @@ class SendAmountPresenter: NSObject {
     
     var rawTransaction: String?
     
-    var customFee : Int?
+    var customFee : UInt32?
     
     //for creating transaction
     var binaryData : BinaryData?

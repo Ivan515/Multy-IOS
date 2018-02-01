@@ -79,8 +79,8 @@ class ReceiveAllDetailsViewController: UIViewController {
     
     func updateUIWithWallet() {
         self.walletNameLbl.text = self.presenter.wallet?.name
-        self.walletCryptoSumBtn.setTitle("\(self.presenter.wallet?.sumInCrypto ?? 0.0) \(self.presenter.wallet?.cryptoName ?? "")", for: .normal)
-        self.walletFiatSumLbl.text = "\(self.presenter.wallet?.sumInFiat ?? 0.0) \(self.presenter.wallet?.fiatSymbol ?? "")"
+        self.walletCryptoSumBtn.setTitle("\((self.presenter.wallet?.sumInCrypto ?? 0.0).fixedFraction(digits: 8)) \(self.presenter.wallet?.cryptoName ?? "")", for: .normal)
+        self.walletFiatSumLbl.text = "\((self.presenter.wallet?.sumInFiat ?? 0.0).fixedFraction(digits: 2)) \(self.presenter.wallet?.fiatSymbol ?? "")"
         self.presenter.walletAddress = (self.presenter.wallet?.address)!
         self.addressLbl.text = self.presenter.walletAddress
     }
@@ -133,9 +133,9 @@ class ReceiveAllDetailsViewController: UIViewController {
         self.fiatSumLbl.isHidden = false
         self.fiatNameLbl.isHidden = false
         
-        self.sumValueLbl.text = "\(self.presenter.cryptoSum ?? 0.0)"
+        self.sumValueLbl.text = "\((self.presenter.cryptoSum ?? 0.0).fixedFraction(digits: 8))"
         self.cryptoNameLbl.text = self.presenter.cryptoName
-        self.fiatSumLbl.text = "\(self.presenter.fiatSum ?? 0.0)"
+        self.fiatSumLbl.text = "\((self.presenter.fiatSum ?? 0.0).fixedFraction(digits: 2))"
         self.fiatNameLbl.text = self.presenter.fiatName
         
         self.makeQrWithSum()

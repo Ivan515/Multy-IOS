@@ -336,7 +336,7 @@ class ApiManager: NSObject, RequestRetrier {
             "Authorization" : "Bearer \(token)"
         ]
         
-        requestManager.request("\(apiUrl)api/v1/transaction/send", method: .post, parameters: transactionParameters, encoding: JSONEncoding.default, headers: header).responseJSON { (response: DataResponse<Any>) in
+        requestManager.request("\(apiUrl)api/v1/transaction/send", method: .post, parameters: transactionParameters, encoding: JSONEncoding.default, headers: header).debugLog().responseJSON { (response: DataResponse<Any>) in
             switch response.result {
             case .success(_):
                 if response.result.value != nil {

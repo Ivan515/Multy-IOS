@@ -80,7 +80,18 @@ class SendFinishViewController: UIViewController, UITextFieldDelegate {
         
         DataManager.shared.sendHDTransaction(presenter.account!.token, transactionParameters: params) { (dict, error) in
             print("---------\(dict)")
-            self.performSegue(withIdentifier: "sendingAnimationVC", sender: sender)
+            
+            if error != nil {
+                self.presentAlert()
+                
+                return
+            }
+            
+            if dict!["code"] as! Int == 200 {
+                self.performSegue(withIdentifier: "sendingAnimationVC", sender: sender)
+            } else {
+                self.presentAlert()
+            }
         }
         
 //        DataManager.shared.addAddress(presenter.account!.token, params: newAddressParams) { (dict, error) in
@@ -108,5 +119,15 @@ class SendFinishViewController: UIViewController, UITextFieldDelegate {
         textField.resignFirstResponder()
         
         return true
+    }
+    
+    func presentAlert() {
+        let message = "Error while sending transaction. Please, try again!"
+        let alert = UIAlertController(title: "Warning", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action) in
+            
+        }))
+        
+        present(alert, animated: true, completion: nil)
     }
 }

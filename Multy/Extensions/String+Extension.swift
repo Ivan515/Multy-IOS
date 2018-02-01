@@ -35,4 +35,16 @@ extension String {
             return nil
         }
     }
+    
+    func toStringWithComma() -> Double {
+        if self.isEmpty {
+            return 0.0
+        }
+        
+        let formatter = NumberFormatter()
+        formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.decimalSeparator = ","
+        
+        return formatter.number(from: self)!.doubleValue
+    }
 }

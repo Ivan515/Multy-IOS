@@ -42,11 +42,11 @@ class Socket: NSObject {
             }
             
             self.socket.on("exchangeAll") {data, ack in
-                print("-----exchangeAll: \(data)")
+//                print("-----exchangeAll: \(data)")
             }
             //"exchangeUpdate"
             self.socket.on("exchangePoloniex") {data, ack in
-                print("-----exchangeUpdate: \(data)")
+//                print("-----exchangeUpdate: \(data)")
                 if !(data is NSNull) {
                     //MARK: uncomment
                     exchangeCourse = ((data[0] as! NSDictionary)["btc_usd"] as! NSNumber).doubleValue
@@ -54,7 +54,7 @@ class Socket: NSObject {
             }
             
             self.socket.on("btcTransactionUpdate") { data, ack in
-                print("-----btcTransactionUpdate: \(data)")
+//                print("-----btcTransactionUpdate: \(data)")
                 
                 NotificationCenter.default.post(name: NSNotification.Name("transactionUpdated"), object: nil)
             }
@@ -78,9 +78,9 @@ class Socket: NSObject {
                                             "To": "BTC"]).socketRepresentation()
         
         socket.emitWithAck("/getExchangeReq", abc).timingOut(after: 0) { (data) in
-            print("\n\n\n\n\n\n\n")
-            print(data)
-            print("\n\n\n\n\n\n\n")
+//            print("\n\n\n\n\n\n\n")
+//            print(data)
+//            print("\n\n\n\n\n\n\n")
         }
     }
 }
