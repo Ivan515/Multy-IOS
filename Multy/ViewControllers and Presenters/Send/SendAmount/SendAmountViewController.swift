@@ -41,6 +41,8 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate {
         presenter.makeMaxSumWithFeeAndDonate()
         setSumInNextBtn()
         
+        amountTF.text = "0"
+        
         presenter.getData()
     }
     
@@ -163,16 +165,16 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate {
         if self.presenter.isCrypto {
             self.commissionSwitch.isOn = false
             self.presenter.setMaxAllowed()
-            self.amountTF.text = "\(self.presenter.availableSumInCrypto ?? 0.0)"
-            self.topSumLbl.text = "\(self.presenter.availableSumInCrypto ?? 0.0)"
+            self.amountTF.text = "\((self.presenter.availableSumInCrypto ?? 0.0).fixedFraction(digits: 8))"
+            self.topSumLbl.text = "\((self.presenter.availableSumInCrypto ?? 0.0).fixedFraction(digits: 8))"
             self.presenter.sumInCrypto = self.presenter.availableSumInCrypto ?? 0.0
             self.presenter.cryptoToUsd()
             self.setSumInNextBtn()
         } else {
             self.commissionSwitch.isOn = false
             self.presenter.setMaxAllowed()
-            self.amountTF.text = "\(self.presenter.availableSumInFiat ?? 0.0)"
-            self.topSumLbl.text = "\(self.presenter.availableSumInFiat ?? 0.0)"
+            self.amountTF.text = "\((self.presenter.availableSumInFiat ?? 0.0).fixedFraction(digits: 2))"
+            self.topSumLbl.text = "\((self.presenter.availableSumInFiat ?? 0.0).fixedFraction(digits: 2))"
             self.presenter.sumInFiat = self.presenter.availableSumInFiat ?? 0.0
             self.presenter.usdToCrypto()
             self.setSumInNextBtn()
@@ -198,12 +200,22 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if textField.text == "" {
-            if (string as NSString).doubleValue > self.presenter.maxAllowedToSpend {
+            if string.toStringWithComma() > self.presenter.maxAllowedToSpend {
                 self.presentWarning(message: "You trying to enter sum more then you have")
+                
                 return false
             }
         }
-        if (string != "," || string != ".") && ((self.topSumLbl.text! + string) as NSString).doubleValue > self.presenter.maxAllowedToSpend {
+        
+        if let textString = textField.text {
+            if textString == "0" && string != "," && string != "." && !string.isEmpty {
+                return false
+            } else if textString.isEmpty && (string == "," || string == ".") {
+                return false
+            }
+        }
+        
+        if (string != "," && string != ".") && (self.topSumLbl.text! + string).toStringWithComma() > self.presenter.maxAllowedToSpend {
             if string != "" {
                 self.presentWarning(message: "You trying to enter sum more then you have")
                 return false
@@ -291,8 +303,6 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate {
             sendFinishVC.presenter.rawTransaction = presenter.rawTransaction
             sendFinishVC.presenter.account =        presenter.account
             sendFinishVC.presenter.addressData =    presenter.addressData
-            
-            test()
         }
     }
     
