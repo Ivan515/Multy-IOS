@@ -79,7 +79,7 @@ class TransactionPendingCell: UITableViewCell {
             
             for tx in histObj.txOutputs {
                 if addresses.contains(tx.address) {
-                    sum += histObj.txOutAmount.uint32Value
+                    sum += tx.amount.uint32Value
                 }
             }
         }

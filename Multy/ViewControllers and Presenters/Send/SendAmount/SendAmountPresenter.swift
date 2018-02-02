@@ -111,10 +111,10 @@ class SendAmountPresenter: NSObject {
         
         let trData = DataManager.shared.coreLibManager.createTransaction(addressPointer: addressData!["addressPointer"] as! OpaquePointer,
                                                                          sendAddress: self.addressToStr!,
-                                                                         sendAmountString: String(self.sumInCrypto),
+                                                                         sendAmountString: self.sumInCrypto.fixedFraction(digits: 8),
                                                                          feePerByteAmount: "\(customFee!)",
                                                                          isDonationExists: true,
-                                                                         donationAmount: String(describing: self.donationObj!.sumInCrypto!),
+                                                                         donationAmount: self.donationObj!.sumInCrypto!.fixedFraction(digits: 8),
                                                                          isPayCommission: self.sendAmountVC!.commissionSwitch.isOn,
                                                                          wallet: wallet!,
                                                                          binaryData: &binaryData!,
@@ -149,16 +149,16 @@ class SendAmountPresenter: NSObject {
     func cryptoToUsd() {
         self.sumInFiat = self.sumInCrypto * exchangeCourse
         self.sumInFiat = Double(round(100 * self.sumInFiat)/100)
-        self.sendAmountVC?.bottomSumLbl.text = "\(self.sumInFiat) "
+        self.sendAmountVC?.bottomSumLbl.text = "\(self.sumInFiat.fixedFraction(digits: 2)) "
     }
     
     func usdToCrypto() {
         self.sumInCrypto = self.sumInFiat/exchangeCourse
         self.sumInCrypto = Double(round(100000000 * self.sumInCrypto)/100000000)
         if self.sumInCrypto > self.availableSumInCrypto! {
-            self.sendAmountVC?.bottomSumLbl.text = "\(self.availableSumInCrypto ?? 0.0)"
+            self.sendAmountVC?.bottomSumLbl.text = "\((self.availableSumInCrypto ?? 0.0).fixedFraction(digits: 8))"
         } else {
-            self.sendAmountVC?.bottomSumLbl.text = "\(self.sumInCrypto)"
+            self.sendAmountVC?.bottomSumLbl.text = "\((self.sumInCrypto).fixedFraction(digits: 8))"
         }
     }
     
@@ -332,15 +332,15 @@ class SendAmountPresenter: NSObject {
         switch isCrypto {
         case true:
             if self.donationObj != nil {
-                message = "You can`t spend sum more than you have!\nDon`t forget about Fee and donation.\n\nYour fee is \(self.transactionObj?.sumInCrypto ?? 0.0) \(self.cryptoName) \nand donation is \(self.donationObj?.sumInCrypto ?? 0.0) \(self.cryptoName)"
+                message = "You can`t spend sum more than you have!\nDon`t forget about Fee and donation.\n\nYour fee is \((self.transactionObj?.sumInCrypto ?? 0.0).fixedFraction(digits: 8)) \(self.cryptoName) \nand donation is \((self.donationObj?.sumInCrypto ?? 0.0).fixedFraction(digits: 8)) \(self.cryptoName)"
             } else {
                 message = "You can`t spend sum more than you have!\nDon`t forget about Fee.\nYour is fee \(self.transactionObj?.sumInCrypto ?? 0.0) \(self.cryptoName)"
             }
         case false:
             if self.donationObj != nil {
-                message = "You can`t spend sum more than you have!\nDon`t forget about Fee and donation.\n\nYour fee is \(self.transactionObj?.sumInFiat ?? 0.0) \(self.fiatName) \nand donation is \(self.donationObj?.sumInFiat ?? 0.0) \(self.fiatName)"
+                message = "You can`t spend sum more than you have!\nDon`t forget about Fee and donation.\n\nYour fee is \((self.transactionObj?.sumInFiat ?? 0.0).fixedFraction(digits: 2)) \(self.fiatName) \nand donation is \((self.donationObj?.sumInFiat ?? 0.0).fixedFraction(digits: 2)) \(self.fiatName)"
             } else {
-                message = "You can`t spend sum more than you have!\nDon`t forget about Fee.\nYour is fee \(self.transactionObj?.sumInFiat ?? 0.0) \(self.fiatName)"
+                message = "You can`t spend sum more than you have!\nDon`t forget about Fee.\nYour is fee \((self.transactionObj?.sumInFiat ?? 0.0).fixedFraction(digits: 2)) \(self.fiatName)"
             }
         }
         return message
