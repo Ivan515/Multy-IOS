@@ -45,6 +45,10 @@ extension String {
         formatter.numberStyle = NumberFormatter.Style.decimal
         formatter.decimalSeparator = ","
         
-        return formatter.number(from: self)!.doubleValue
+        if formatter.number(from: self) == nil {
+            return 0
+        } else {
+            return formatter.number(from: self)!.doubleValue
+        }
     }
 }
