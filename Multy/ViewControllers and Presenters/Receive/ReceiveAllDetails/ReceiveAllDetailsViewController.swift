@@ -19,6 +19,7 @@ class ReceiveAllDetailsViewController: UIViewController {
     @IBOutlet weak var walletNameLbl: UILabel!
     @IBOutlet weak var walletCryptoSumBtn: UIButton! //set title with sum here
     @IBOutlet weak var walletFiatSumLbl: UILabel!
+    @IBOutlet weak var constraintForSum: NSLayoutConstraint!
     
     let presenter = ReceiveAllDetailsPresenter()
     
@@ -30,6 +31,7 @@ class ReceiveAllDetailsViewController: UIViewController {
         super.viewDidLoad()
         self.presenter.receiveAllDetailsVC = self
         self.tabBarController?.tabBar.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -37,6 +39,7 @@ class ReceiveAllDetailsViewController: UIViewController {
         self.checkValuesAndSetupUI()
         self.updateUIWithWallet()
         self.makeQRCode()
+        self.ipadFix()
     }
     
     @IBAction func cancelAction(_ sender: Any) {
@@ -159,6 +162,13 @@ class ReceiveAllDetailsViewController: UIViewController {
                 destVC.fiatName = self.presenter.fiatName!
                 destVC.sumInFiat = self.presenter.fiatSum!
             }
+        }
+    }
+    
+    func ipadFix() {
+        if screenHeight == 480 {
+            self.sumValueLbl.font = sumValueLbl.font.withSize(30)
+            self.cryptoNameLbl.font = cryptoNameLbl.font.withSize(30)
         }
     }
 }

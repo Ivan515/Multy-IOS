@@ -473,6 +473,7 @@ Options</string>
                     <connections>
                         <outlet property="addressLbl" destination="TcM-XW-eXl" id="518-rV-EwW"/>
                         <outlet property="cancelBtn" destination="UQf-gq-ib1" id="Mwv-vl-IpK"/>
+                        <outlet property="constraintForSum" destination="e77-4w-Fs0" id="WlQ-ub-GRa"/>
                         <outlet property="cryptoNameLbl" destination="CTc-56-hc2" id="Rw6-3b-GVs"/>
                         <outlet property="fiatNameLbl" destination="8Fl-G0-iLU" id="dfL-uW-DnA"/>
                         <outlet property="fiatSumLbl" destination="WPa-6H-9ZB" id="wul-oF-djW"/>

@@ -390,16 +390,14 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        if self.presenter.numberOfTransactions() == 0 {
-//            return
-//        }
-//
-//        if indexPath.row % 2 == 0 {
-//            self.even = true
-//        } else {
-//            self.even = false
-//        }x
-//        self.performSegue(withIdentifier: "transactionVC", sender: Any.self)
+        if self.presenter.numberOfTransactions() == 0 {
+            return
+        }
+        let countOfHistObjs = self.presenter.numberOfTransactions()
+        if indexPath.row > countOfHistObjs && countOfHistObjs <= visibleCells {
+            return
+        }
+        
         let storyBoard = UIStoryboard(name: "Wallet", bundle: nil)
         let transactionVC = storyBoard.instantiateViewController(withIdentifier: "transaction") as! TransactionViewController
         transactionVC.presenter.histObj = presenter.historyArray[indexPath.row - 1]
