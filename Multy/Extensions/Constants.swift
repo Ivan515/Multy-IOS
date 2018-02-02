@@ -81,3 +81,7 @@ let apiUrl = "http://88.198.47.112:5578/"//"http://192.168.0.121:7778/"
 let socketUrl = "http://88.198.47.112:5580"
 let apiUrlTest = "http://192.168.0.125:8080/"
 let nonLocalURL = "http://88.198.47.112:7778/"
+
+
+//let apiUrl = "http://api.multy.io/"
+
