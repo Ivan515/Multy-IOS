@@ -133,4 +133,8 @@ class HistoryRLM: Object {
     override class func primaryKey() -> String? {
         return "txId"
     }
+    
+    func isIncoming() -> Bool {
+        return self.txStatus.intValue == TxStatus.MempoolIncoming.rawValue || self.txStatus.intValue == TxStatus.BlockIncoming.rawValue || self.txStatus.intValue == TxStatus.BlockConfirmedIncoming.rawValue
+    }
 }
