@@ -57,7 +57,7 @@ class Socket: NSObject {
             }
             
             self.socket.on("btcTransactionUpdate") { data, ack in
-//                print("-----btcTransactionUpdate: \(data)")
+                print("-----btcTransactionUpdate: \(data)")
                 
                 NotificationCenter.default.post(name: NSNotification.Name("transactionUpdated"), object: nil)
             }

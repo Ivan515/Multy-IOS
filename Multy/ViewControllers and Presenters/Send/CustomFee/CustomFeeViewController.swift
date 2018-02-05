@@ -66,8 +66,8 @@ class CustomFeeViewController: UIViewController, UITextFieldDelegate {
         }
         
         let endString = textField.text! + string
-        if UInt64(endString)! > 100000000 {
-            let message = "You can`t enter fee more than 1 BTC"
+        if UInt64(endString)! > 3000 {
+            let message = "You fee is too high. Please enter normal fee amount!"
             let alert = UIAlertController(title: "Warning!", message: message, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action) in
                 self.topPriceTf.becomeFirstResponder()

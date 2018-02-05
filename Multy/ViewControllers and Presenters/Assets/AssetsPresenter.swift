@@ -47,7 +47,7 @@ class AssetsPresenter: NSObject {
                     DispatchQueue.main.async {
                         self.account = account
                         DataManager.shared.socketManager.start()
-                        self.getWalletVerbose(completion: {_ in })
+                        self.getWalletsVerbose(completion: {_ in })
                     }
                 }
             } else {
@@ -55,7 +55,7 @@ class AssetsPresenter: NSObject {
                 DataManager.shared.auth(rootKey: self.account?.backupSeedPhrase, completion: { (acc, err) in
                     if acc != nil {
                         self.account = acc
-                        self.getWalletVerbose(completion: {_ in})
+                        self.getWalletsVerbose(completion: {_ in})
                         DataManager.shared.socketManager.start()
                     }
                 })
@@ -86,7 +86,7 @@ class AssetsPresenter: NSObject {
         DataManager.shared.getAccount { (acc, err) in
             if acc != nil {
                 self.account = acc
-                self.getWalletVerbose(completion: {_ in })
+                self.getWalletsVerbose(completion: {_ in })
             }
         }
     }
@@ -153,7 +153,7 @@ class AssetsPresenter: NSObject {
         }
     }
     
-    func getWalletVerbose(completion: @escaping (_ flag: Bool) -> ()) {
+    func getWalletsVerbose(completion: @escaping (_ flag: Bool) -> ()) {
         DataManager.shared.getWalletsVerbose() { (walletsArrayFromApi, err) in
             if err != nil {
                 return

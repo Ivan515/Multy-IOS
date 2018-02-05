@@ -66,8 +66,7 @@ class WalletTableViewCell: UITableViewCell {
         self.fiatSumLbl.text = "\(sumInFiat) \(self.wallet!.fiatSymbol)"
         
         if wallet != nil {
-            let isHidden = wallet!.calculateBlockedAmount() == 0
-            self.statusImage.isHidden = isHidden
+            self.statusImage.isHidden = !wallet!.isTherePendingAmount()
         }
     }
 }

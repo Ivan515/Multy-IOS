@@ -112,8 +112,8 @@ class TransactionViewController: UIViewController {
             self.transctionSumLbl.text = "-\(cryptoSumInBTC.fixedFraction(digits: 8))"
             self.sumInFiatLbl.text = "-\((cryptoSumInBTC * presenter.histObj.btcToUsd).fixedFraction(digits: 2)) USD"
             if let donatAddress = UserDefaults.standard.string(forKey: "BTCDonationAddress") {
-                if arrOfOutputsAddresses.contains("donatAddress") {
-                    let donatOutPutObj = getDonationTxOutput(address: "donatAddress")
+                if arrOfOutputsAddresses.contains(donatAddress) {
+                    let donatOutPutObj = getDonationTxOutput(address: donatAddress)
                     if donatOutPutObj == nil {
                         return
                     }

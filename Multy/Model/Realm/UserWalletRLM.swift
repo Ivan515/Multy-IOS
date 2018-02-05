@@ -144,6 +144,18 @@ class UserWalletRLM: Object {
         return sum
     }
     
+    func isTherePendingAmount() -> Bool {
+        for address in self.addresses {
+            for out in address.spendableOutput {
+                if out.transactionStatus.intValue == TxStatus.MempoolIncoming.rawValue && out.transactionOutAmount.uint32Value > 0 {
+                    return true
+                }
+            }
+        }
+        
+        return false
+    }
+    
     override class func primaryKey() -> String? {
         return "id"
     }

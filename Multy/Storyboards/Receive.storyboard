@@ -344,7 +344,7 @@ Book</string>
                                             <constraint firstItem="SXI-5J-BlV" firstAttribute="top" secondItem="6a8-cd-Cp7" secondAttribute="bottom" id="N7L-rc-GLi"/>
                                             <constraint firstItem="AXb-Qw-h0b" firstAttribute="top" secondItem="6cq-qs-W93" secondAttribute="bottom" constant="-34" id="Noc-xI-POE"/>
                                             <constraint firstItem="fc4-7b-wBs" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="WdU-vV-Cb8" secondAttribute="leading" constant="5" id="Ood-gv-SR2"/>
-                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="CTc-56-hc2" secondAttribute="trailing" constant="5" id="TPH-vy-yhf"/>
+                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="CTc-56-hc2" secondAttribute="trailing" constant="20" id="TPH-vy-yhf"/>
                                             <constraint firstItem="TcM-XW-eXl" firstAttribute="top" secondItem="yfh-1j-Y6Q" secondAttribute="bottom" constant="16" id="UF0-8W-0B9"/>
                                             <constraint firstItem="AXb-Qw-h0b" firstAttribute="leading" secondItem="WdU-vV-Cb8" secondAttribute="leading" id="UKD-fF-PG9"/>
                                             <constraint firstItem="6a8-cd-Cp7" firstAttribute="leading" secondItem="WdU-vV-Cb8" secondAttribute="leading" id="ank-0A-3Tl"/>
