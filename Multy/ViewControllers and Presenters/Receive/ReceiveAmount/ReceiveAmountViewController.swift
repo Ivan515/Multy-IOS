@@ -130,6 +130,15 @@ class ReceiveAmountViewController: UIViewController, UITextFieldDelegate {
                 return false
             }
         }
+        
+        if let textString = textField.text {
+            if textString == "0" && string != "," && string != "." && !string.isEmpty {
+                return false
+            } else if textString.isEmpty && (string == "," || string == ".") {
+                return false
+            }
+        }
+        
         guard let text = textField.text else { return true }
         let newLength = text.count + string.count - range.length
         
