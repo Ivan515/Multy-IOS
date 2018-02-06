@@ -636,6 +636,10 @@ operations</string>
                                     <action selector="backAction:" destination="aaV-AB-1NL" eventType="touchUpInside" id="Yhy-YE-4Ep"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="riS-0M-cHI">
+                                <rect key="frame" x="169" y="325" width="37" height="37"/>
+                                <color key="color" red="0.01176470588" green="0.49803921569999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -646,11 +650,14 @@ operations</string>
                             <constraint firstItem="exA-CS-1fw" firstAttribute="top" secondItem="6p7-Q6-H26" secondAttribute="bottom" id="KtG-O7-KBq"/>
                             <constraint firstItem="JED-BP-ugC" firstAttribute="leading" secondItem="6SZ-SU-G7x" secondAttribute="leading" id="VQl-Hc-Rcc"/>
                             <constraint firstItem="JED-BP-ugC" firstAttribute="trailing" secondItem="GfT-DZ-979" secondAttribute="trailing" constant="20" id="YPe-l9-kCV"/>
+                            <constraint firstItem="riS-0M-cHI" firstAttribute="centerX" secondItem="6p7-Q6-H26" secondAttribute="centerX" id="pfs-o4-OCM"/>
                             <constraint firstItem="GfT-DZ-979" firstAttribute="top" secondItem="JkB-6E-Jqa" secondAttribute="bottom" constant="20" id="syE-eO-Bom"/>
+                            <constraint firstItem="riS-0M-cHI" firstAttribute="centerY" secondItem="6p7-Q6-H26" secondAttribute="centerY" id="vck-WZ-BXK"/>
                             <constraint firstAttribute="trailing" secondItem="6p7-Q6-H26" secondAttribute="trailing" id="vmV-4d-maJ"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="spiner" destination="riS-0M-cHI" id="pfN-gZ-16W"/>
                         <outlet property="webView" destination="6p7-Q6-H26" id="Bfx-bp-ZXk"/>
                     </connections>
                 </viewController>
