@@ -367,7 +367,7 @@ operations</string>
                                                 <color key="textColor" red="0.21176470588235294" green="0.21176470588235294" blue="0.21176470588235294" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrowDownCoin" translatesAutoresizingMaskIntoConstraints="NO" id="FwO-hi-BCf">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrowCoin" translatesAutoresizingMaskIntoConstraints="NO" id="FwO-hi-BCf">
                                                 <rect key="frame" x="164.5" y="293" width="14" height="66"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="14" id="t3K-KE-ILR"/>
@@ -1183,7 +1183,7 @@ operations</string>
     <resources>
         <image name="BTC_medium_icon" width="39" height="39"/>
         <image name="arrow" width="14" height="20"/>
-        <image name="arrowDownCoin" width="14" height="66"/>
+        <image name="arrowCoin" width="14" height="68"/>
         <image name="backGrey" width="13" height="21"/>
         <image name="chevron" width="15" height="22"/>
         <image name="donationIcon" width="98" height="78"/>
