@@ -54,31 +54,63 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        self.window?.makeKeyAndVisible()
         
         
-        let branch: Branch = Branch.getInstance()
-        branch.initSession(launchOptions: launchOptions, andRegisterDeepLinkHandler: {params, error in
+//        let branch: Branch = Branch.getInstance()
+//        branch.initSession(launchOptions: launchOptions, andRegisterDeepLinkHandler: {params, error in
+//            if error == nil {
+//                // params are the deep linked params associated with the link that the user clicked -> was re-directed to this app
+//                // params will be empty if no data found
+//                // ... insert custom logic here ...
+//                print("params: %@", params as? [String: AnyObject] ?? {})
+//            }
+//        })
+        // for debug and development only
+        Branch.getInstance().setDebug()
+        // listener for Branch Deep Link data
+        Branch.getInstance().initSession(launchOptions: launchOptions) { (params, error) in
+            // do stuff with deep link data (nav to page, display content, etc)
+//            print(params as? [String: AnyObject] ?? {})
             if error == nil {
-                // params are the deep linked params associated with the link that the user clicked -> was re-directed to this app
-                // params will be empty if no data found
-                // ... insert custom logic here ...
-                print("params: %@", params as? [String: AnyObject] ?? {})
+                let dictFormLink = params! as NSDictionary
+                if (dictFormLink["address"] != nil) {
+                    let chainNameFromLink = (dictFormLink["address"] as! String).split(separator: ":").first
+                    let addressFromLink = (dictFormLink["address"] as! String).split(separator: ":").last
+                    let amountFromLink = dictFormLink["amount"] as! Double
+                    
+                    let storyboard = UIStoryboard(name: "Send", bundle: nil)
+                    let sendStartVC = storyboard.instantiateViewController(withIdentifier: "sendStart") as! SendStartViewController
+                    sendStartVC.presenter.addressSendTo = "\(addressFromLink ?? "")"
+                    sendStartVC.presenter.amountInCrypto = 0.0001//amountFromLink
+                    ((self.window?.rootViewController as! CustomTabBarViewController).selectedViewController as! UINavigationController).pushViewController(sendStartVC, animated: false)
+                    sendStartVC.performSegue(withIdentifier: "chooseWalletVC", sender: (Any).self)
+//                    self.window?.rootViewController?.navigationController?.pushViewController(sendStartVC, animated: false)
+//                    let chooseWalletVC = WalletChoooseViewController()
+//                    self.window?.rootViewController?.navigationController?.pushViewController(chooseWalletVC, animated: true)
+                }
             }
-        })
+        }
+        
         return true
     }
     
     // Respond to URI scheme links
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-        // pass the url to the handle deep link call
-        let branchHandled = Branch.getInstance().application(application,
-                                                             open: url,
-                                                             sourceApplication: sourceApplication,
-                                                             annotation: annotation
-        )
-        if (!branchHandled) {
-            // If not handled by Branch, do other deep link routing for the Facebook SDK, Pinterest SDK, etc
-        }
-        
-        // do other deep link routing for the Facebook SDK, Pinterest SDK, etc
+//        // pass the url to the handle deep link call
+//        let branchHandled = Branch.getInstance().application(application,
+//                                                             open: url,
+//                                                             sourceApplication: sourceApplication,
+//                                                             annotation: annotation
+//        )
+//        if (!branchHandled) {
+//            // If not handled by Branch, do other deep link routing for the Facebook SDK, Pinterest SDK, etc
+//        }
+//
+//        // do other deep link routing for the Facebook SDK, Pinterest SDK, etc
+        return true
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        // handler for URI Schemes (depreciated in iOS 9.2+, but still used by some apps)
+        Branch.getInstance().application(app, open: url, options: options)
         return true
     }
     
@@ -89,6 +121,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return true
     }
+    
     
     
     

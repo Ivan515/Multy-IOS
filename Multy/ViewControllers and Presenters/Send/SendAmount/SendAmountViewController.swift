@@ -31,9 +31,14 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate {
     
     let presenter = SendAmountPresenter()
     
+    let numberFormatter = NumberFormatter()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.sendAmountVC = self
+        numberFormatter.numberStyle = .decimal
+        
         presenter.setAmountFromQr()
         presenter.cryptoToUsd()
         presenter.setSpendableAmountText()
@@ -41,8 +46,9 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate {
         presenter.makeMaxSumWithFeeAndDonate()
         setSumInNextBtn()
         
-        amountTF.text = "0"
-        
+        if (self.amountTF.text?.isEmpty)! {
+            amountTF.text = "0"
+        }
         presenter.getData()
     }
     
@@ -181,7 +187,7 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate {
         }
         self.presenter.saveTfValue()
     }
-    
+
     
     
     @IBAction func nextAction(_ sender: Any) {
@@ -275,8 +281,7 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func changeSum() {
-        let numberFormatter = NumberFormatter()
-        numberFormatter.numberStyle = .decimal
+       
         
         let sumForBtn = self.presenter.getNextBtnSum()
         if self.presenter.isCrypto {
