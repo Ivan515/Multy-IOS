@@ -4,9 +4,10 @@
 
 import UIKit
 
-class ViewInBlockchainViewController: UIViewController {
+class ViewInBlockchainViewController: UIViewController, UIWebViewDelegate {
 
     @IBOutlet weak var webView: UIWebView!
+    @IBOutlet weak var spiner: UIActivityIndicatorView!
     
     let presenter = ViewInBlockchainPresenter()
     
@@ -14,6 +15,8 @@ class ViewInBlockchainViewController: UIViewController {
         super.viewDidLoad()
         self.presenter.blockchainVC = self
         self.loadPage(txId: presenter.txId!)
+        self.webView.delegate = self
+        self.spiner.hidesWhenStopped = true
     }
     
     func loadPage(txId: String) {
@@ -24,5 +27,13 @@ class ViewInBlockchainViewController: UIViewController {
 
     @IBAction func backAction(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    func webViewDidStartLoad(_ webView: UIWebView) {
+        spiner.startAnimating()
+    }
+    
+    func webViewDidFinishLoad(_ webView: UIWebView) {
+        spiner.stopAnimating()
     }
 }

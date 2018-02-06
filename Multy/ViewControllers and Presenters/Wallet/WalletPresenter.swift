@@ -79,6 +79,23 @@ class WalletPresenter: NSObject {
         return blockedAmount(for: historyArray[indexPath.row - 1]) > 0
     }
     
+    func getNumberOfPendingTransactions() -> Int {
+        var count = 0
+        
+        if historyArray == nil {
+            return count
+        }
+        
+        for transaction in historyArray {
+            if blockedAmount(for: transaction) > 0 {
+                count += 1
+            }
+        }
+        
+        return count
+    }
+    
+    
     func getHistoryAndWallet() {
         DataManager.shared.getOneWalletVerbose(walletID: wallet!.walletID) { (wallet, error) in
             if wallet != nil {
