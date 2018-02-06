@@ -36,7 +36,7 @@ class WalletViewController: UIViewController {
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(self.handleRefresh(_:)), for: UIControlEvents.valueChanged)
-        refreshControl.tintColor = UIColor.red
+        refreshControl.tintColor = UIColor.blue
         
         return refreshControl
     }()
@@ -257,6 +257,16 @@ class WalletViewController: UIViewController {
         setGradientBackground()
     }
     
+    func fixUIForPlusScreens() {
+        let numberOfPending = presenter.getNumberOfPendingTransactions()
+        let numberOfTransactions = presenter.numberOfTransactions()
+        if screenHeight == 736 && numberOfTransactions < 5 {
+            if numberOfPending > 2 {
+                self.tableView.isScrollEnabled = true
+            }
+        }
+    }
+    
     @IBAction func sendAction(_ sender: Any) {
         let storyboard = UIStoryboard(name: "Send", bundle: nil)
         let sendStartVC = storyboard.instantiateViewController(withIdentifier: "sendStart") as! SendStartViewController
@@ -308,6 +318,11 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
             } else {
                 self.tableView.isScrollEnabled = true
                 
+                if screenHeight == 736 && countOfHistObjects <= 5 { // 6 plus screen
+                    self.tableView.isScrollEnabled = false
+                    return 7
+                }
+                
                 return countOfHistObjects + 1
             }
         } else {
@@ -318,6 +333,7 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        self.fixUIForPlusScreens()
         if indexPath == [0, 0] {         // Main Wallet Header Cell
             let headerCell = self.tableView.dequeueReusableCell(withIdentifier: "MainWalletHeaderCellID") as! MainWalletHeaderCell
             headerCell.selectionStyle = .none
