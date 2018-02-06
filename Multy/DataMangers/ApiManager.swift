@@ -36,11 +36,22 @@ class ApiManager: NSObject, RequestRetrier {
     override init() {
         super.init()
         
-        let configuration = URLSessionConfiguration.default
-        configuration.timeoutIntervalForRequest = 10 // seconds
-        configuration.timeoutIntervalForResource = 10
+//        let configuration = URLSessionConfiguration.default
+//        configuration.timeoutIntervalForRequest = 10 // seconds
+//        configuration.timeoutIntervalForResource = 10
         
-        requestManager = Alamofire.SessionManager(configuration: configuration)
+//        requestManager = Alamofire.SessionManager(configuration: configuration)
+        let serverTrustPolicies: [String: ServerTrustPolicy] = [
+//            "api.multy.io": .pinCertificates(
+//                certificates: ServerTrustPolicy.certificates(),
+//                validateCertificateChain: true,
+//                validateHost: true
+//            ),
+            "api.multy.io": .disableEvaluation
+            ]
+        
+        requestManager = SessionManager(serverTrustPolicyManager: ServerTrustPolicyManager(policies: serverTrustPolicies))
+        
         requestManager.retrier = self
         requestManager.adapter = AccessTokenAdapter(accessToken: token)
     }
