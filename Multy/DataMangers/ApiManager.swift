@@ -5,10 +5,33 @@
 import UIKit
 import Alamofire
 
+class AccessTokenAdapter: RequestAdapter {
+    private let accessToken: String
+    
+    init(accessToken: String) {
+        self.accessToken = accessToken
+    }
+    
+    func adapt(_ urlRequest: URLRequest) throws -> URLRequest {
+        var urlRequest = urlRequest
+        
+        if let urlString = urlRequest.url?.absoluteString, urlString.hasPrefix("\(apiUrl)api/v1/") {
+            urlRequest.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization")
+        }
+        
+        return urlRequest
+    }
+}
+
 class ApiManager: NSObject, RequestRetrier {
     static let shared = ApiManager()
     var requestManager = Alamofire.SessionManager.default
-    var token = String()
+    var token = String() {
+        didSet {
+            self.requestManager.adapter = AccessTokenAdapter(accessToken: token)
+        }
+    }
+    var userID = String()
     
     override init() {
         super.init()
@@ -19,6 +42,7 @@ class ApiManager: NSObject, RequestRetrier {
         
         requestManager = Alamofire.SessionManager(configuration: configuration)
         requestManager.retrier = self
+        requestManager.adapter = AccessTokenAdapter(accessToken: token)
     }
     
 //    func adapt(_ urlRequest: URLRequest) throws -> URLRequest {
@@ -31,22 +55,23 @@ class ApiManager: NSObject, RequestRetrier {
     
     public func should(_ manager: SessionManager, retry request: Request, with error: Error, completion: @escaping RequestRetryCompletion) {
         print("\n\n\n\n\n\nretrier\n\n\n\n\n\n")
+        
         if let response = request.task?.response as? HTTPURLResponse, response.statusCode == 401 {
-            if let account = DataManager.shared.realmManager.account {
-//                DataManager.shared.getAccount(completion: { (account, error) in
-//                DispatchQueue.main.async {
-//                    if account != nil && !account.token.isEmpty {
-//                        DataManager.shared.auth(rootKey: account.token, completion: { (account, error) in
-//                            completion(true, 0.3) // retry after 0.3 second
-//                        })
-//                    } else {
-//                        completion(false, 0.0) // don't retry
-//                    }
-//                }
-//                })
-            } else {
-                //if we have
+            
+            if userID.isEmpty {
+                completion(false, 0.0)
             }
+            
+            var params : Parameters = [ : ]
+            params["userID"] = userID
+            params["deviceID"] = "iOS \(UIDevice.current.name)"
+            params["deviceType"] = 1
+            params["pushToken"] = UUID().uuidString
+            
+            
+            self.auth(with: params, completion: { (dict, error) in
+                completion(true, 0.2) // retry after 0.2 second
+            })
         } else {
             completion(false, 0.0) // don't retry
         }

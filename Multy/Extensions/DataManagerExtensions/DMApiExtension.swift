@@ -80,6 +80,8 @@ extension DataManager {
                     params["deviceID"] = account?.deviceID
                     params["deviceType"] = account?.deviceType
                     params["pushToken"] = account?.pushToken
+                    
+                    self.apiManager.userID = account!.userID
                 } else {
                     //MARK: names
                     var paramsDict = NSMutableDictionary()
@@ -94,6 +96,8 @@ extension DataManager {
                         
                         paramsDict["seedPhrase"] = seedPhraseString
                         paramsDict["binaryData"] = self.coreLibManager.createSeedBinaryData(from: seedPhraseString)?.convertToHexString()
+                        
+                        self.apiManager.userID = params["userID"] as! String
                     } else {
                         params["userID"] = self.getRootString(from: rootKey!).0
                         params["deviceID"] = "iOS \(UIDevice.current.name)"//UUID().uuidString
@@ -106,6 +110,8 @@ extension DataManager {
                         paramsDict["binaryData"] = hexBinData
                         
                         print(paramsDict)
+                        
+                        self.apiManager.userID = params["userID"] as! String
                     }
                     
                     self.realmManager.updateAccount(paramsDict, completion: { (account, error) in

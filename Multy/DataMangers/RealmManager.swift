@@ -222,6 +222,7 @@ class RealmManager: NSObject {
                     }
                     
                     realm.add(accountRLM, update: true)
+                    self.account = accountRLM
                     
                     completion(accountRLM, nil)
                     
@@ -375,6 +376,9 @@ class RealmManager: NSObject {
                 
                 //                        acc!.wallets = newWallets
                 //                        acc?.wallets = arrOfWallets
+                
+                self.account = account
+                
                 completion(account, nil)
             }
         }
@@ -462,6 +466,8 @@ class RealmManager: NSObject {
                 }
             }
         }
+        
+        self.account = nil
     }
     
     // MARK: - Migrations
