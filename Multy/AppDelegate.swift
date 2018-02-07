@@ -83,7 +83,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         let storyboard = UIStoryboard(name: "Send", bundle: nil)
                         let sendStartVC = storyboard.instantiateViewController(withIdentifier: "sendStart") as! SendStartViewController
                         sendStartVC.presenter.addressSendTo = "\(addressFromLink ?? "")"
-                        sendStartVC.presenter.amountInCrypto = 0.0001//amountFromLink
+                        sendStartVC.presenter.amountInCrypto = amountFromLink
                         ((self.window?.rootViewController as! CustomTabBarViewController).selectedViewController as! UINavigationController).pushViewController(sendStartVC, animated: false)
                         sendStartVC.performSegue(withIdentifier: "chooseWalletVC", sender: (Any).self)
                     })
