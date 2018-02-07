@@ -103,7 +103,8 @@ class TransactionViewController: UIViewController {
         let arrOfOutputsAddresses = presenter.histObj.txOutputs.map{ $0.address }.joined(separator: "\n")
         
         self.walletToAddressLbl.text = arrOfOutputsAddresses
-        self.numberOfConfirmationLbl.text = "\(presenter.histObj.confirmations) Confirmation"
+        
+        self.numberOfConfirmationLbl.text = makeConfirmationText()
         
         if isIncoming {
             self.transctionSumLbl.text = "+\(cryptoSumInBTC.fixedFraction(digits: 8))"
@@ -122,7 +123,7 @@ class TransactionViewController: UIViewController {
                     self.constraintDonationHeight.constant = 283
                     self.donationCryptoSum.text = btcDonation.fixedFraction(digits: 8)
                     self.donationCryptoName.text = " BTC"
-                    self.donationFiatSumAndName.text = (btcDonation * presenter.histObj.btcToUsd).fixedFraction(digits: 2)
+                    self.donationFiatSumAndName.text = "\((btcDonation * presenter.histObj.btcToUsd).fixedFraction(digits: 2)) USD"
                 }
             }
         }
@@ -149,6 +150,22 @@ class TransactionViewController: UIViewController {
     
     @IBAction func viewInBlockchainAction(_ sender: Any) {
         self.performSegue(withIdentifier: "viewInBlockchain", sender: nil)
+    }
+    
+    
+    func makeConfirmationText() -> String {
+        var textForConfirmations = ""
+        switch presenter.histObj.confirmations {
+        case 0:
+            textForConfirmations = "Transaction In Mempool"
+        case 1-6:
+            textForConfirmations = "1-6 Confirmations"
+        case nil:
+            textForConfirmations = "Information not found"
+        default: // more than 6
+            textForConfirmations = "6+ Confirmations"
+        }
+        return textForConfirmations
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

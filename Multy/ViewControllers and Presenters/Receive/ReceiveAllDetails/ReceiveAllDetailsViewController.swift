@@ -3,6 +3,7 @@
 //See LICENSE for details
 
 import UIKit
+import Branch
 
 class ReceiveAllDetailsViewController: UIViewController {
 
@@ -62,12 +63,48 @@ class ReceiveAllDetailsViewController: UIViewController {
     @IBAction func addressBookAction(_ sender: Any) {
     }
     
+    func branchDict() -> NSDictionary {
+        //check for blockchain
+        //if bitcoin - address: "\(chainName):\(presenter.walletAddress)"
+        let chainName = "bitcoin"
+        let dict: NSDictionary = ["$og_title" : "Multy",
+                                  "address"   : "\(chainName):\(presenter.walletAddress)",
+                                  "amount"    : presenter.cryptoSum ?? 0.0]
+        
+        return dict
+    }
+    
+    
     @IBAction func moreOptionsAction(_ sender: Any) {
-        let message = "MULTY \n\nYour Address: \n\(self.presenter.walletAddress) \n\nRequested Amount: \((self.presenter.cryptoSum ?? 0.0).fixedFraction(digits: 8)) \(self.presenter.cryptoName ?? "")"
-        let objectsToShare = [message] as [String]
-        let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
-        activityVC.excludedActivityTypes = [UIActivityType.airDrop, UIActivityType.addToReadingList]
-        self.present(activityVC, animated: true, completion: nil)
+        let branch = Branch.getInstance()
+        branch?.getShortURL(withParams: branchDict() as! [String : Any], andChannel: "Create option \"Multy\"", andFeature: "sharing", andCallback: { (url, err) in
+            let objectsToShare = [url] as! [String]
+            let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+            activityVC.excludedActivityTypes = [UIActivityType.airDrop, UIActivityType.addToReadingList]
+            self.present(activityVC, animated: true, completion: nil)
+        })
+        
+//        let linkProperties: BranchLinkProperties = BranchLinkProperties()
+//        linkProperties.feature = "sharing"
+////        linkProperties.addControlParam("$desktop_url", withValue: "http://onliner.by/")
+////        linkProperties.addControlParam("$ios_url", withValue: "multy://")
+//        linkProperties.addControlParam("address", withValue: self.presenter.walletAddress)
+//
+//
+//        let branchUniversalObject: BranchUniversalObject = BranchUniversalObject(canonicalIdentifier: "item/12345")
+//        branchUniversalObject.title = "My Content Title"
+//        branchUniversalObject.getShortUrl(with: linkProperties) { (url, error) in
+//            let objectsToShare = [url] as! [String]
+//            let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+//            activityVC.excludedActivityTypes = [UIActivityType.airDrop, UIActivityType.addToReadingList]
+//            self.present(activityVC, animated: true, completion: nil)
+//        }
+        
+//        let message = "MULTY \n\nYour Address: \n\(self.presenter.walletAddress) \n\nRequested Amount: \(self.presenter.cryptoSum ?? 0.0) \(self.presenter.cryptoName ?? "")"
+//        let objectsToShare = [message] as [String]
+//        let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+//        activityVC.excludedActivityTypes = [UIActivityType.airDrop, UIActivityType.addToReadingList]
+//        self.present(activityVC, animated: true, completion: nil)
     }
     
     @IBAction func chooseAnotherWalletAction(_ sender: Any) {
