@@ -72,16 +72,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if error == nil {
                 let dictFormLink = params! as NSDictionary
                 if (dictFormLink["address"] != nil) {
-                    let chainNameFromLink = (dictFormLink["address"] as! String).split(separator: ":").first
-                    let addressFromLink = (dictFormLink["address"] as! String).split(separator: ":").last
-                    let amountFromLink = dictFormLink["amount"] as! Double
-                    
-                    let storyboard = UIStoryboard(name: "Send", bundle: nil)
-                    let sendStartVC = storyboard.instantiateViewController(withIdentifier: "sendStart") as! SendStartViewController
-                    sendStartVC.presenter.addressSendTo = "\(addressFromLink ?? "")"
-                    sendStartVC.presenter.amountInCrypto = 0.0001//amountFromLink
-                    ((self.window?.rootViewController as! CustomTabBarViewController).selectedViewController as! UINavigationController).pushViewController(sendStartVC, animated: false)
-                    sendStartVC.performSegue(withIdentifier: "chooseWalletVC", sender: (Any).self)
+                    DataManager.shared.getAccount(completion: { (acc, err) in
+                        if acc == nil {
+                            return
+                        }
+                        let chainNameFromLink = (dictFormLink["address"] as! String).split(separator: ":").first
+                        let addressFromLink = (dictFormLink["address"] as! String).split(separator: ":").last
+                        let amountFromLink = dictFormLink["amount"] as! Double
+                        
+                        let storyboard = UIStoryboard(name: "Send", bundle: nil)
+                        let sendStartVC = storyboard.instantiateViewController(withIdentifier: "sendStart") as! SendStartViewController
+                        sendStartVC.presenter.addressSendTo = "\(addressFromLink ?? "")"
+                        sendStartVC.presenter.amountInCrypto = 0.0001//amountFromLink
+                        ((self.window?.rootViewController as! CustomTabBarViewController).selectedViewController as! UINavigationController).pushViewController(sendStartVC, animated: false)
+                        sendStartVC.performSegue(withIdentifier: "chooseWalletVC", sender: (Any).self)
+                    })
 //                    self.window?.rootViewController?.navigationController?.pushViewController(sendStartVC, animated: false)
 //                    let chooseWalletVC = WalletChoooseViewController()
 //                    self.window?.rootViewController?.navigationController?.pushViewController(chooseWalletVC, animated: true)
