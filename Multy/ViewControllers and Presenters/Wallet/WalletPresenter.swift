@@ -107,6 +107,10 @@ class WalletPresenter: NSObject {
         
         DataManager.shared.getTransactionHistory(currencyID: wallet!.chain, walletID: wallet!.walletID) { (histList, err) in
             if err == nil && histList != nil {
+                self.mainVC!.refreshControl.endRefreshing()
+                self.mainVC!.tableView.isUserInteractionEnabled = true
+                self.mainVC!.tableView.contentOffset.y = 0
+//                self.mainVC!.tableView.contentOffset = 
                 self.historyArray = histList!.sorted(by: { $0.blockTime > $1.blockTime })
                 print("transaction history:\n\(histList)")
                 self.mainVC!.isSocketInitiateUpdating = false

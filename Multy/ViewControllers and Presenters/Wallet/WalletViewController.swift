@@ -130,6 +130,7 @@ class WalletViewController: UIViewController {
     }
     
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
+        self.tableView.isUserInteractionEnabled = false
         self.presenter.getHistoryAndWallet()
     }
     
