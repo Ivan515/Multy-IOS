@@ -104,10 +104,10 @@ class AssetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         (self.tabBarController as! CustomTabBarViewController).changeViewVisibility(isHidden: presenter.account == nil)
         self.tabBarController?.tabBar.frame = self.presenter.tabBarFrame!
         
-        if presenter.account != nil && presenter.account!.wallets.count > 0 {
-            tableView.reloadData()
-            tableView.scrollToRow(at: [0, presenter.account!.wallets.count - 1], at: .bottom, animated: false)
-        }
+//        if presenter.account != nil && tableView.numberOfRows(inSection: 0) > presenter.tappedIndexPath.row {
+//            tableView.reloadData()
+//            tableView.scrollToRow(at: presenter.tappedIndexPath, at: .bottom, animated: true)
+//        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -363,7 +363,7 @@ class AssetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        presenter.tappedIndexPath = indexPath
 //        let wallet = presenter.account!.wallets[indexPath.row - 2]
 //        var binData = presenter.account!.binaryDataString.createBinaryData()!
 //        let newAddressDict = DataManager.shared.coreLibManager.createAddress(currencyID: wallet.chain.uint32Value,

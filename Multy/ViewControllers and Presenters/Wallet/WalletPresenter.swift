@@ -12,7 +12,7 @@ class WalletPresenter: NSObject {
     var wallet : UserWalletRLM? {
         didSet {
             mainVC?.titleLbl.text = self.wallet?.name
-//            blockedAmount = calculateBlockedAmount()
+            blockedAmount = wallet!.calculateBlockedAmount()
 //            updateWalletInfo()
         }
     }

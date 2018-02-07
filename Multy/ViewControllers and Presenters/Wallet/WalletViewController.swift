@@ -128,9 +128,11 @@ class WalletViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if tableView.contentOffset.y + screenHeight > tableView.contentSize.height {
-            tableView.scrollToRow(at: [0, tableView.numberOfRows(inSection: 0) - 1], at: .middle, animated: false)
-        }
+//        if tableView.setContentOffset(CGPoint.zero, animated: false)
+        
+//        if tableView.contentOffset.y + screenHeight > tableView.contentSize.height {
+//            tableView.scrollToRow(at: [0, tableView.numberOfRows(inSection: 0) - 1], at: .middle, animated: false)
+//        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {

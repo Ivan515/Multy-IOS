@@ -84,6 +84,8 @@ class SendFinishViewController: UIViewController, UITextFieldDelegate {
             if error != nil {
                 self.presentAlert()
                 
+                print("sendHDTransaction Error: \(error)")
+                
                 return
             }
             

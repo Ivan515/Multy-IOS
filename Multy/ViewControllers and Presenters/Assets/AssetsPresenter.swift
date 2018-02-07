@@ -12,6 +12,7 @@ class AssetsPresenter: NSObject {
     var tabBarFrame: CGRect?
     
     var isJailed = false
+    var tappedIndexPath = IndexPath(row: 0, section: 0)
     
     var account : AccountRLM? {
         didSet {
