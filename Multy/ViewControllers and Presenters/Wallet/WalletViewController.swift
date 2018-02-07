@@ -333,7 +333,6 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        self.fixUIForPlusScreens()
         if indexPath == [0, 0] {         // Main Wallet Header Cell
             let headerCell = self.tableView.dequeueReusableCell(withIdentifier: "MainWalletHeaderCellID") as! MainWalletHeaderCell
             headerCell.selectionStyle = .none
