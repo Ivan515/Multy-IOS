@@ -140,9 +140,9 @@ class SendAmountPresenter: NSObject {
     
     func setAmountFromQr() {
         if self.sumInCrypto != 0.0 {
-            self.sendAmountVC?.amountTF.text = "\(self.sumInCrypto)"
-            self.sendAmountVC?.topSumLbl.text = "\(self.sumInCrypto)"
-            self.sendAmountVC?.btnSumLbl.text = "\(self.sumInCrypto)"
+            self.sendAmountVC?.amountTF.text = "\(self.sumInCrypto.fixedFraction(digits: 8))"
+            self.sendAmountVC?.topSumLbl.text = "\(self.sumInCrypto.fixedFraction(digits: 8))"
+            self.sendAmountVC?.btnSumLbl.text = "\(self.sumInCrypto.fixedFraction(digits: 8))"
         }
     }
     
