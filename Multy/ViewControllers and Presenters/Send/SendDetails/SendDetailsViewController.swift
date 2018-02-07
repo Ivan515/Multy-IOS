@@ -67,7 +67,7 @@ class SendDetailsViewController: UIViewController, UITextFieldDelegate {
     }
     
     func setupDonationUI() {
-        self.donationTF.text = "\(self.presenter.donationInCrypto ?? 0.0)"
+        self.donationTF.text = "\((self.presenter.donationInCrypto ?? 0.0).fixedFraction(digits: 8))"
         self.presenter.donationInFiat = self.presenter.donationInCrypto! * exchangeCourse
         self.donationFiatSumLbl.text = "\(self.presenter.donationInFiat?.fixedFraction(digits: 2) ?? "0.00")"
     }
@@ -230,12 +230,12 @@ class SendDetailsViewController: UIViewController, UITextFieldDelegate {
         if string == "" && self.donationTF.text == "" {
             self.presenter.donationInCrypto = 0.0
             self.presenter.donationInFiat = 0.0
-            self.donationFiatSumLbl.text = "\(self.presenter.donationInFiat ?? 0.0)"
+            self.donationFiatSumLbl.text = "\((self.presenter.donationInFiat ?? 0.0).fixedFraction(digits: 2))"
         } else {
             self.presenter.donationInCrypto = (self.donationTF.text! + string as NSString).doubleValue
             self.presenter.donationInFiat = self.presenter.donationInCrypto! * exchangeCourse
             self.presenter.donationInFiat = Double(round(100*self.presenter.donationInFiat!)/100)
-            self.donationFiatSumLbl.text = "\(self.presenter.donationInFiat ?? 0.0)"
+            self.donationFiatSumLbl.text = "\((self.presenter.donationInFiat ?? 0.0).fixedFraction(digits: 2))"
         }
     }
     

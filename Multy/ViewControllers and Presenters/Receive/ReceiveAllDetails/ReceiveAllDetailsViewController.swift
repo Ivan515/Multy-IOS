@@ -63,7 +63,7 @@ class ReceiveAllDetailsViewController: UIViewController {
     }
     
     @IBAction func moreOptionsAction(_ sender: Any) {
-        let message = "MULTY \n\nYour Address: \n\(self.presenter.walletAddress) \n\nRequested Amount: \(self.presenter.cryptoSum ?? 0.0) \(self.presenter.cryptoName ?? "")"
+        let message = "MULTY \n\nYour Address: \n\(self.presenter.walletAddress) \n\nRequested Amount: \((self.presenter.cryptoSum ?? 0.0).fixedFraction(digits: 8)) \(self.presenter.cryptoName ?? "")"
         let objectsToShare = [message] as [String]
         let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
         activityVC.excludedActivityTypes = [UIActivityType.airDrop, UIActivityType.addToReadingList]
@@ -90,7 +90,7 @@ class ReceiveAllDetailsViewController: UIViewController {
     
     
     func makeStringForQRWithSumAndAdress(cryptoName: String) -> String { // cryptoName = bitcoin
-        return "\(cryptoName):\(self.presenter.walletAddress)?amount=\(self.presenter.cryptoSum ?? 0.0)"
+        return "\(cryptoName):\(self.presenter.walletAddress)?amount=\((self.presenter.cryptoSum ?? 0.0).fixedFraction(digits: 8))"
     }
     
 // MARK: QRCode Activity

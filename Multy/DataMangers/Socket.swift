@@ -26,9 +26,9 @@ class Socket: NSObject {
                 return
             }
             
-            let header = ["userID": "\(account!.userID)",
+            let header = ["userID": account!.userID,
                 "deviceType": "\(account!.deviceType)",
-                "jwtToken": "\(account!.token)"]
+                "jwtToken": account!.token]
             
             self.manager = SocketManager(socketURL: URL(string: socketUrl)!, config: [.log(true), .compress, .forceWebsockets(true), .reconnectAttempts(3), .forcePolling(false), .extraHeaders(header)])
             self.socket = self.manager.defaultSocket

@@ -275,16 +275,11 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func changeSum() {
-        let numberFormatter = NumberFormatter()
-        numberFormatter.numberStyle = .decimal
-        
         let sumForBtn = self.presenter.getNextBtnSum()
         if self.presenter.isCrypto {
-            numberFormatter.maximumFractionDigits = 8
-            self.btnSumLbl.text = "\(numberFormatter.string(for: sumForBtn) ?? "0.0") \(self.presenter.cryptoName)"
+            self.btnSumLbl.text = "\(sumForBtn.fixedFraction(digits: 8)) \(self.presenter.cryptoName)"
         } else {
-            numberFormatter.maximumFractionDigits = 2
-            self.btnSumLbl.text = "\(numberFormatter.string(for: sumForBtn) ?? "0.0") \(self.presenter.fiatName)"
+            self.btnSumLbl.text = "\(sumForBtn.fixedFraction(digits: 2)) \(self.presenter.fiatName)"
         }
     }
     

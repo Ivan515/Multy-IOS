@@ -140,9 +140,9 @@ class SendAmountPresenter: NSObject {
     
     func setAmountFromQr() {
         if self.sumInCrypto != 0.0 {
-            self.sendAmountVC?.amountTF.text = "\(self.sumInCrypto)"
-            self.sendAmountVC?.topSumLbl.text = "\(self.sumInCrypto)"
-            self.sendAmountVC?.btnSumLbl.text = "\(self.sumInCrypto)"
+            self.sendAmountVC?.amountTF.text = self.sumInCrypto.fixedFraction(digits: 8)
+            self.sendAmountVC?.topSumLbl.text = self.sumInCrypto.fixedFraction(digits: 8)
+            self.sendAmountVC?.btnSumLbl.text = self.sumInCrypto.fixedFraction(digits: 8)
         }
     }
     
@@ -334,7 +334,7 @@ class SendAmountPresenter: NSObject {
             if self.donationObj != nil {
                 message = "You can`t spend sum more than you have!\nDon`t forget about Fee and donation.\n\nYour fee is \((self.transactionObj?.sumInCrypto ?? 0.0).fixedFraction(digits: 8)) \(self.cryptoName) \nand donation is \((self.donationObj?.sumInCrypto ?? 0.0).fixedFraction(digits: 8)) \(self.cryptoName)"
             } else {
-                message = "You can`t spend sum more than you have!\nDon`t forget about Fee.\nYour is fee \(self.transactionObj?.sumInCrypto ?? 0.0) \(self.cryptoName)"
+                message = "You can`t spend sum more than you have!\nDon`t forget about Fee.\nYour is fee \((self.transactionObj?.sumInCrypto ?? 0.0).fixedFraction(digits: 8)) \(self.cryptoName)"
             }
         case false:
             if self.donationObj != nil {
