@@ -123,7 +123,7 @@ class TransactionViewController: UIViewController {
                     self.constraintDonationHeight.constant = 283
                     self.donationCryptoSum.text = btcDonation.fixedFraction(digits: 8)
                     self.donationCryptoName.text = " BTC"
-                    self.donationFiatSumAndName.text = (btcDonation * presenter.histObj.btcToUsd).fixedFraction(digits: 2)
+                    self.donationFiatSumAndName.text = "\((btcDonation * presenter.histObj.btcToUsd).fixedFraction(digits: 2)) USD"
                 }
             }
         }
