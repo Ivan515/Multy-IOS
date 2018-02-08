@@ -144,6 +144,26 @@ class UserWalletRLM: Object {
         return sum
     }
     
+    func availableAmount() -> UInt32 {
+        var sum = UInt32(0)
+        
+        for address in self.addresses {
+            for out in address.spendableOutput {
+                if out.transactionStatus.intValue == TxStatus.BlockIncoming.rawValue {
+                    sum += out.transactionOutAmount.uint32Value
+                }/* else if out.transactionStatus.intValue == TxStatus.MempoolOutcoming.rawValue {
+                 let addresses = self.fetchAddresses()
+                 
+                 if addresses.contains(address.address) {
+                 sum += out.transactionOutAmount.uint32Value
+                 }
+                 }*/
+            }
+        }
+        
+        return sum
+    }
+    
     func isTherePendingAmount() -> Bool {
         for address in self.addresses {
             for out in address.spendableOutput {

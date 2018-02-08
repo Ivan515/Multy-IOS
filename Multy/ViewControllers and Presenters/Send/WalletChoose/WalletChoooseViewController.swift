@@ -66,6 +66,13 @@ extension WalletChoooseViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row < presenter.numberOfWallets() {
+            if presenter.walletsArr[indexPath.row] {
+                
+            }
+        }
+        
+        
         self.presenter.selectedIndex = indexPath.row
         self.performSegue(withIdentifier: "sendDetailsVC", sender: Any.self)
     }
