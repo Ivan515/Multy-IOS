@@ -27,9 +27,9 @@ class SendStartViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if self.presenter.addressSendTo != "" {
-            self.modifyNextButtonMode()
-        }
+//        if self.presenter.addressSendTo != "" {
+//            self.modifyNextButtonMode()
+//        }
     }
     
     func hideKeyboardWhenTappedAroundForSendStart() {
@@ -51,6 +51,10 @@ class SendStartViewController: UIViewController {
         
         let topCell = tableView.cellForRow(at: IndexPath(row: 1, section: 0)) as? NewWalletTableViewCell
         topCell?.makeTopCorners()
+        
+        if self.presenter.addressSendTo != "" {
+            self.modifyNextButtonMode()
+        }
     }
     
     func registerCells() {
