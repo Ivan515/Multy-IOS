@@ -28,12 +28,13 @@ class SendFinishViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.fixUIForX()
         self.presenter.sendFinishVC = self
         self.hideKeyboardWhenTappedAround()
         self.presenter.makeEndSum()
-        
+
         self.noteTF.delegate = self
-        
+
         self.setupUI()
     }
     
@@ -131,5 +132,11 @@ class SendFinishViewController: UIViewController, UITextFieldDelegate {
         }))
         
         present(alert, animated: true, completion: nil)
+    }
+    
+    func fixUIForX() {
+        if screenHeight == 812 {
+            self.btnTopConstraint.constant = 110
+        }
     }
 }
