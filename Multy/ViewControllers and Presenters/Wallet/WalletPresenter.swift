@@ -13,7 +13,7 @@ class WalletPresenter: NSObject {
         didSet {
             mainVC?.titleLbl.text = self.wallet?.name
             mainVC?.fixUIForPlusScreens()
-//            blockedAmount = calculateBlockedAmount()
+            blockedAmount = wallet!.calculateBlockedAmount()
 //            updateWalletInfo()
         }
     }
@@ -30,7 +30,7 @@ class WalletPresenter: NSObject {
     
     var historyArray = [HistoryRLM]() {
         didSet {
-            blockedAmount = calculateBlockedAmount()
+//            blockedAmount = calculateBlockedAmount()
 //            updateWalletInfo()
 //            mainVC?.updateHistory()
             reloadTableView()
@@ -83,10 +83,6 @@ class WalletPresenter: NSObject {
     func getNumberOfPendingTransactions() -> Int {
         var count = 0
         
-        if historyArray == nil {
-            return count
-        }
-        
         for transaction in historyArray {
             if blockedAmount(for: transaction) > 0 {
                 count += 1
@@ -121,48 +117,48 @@ class WalletPresenter: NSObject {
         }
     }
     
-    func calculateBlockedAmount() -> UInt32 {
-        var sum = UInt32(0)
-        
-        if wallet == nil {
-            return sum
-        }
-        
-        if historyArray.count == 0 {
-            return sum
-        }
-        
-//        for address in wallet!.addresses {
-//            for out in address.spendableOutput {
-//                if out.transactionStatus.intValue == TxStatus.MempoolIncoming.rawValue {
-//                    sum += out.transactionOutAmount.uint32Value
-//                } else if out.transactionStatus.intValue == TxStatus.MempoolOutcoming.rawValue {
-//                    out.
-//                }
-//            }
+//    func calculateBlockedAmount() -> UInt32 {
+//        var sum = UInt32(0)
+//
+//        if wallet == nil {
+//            return sum
 //        }
-        for history in historyArray {
-            sum += blockedAmount(for: history)
-        }
-        
-        return sum
-    }
-    
+//
+//        if historyArray.count == 0 {
+//            return sum
+//        }
+//
+////        for address in wallet!.addresses {
+////            for out in address.spendableOutput {
+////                if out.transactionStatus.intValue == TxStatus.MempoolIncoming.rawValue {
+////                    sum += out.transactionOutAmount.uint32Value
+////                } else if out.transactionStatus.intValue == TxStatus.MempoolOutcoming.rawValue {
+////                    out.
+////                }
+////            }
+////        }
+//        for history in historyArray {
+//            sum += blockedAmount(for: history)
+//        }
+//
+//        return sum
+//    }
+
     func blockedAmount(for transaction: HistoryRLM) -> UInt32 {
         var sum = UInt32(0)
-        
+
         if transaction.txStatus.intValue == TxStatus.MempoolIncoming.rawValue {
             sum += transaction.txOutAmount.uint32Value
         } else if transaction.txStatus.intValue == TxStatus.MempoolOutcoming.rawValue {
             let addresses = wallet!.fetchAddresses()
-            
+
             for tx in transaction.txOutputs {
                 if addresses.contains(tx.address) {
                     sum += tx.amount.uint32Value
                 }
             }
         }
-        
+
         return sum
     }
 }

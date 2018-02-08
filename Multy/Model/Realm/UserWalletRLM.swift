@@ -39,10 +39,12 @@ class UserWalletRLM: Object {
 //                for out in address.spendableOutput {
 //                    sum += out.transactionOutAmount.uint32Value
 //                }
-                sum += address.amount.uint32Value
+                for out in address.spendableOutput {
+                    sum += out.transactionOutAmount.uint32Value
+                }
             }
             
-            sumInCrypto = Double(sum) / 100000000.0
+            sumInCrypto = convertSatoshiToBTC(sum: sum)
             
             address = addresses.last?.address ?? ""
         }
