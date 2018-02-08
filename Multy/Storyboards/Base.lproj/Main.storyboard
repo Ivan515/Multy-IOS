@@ -857,7 +857,7 @@ correctly</string>
                                 <color key="textColor" red="0.31764705882352939" green="0.40784313725490196" blue="0.45490196078431372" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a69-V8-DmE">
+                            <switch opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a69-V8-DmE">
                                 <rect key="frame" x="305" y="95" width="51" height="31"/>
                                 <color key="onTintColor" red="0.056432507932186127" green="0.55575066804885864" blue="0.99944394826889038" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
