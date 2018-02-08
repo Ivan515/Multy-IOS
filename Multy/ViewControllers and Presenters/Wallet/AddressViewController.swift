@@ -62,16 +62,32 @@ class AddressViewController: UIViewController {
     }
     
     @IBAction func shareAction(_ sender: Any) {
-        
-        let message = "MULTY \n\nMy \(self.wallet?.cryptoName ?? "") Address: \n\(self.wallet?.addresses[addressIndex!].address ?? "")"
-        let objectsToShare = [message] as [String]
-        let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
-        activityVC.excludedActivityTypes = [UIActivityType.airDrop, UIActivityType.addToReadingList]
-        self.present(activityVC, animated: true, completion: nil)
+        let branch = Branch.getInstance()
+        branch?.getShortURL(withParams: branchDict() as! [String : Any], andChannel: "Create option \"Multy\"", andFeature: "sharing", andCallback: { (url, err) in
+            let objectsToShare = [url] as! [String]
+            let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+            activityVC.excludedActivityTypes = [UIActivityType.airDrop, UIActivityType.addToReadingList]
+            self.present(activityVC, animated: true, completion: nil)
+        })
+
+//        let message = "MULTY \n\nMy \(self.wallet?.cryptoName ?? "") Address: \n\(makeStringWithAddress())"
+//        let objectsToShare = [message] as [String]
+//        let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+//        activityVC.excludedActivityTypes = [UIActivityType.airDrop, UIActivityType.addToReadingList]
+//        self.present(activityVC, animated: true, completion: nil)
     }
     
-    
-    
+    func branchDict() -> NSDictionary {
+        //check for blockchain
+        //if bitcoin - address: "\(chainName):\(presenter.walletAddress)"
+        let chainName = "bitcoin"
+        let dict: NSDictionary = ["$og_title" : "Multy",
+                                  "address"   : "\(chainName):\(makeStringWithAddress())",
+                                  "amount"    : 0.0]
+
+        return dict
+    }
+  
     @IBAction func cancelAction(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
