@@ -270,11 +270,15 @@ class WalletViewController: UIViewController {
         setGradientBackground()
     }
     
-    func fixUIForPlusScreens() {
+    func fixUiWithPendingTransactions() {
         let numberOfPending = presenter.getNumberOfPendingTransactions()
         let numberOfTransactions = presenter.numberOfTransactions()
         if screenHeight == 736 && numberOfTransactions < 5 {
             if numberOfPending > 2 {
+                self.tableView.isScrollEnabled = true
+            }
+        } else if screenHeight == 667 && numberOfTransactions < 5 {
+            if numberOfPending > 1 {
                 self.tableView.isScrollEnabled = true
             }
         }
@@ -320,22 +324,28 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
         // else return some empty cells
         let countOfHistObjects = self.presenter.numberOfTransactions()
         if countOfHistObjects > 0 {
-            if countOfHistObjects < visibleCells {
-                self.tableView.isScrollEnabled = false
-                if screenHeight == 480 {   //ipad
-                    self.tableView.isScrollEnabled = true
-                    return countOfHistObjects + 1
-                }
-                
-                return 10
+//            if countOfHistObjects < visibleCells {
+//                self.tableView.isScrollEnabled = false
+//                if screenHeight == 480 {   //ipad
+//                    self.tableView.isScrollEnabled = true
+//                    return countOfHistObjects + 1
+//                }
+//
+//                return 10
+//            } else {
+//                self.tableView.isScrollEnabled = true
+//
+//                if screenHeight == 736 && countOfHistObjects <= 5 { // 6 plus screen
+//                    self.tableView.isScrollEnabled = false
+//                    return 7
+//                }
+//
+//                return countOfHistObjects + 1
+//            }
+            self.tableView.isScrollEnabled = true
+            if countOfHistObjects < 7 {
+                return 7
             } else {
-                self.tableView.isScrollEnabled = true
-                
-                if screenHeight == 736 && countOfHistObjects <= 5 { // 6 plus screen
-                    self.tableView.isScrollEnabled = false
-                    return 7
-                }
-                
                 return countOfHistObjects + 1
             }
         } else {
