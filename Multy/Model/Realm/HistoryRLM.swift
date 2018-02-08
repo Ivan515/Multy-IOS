@@ -67,8 +67,12 @@ class HistoryRLM: Object {
             hist.confirmations = confirmations
         }
         
-        if let blocktime = historyDict["mempoolTime"] {
-            hist.mempoolTime = NSDate(timeIntervalSince1970: (blocktime as! Double)) as Date
+        if let blocktime = historyDict["blocktime"] {
+            hist.blockTime = NSDate(timeIntervalSince1970: (blocktime as! Double)) as Date
+        }
+        
+        if let mempoolTime = historyDict["mempooltime"] {
+            hist.mempoolTime = NSDate(timeIntervalSince1970: (mempoolTime as! Double)) as Date
         }
         
         if let rates = historyDict["stockexchangerate"] as? NSArray {

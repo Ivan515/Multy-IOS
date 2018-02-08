@@ -89,7 +89,12 @@ class TransactionViewController: UIViewController {
         
         let cryptoSumInBTC = convertSatoshiToBTC(sum: UInt32(truncating: presenter.histObj.txOutAmount))
         
-        self.dateLbl.text = dateFormatter.string(from: presenter.histObj.blockTime)
+        if presenter.histObj.txStatus.intValue == TxStatus.MempoolIncoming.rawValue ||
+            presenter.histObj.txStatus.intValue == TxStatus.MempoolOutcoming.rawValue {
+            self.dateLbl.text = dateFormatter.string(from: presenter.histObj.mempoolTime)
+        } else {
+            self.dateLbl.text = dateFormatter.string(from: presenter.histObj.blockTime)
+        }
         
         self.noteLbl.text = "" // NOTE FROM HIST OBJ
         self.constraintNoteFiatSum.constant = 10
