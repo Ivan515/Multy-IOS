@@ -71,6 +71,10 @@ class HistoryRLM: Object {
             hist.blockTime = NSDate(timeIntervalSince1970: (blocktime as! Double)) as Date
         }
         
+        if hist.blockHeight == -1 {
+            hist.blockTime = Date()
+        }
+        
         if let mempoolTime = historyDict["mempooltime"] {
             hist.mempoolTime = NSDate(timeIntervalSince1970: (mempoolTime as! Double)) as Date
         }
