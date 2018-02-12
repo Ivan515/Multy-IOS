@@ -76,7 +76,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         }
                         let chainNameFromLink = (dictFormLink["address"] as! String).split(separator: ":").first
                         let addressFromLink = (dictFormLink["address"] as! String).split(separator: ":").last
-                        let amountFromLink = dictFormLink["amount"] as! Double
+                        let amountFromLink = (dictFormLink["amount"] as! NSString).doubleValue
                         
                         let storyboard = UIStoryboard(name: "Send", bundle: nil)
                         let sendStartVC = storyboard.instantiateViewController(withIdentifier: "sendStart") as! SendStartViewController
