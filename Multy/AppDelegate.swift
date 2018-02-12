@@ -31,9 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print("\n\nScreennshot!\n\n")
                 //executes after screenshot
         }
-
         self.performFirstEnterFlow()
-
         DataManager.shared.realmManager.getAccount { (acc, err) in
             isNeedToAutorise = acc != nil
 
