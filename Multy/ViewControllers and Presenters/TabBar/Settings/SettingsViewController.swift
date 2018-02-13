@@ -76,6 +76,7 @@ class SettingsViewController: UIViewController {
         self.navigationController?.pushViewController(secureSettingsVC, animated: true)
     }
     
+    
     @objc func disablePin() {
         self.pinSwitch.isOn = false
         NotificationCenter.default.removeObserver(self)

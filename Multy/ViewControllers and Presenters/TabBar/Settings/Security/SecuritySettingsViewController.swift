@@ -27,4 +27,10 @@ class SecuritySettingsViewController: UIViewController {
         resetVC.modalPresentationStyle = .overCurrentContext
         self.present(resetVC, animated: true, completion: nil)
     }
+    
+    @IBAction func goToEntranceSettingsAction(_ sender: Any) {
+        self.performSegue(withIdentifier: "entranceSettingsVC", sender: sender)
+    }
+    
+    
 }
