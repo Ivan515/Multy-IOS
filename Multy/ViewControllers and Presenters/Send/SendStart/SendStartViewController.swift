@@ -5,7 +5,7 @@
 import UIKit
 import ZFRippleButton
 
-class SendStartViewController: UIViewController {
+class SendStartViewController: UIViewController, AnalyticsProtocol {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var nextBtn: ZFRippleButton!
@@ -23,6 +23,7 @@ class SendStartViewController: UIViewController {
         self.hideKeyboardWhenTappedAroundForSendStart()
         self.nextBtn.backgroundColor = UIColor(red: 209/255, green: 209/255, blue: 214/255, alpha: 1.0)
         self.ipadFix()
+        sendAnalyticsEvent(screenName: screenSendTo, eventName: screenSendTo)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -40,7 +41,7 @@ class SendStartViewController: UIViewController {
     
     @objc func dismissSendKeyboard() {
         let searchCell = self.tableView.cellForRow(at: [0,0]) as! SearchAddressTableViewCell
-        presenter.addressSendTo = searchCell.addressTV.text
+        presenter.transactionDTO.sendAddress = searchCell.addressTV.text
         
         modifyNextButtonMode()
         view.endEditing(true)
@@ -52,7 +53,7 @@ class SendStartViewController: UIViewController {
         let topCell = tableView.cellForRow(at: IndexPath(row: 1, section: 0)) as? NewWalletTableViewCell
         topCell?.makeTopCorners()
         
-        if self.presenter.addressSendTo != "" {
+        if presenter.transactionDTO.sendAddress != nil && !presenter.transactionDTO.sendAddress!.isEmpty {
             self.modifyNextButtonMode()
         }
     }
@@ -69,7 +70,7 @@ class SendStartViewController: UIViewController {
     }
     
     @IBAction func nextAction(_ sender: Any) {
-        if self.presenter.choosenWallet == nil {
+        if self.presenter.transactionDTO.choosenWallet == nil {
             self.performSegue(withIdentifier: "chooseWalletVC", sender: sender)
         } else {
             self.performSegue(withIdentifier: "transactionDetail", sender: sender)
@@ -77,7 +78,7 @@ class SendStartViewController: UIViewController {
     }
     
     func modifyNextButtonMode() {
-        if presenter.addressSendTo.isValidCryptoAddress() {
+        if presenter.transactionDTO.sendAddress != nil && presenter.transactionDTO.sendAddress!.isValidCryptoAddress() {
             if !nextBtn.isEnabled {
                 self.nextBtn.isEnabled = true
                 self.nextBtn.applyGradient(withColours: [UIColor(ciColor: CIColor(red: 0/255, green: 178/255, blue: 255/255)),
@@ -99,17 +100,14 @@ class SendStartViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
         case "chooseWalletVC"?:
-            let chooseWalletVC = segue.destination as! WalletChoooseViewController
-            chooseWalletVC.presenter.addressToStr = self.presenter.addressSendTo
-            chooseWalletVC.presenter.amountFromQr = self.presenter.amountInCrypto
+            let chooseWalletVC = segue.destination as! WalletChooseViewController
+            chooseWalletVC.presenter.transactionDTO = presenter.transactionDTO
         case "qrCamera"?:
             let qrScanerVC = segue.destination as! QrScannerViewController
             qrScanerVC.qrDelegate = self.presenter
         case "transactionDetail"?:
             let sendDetailsVC = segue.destination as! SendDetailsViewController
-            sendDetailsVC.presenter.choosenWallet = self.presenter.choosenWallet
-            sendDetailsVC.presenter.addressToStr = self.presenter.addressSendTo
-            sendDetailsVC.presenter.amountFromQr = self.presenter.amountInCrypto
+            sendDetailsVC.presenter.transactionDTO = presenter.transactionDTO
         default: break
         }
     }
@@ -128,8 +126,8 @@ extension SendStartViewController:  UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath == [0, 0] {
             let searchAddressCell = self.tableView.dequeueReusableCell(withIdentifier: "searchAddressCell") as! SearchAddressTableViewCell
-            if self.presenter.addressSendTo != "" {
-                searchAddressCell.updateWithAddress(address: self.presenter.addressSendTo)
+            if presenter.transactionDTO.sendAddress != nil && !presenter.transactionDTO.sendAddress!.isEmpty {
+                searchAddressCell.updateWithAddress(address: presenter.transactionDTO.sendAddress!)
             }
             searchAddressCell.cancelDelegate = self.presenter
             searchAddressCell.sendAddressDelegate = self.presenter
@@ -162,7 +160,7 @@ extension SendStartViewController:  UITableViewDelegate, UITableViewDataSource {
             let selectedCell = self.tableView.cellForRow(at: indexPath) as! RecentAddressTableViewCell
             searchCell.addressTV.text = selectedCell.addressLbl.text
             searchCell.addressInTfLlb.text = selectedCell.addressLbl.text
-            self.presenter.addressSendTo = selectedCell.addressLbl.text!
+            self.presenter.transactionDTO.sendAddress = selectedCell.addressLbl.text!
             self.tableView.deselectRow(at: indexPath, animated: true)
             self.modifyNextButtonMode()
         }

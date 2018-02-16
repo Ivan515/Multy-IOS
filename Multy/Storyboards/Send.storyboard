@@ -143,7 +143,7 @@ This feature will be in the next update.</string>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3H5-Jj-TW4">
                                 <rect key="frame" x="0.0" y="28" width="49" height="30"/>
                                 <connections>
-                                    <action selector="cancelAtion:" destination="rrp-ST-Ben" eventType="touchUpInside" id="0A2-Ge-bCV"/>
+                                    <action selector="cancelAction:" destination="rrp-ST-Ben" eventType="touchUpInside" id="0A2-Ge-bCV"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BX5-GH-dDv">
@@ -234,10 +234,10 @@ This feature will be in the next update.</string>
             </objects>
             <point key="canvasLocation" x="1697" y="1046"/>
         </scene>
-        <!--Wallet Chooose View Controller-->
+        <!--Wallet Choose View Controller-->
         <scene sceneID="HO5-Ha-KfH">
             <objects>
-                <viewController id="3gL-lZ-1hN" customClass="WalletChoooseViewController" customModule="Multy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="3gL-lZ-1hN" customClass="WalletChooseViewController" customModule="Multy" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="9BJ-vZ-ZUf"/>
                         <viewControllerLayoutGuide type="bottom" id="qXe-wl-HWf"/>
@@ -827,10 +827,26 @@ This feature will be in the next update.</string>
                                             <action selector="changeAction:" destination="LFO-Fg-H8V" eventType="touchUpInside" id="NyX-Z2-lnu"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pDG-0f-Iiz">
+                                        <rect key="frame" x="173" y="161.5" width="60.5" height="53.5"/>
+                                        <connections>
+                                            <action selector="topBtn:" destination="LFO-Fg-H8V" eventType="touchUpInside" id="6De-Ul-Vl7"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DDj-lp-BeH">
+                                        <rect key="frame" x="164" y="265" width="47" height="15"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="15" id="904-c7-kAc"/>
+                                        </constraints>
+                                        <connections>
+                                            <action selector="botBtn:" destination="LFO-Fg-H8V" eventType="touchUpInside" id="Zox-GS-9w4"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="70x-BQ-w30" firstAttribute="centerX" secondItem="uDq-Td-EBb" secondAttribute="centerX" id="1QK-ib-Lcm"/>
                                     <constraint firstItem="Lm1-SW-8dk" firstAttribute="centerY" secondItem="VhT-01-bTB" secondAttribute="centerY" id="3Un-QL-QAD"/>
+                                    <constraint firstItem="pDG-0f-Iiz" firstAttribute="top" secondItem="gfE-Vc-rTR" secondAttribute="top" id="7eH-CX-NVt"/>
                                     <constraint firstItem="fOo-l7-Vq8" firstAttribute="bottom" secondItem="gfE-Vc-rTR" secondAttribute="bottom" constant="-15" id="8jK-nA-1j1"/>
                                     <constraint firstItem="bZE-Cd-gDu" firstAttribute="centerX" secondItem="uDq-Td-EBb" secondAttribute="centerX" id="9GC-nw-scf"/>
                                     <constraint firstItem="gfE-Vc-rTR" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="uDq-Td-EBb" secondAttribute="leading" priority="990" constant="20" id="AcU-fU-Vdt"/>
@@ -840,6 +856,7 @@ This feature will be in the next update.</string>
                                     <constraint firstItem="1r8-E7-NF8" firstAttribute="top" secondItem="bZE-Cd-gDu" secondAttribute="bottom" constant="10" id="P3b-Gc-rJn"/>
                                     <constraint firstItem="Lm1-SW-8dk" firstAttribute="leading" secondItem="uDq-Td-EBb" secondAttribute="leading" constant="16" id="Qlq-ys-HTl"/>
                                     <constraint firstItem="gfE-Vc-rTR" firstAttribute="top" secondItem="VhT-01-bTB" secondAttribute="bottom" constant="105" id="RJ1-gs-5mw"/>
+                                    <constraint firstItem="DDj-lp-BeH" firstAttribute="leading" secondItem="iP4-gf-E0A" secondAttribute="leading" id="S94-tF-Wop"/>
                                     <constraint firstItem="gfE-Vc-rTR" firstAttribute="centerX" secondItem="uDq-Td-EBb" secondAttribute="centerX" id="TyA-3u-UGW"/>
                                     <constraint firstItem="A45-fp-vZe" firstAttribute="centerY" secondItem="70x-BQ-w30" secondAttribute="centerY" id="XtI-6w-SNs"/>
                                     <constraint firstItem="WHc-k4-50p" firstAttribute="leading" secondItem="70x-BQ-w30" secondAttribute="trailing" constant="2" id="YLN-ro-kTv"/>
@@ -849,19 +866,24 @@ This feature will be in the next update.</string>
                                     <constraint firstItem="1r8-E7-NF8" firstAttribute="top" secondItem="tyQ-1e-aWF" secondAttribute="bottom" constant="15" id="apj-dr-7vC"/>
                                     <constraint firstItem="Rnf-u0-7bX" firstAttribute="top" secondItem="1r8-E7-NF8" secondAttribute="bottom" constant="10" id="bIm-zv-uGT"/>
                                     <constraint firstAttribute="bottom" secondItem="Rnf-u0-7bX" secondAttribute="bottom" constant="-44" id="bYx-4N-Wrh"/>
+                                    <constraint firstItem="DDj-lp-BeH" firstAttribute="trailing" secondItem="njG-Gh-LWY" secondAttribute="trailing" id="cMs-8Z-bVj"/>
                                     <constraint firstItem="D9i-dd-7eI" firstAttribute="leading" secondItem="uDq-Td-EBb" secondAttribute="leading" id="ecU-Nu-VjJ"/>
                                     <constraint firstItem="70x-BQ-w30" firstAttribute="leading" secondItem="A45-fp-vZe" secondAttribute="trailing" constant="4" id="fyP-uk-opF"/>
                                     <constraint firstItem="70x-BQ-w30" firstAttribute="top" secondItem="gfE-Vc-rTR" secondAttribute="bottom" constant="-0.5" id="hM2-TY-UoJ"/>
+                                    <constraint firstItem="pDG-0f-Iiz" firstAttribute="leading" secondItem="gfE-Vc-rTR" secondAttribute="leading" id="him-sv-BEW"/>
                                     <constraint firstItem="bZE-Cd-gDu" firstAttribute="top" secondItem="gfE-Vc-rTR" secondAttribute="bottom" constant="-13.5" id="iaO-Yg-kxv"/>
                                     <constraint firstItem="Rnf-u0-7bX" firstAttribute="centerX" secondItem="uDq-Td-EBb" secondAttribute="centerX" id="j5Q-Vh-VM2"/>
                                     <constraint firstItem="1r8-E7-NF8" firstAttribute="centerX" secondItem="uDq-Td-EBb" secondAttribute="centerX" id="nFa-j9-Aef"/>
+                                    <constraint firstItem="DDj-lp-BeH" firstAttribute="top" secondItem="iP4-gf-E0A" secondAttribute="top" id="o19-zc-HNX"/>
                                     <constraint firstItem="cLW-Qu-SGI" firstAttribute="centerY" secondItem="VhT-01-bTB" secondAttribute="centerY" id="pZx-21-J9n"/>
                                     <constraint firstAttribute="trailing" secondItem="cLW-Qu-SGI" secondAttribute="trailing" constant="16" id="pge-lL-wGL"/>
                                     <constraint firstItem="D9i-dd-7eI" firstAttribute="top" secondItem="Lm1-SW-8dk" secondAttribute="top" id="sjW-UI-ksN"/>
                                     <constraint firstItem="fOo-l7-Vq8" firstAttribute="leading" secondItem="gfE-Vc-rTR" secondAttribute="trailing" id="szT-6r-cTL"/>
                                     <constraint firstItem="VhT-01-bTB" firstAttribute="centerX" secondItem="uDq-Td-EBb" secondAttribute="centerX" id="ttK-o3-4ti"/>
+                                    <constraint firstItem="pDG-0f-Iiz" firstAttribute="bottom" secondItem="gfE-Vc-rTR" secondAttribute="bottom" constant="-15" id="vPF-MF-ZXp"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="fOo-l7-Vq8" secondAttribute="trailing" constant="20" id="xQ0-88-ytT"/>
                                     <constraint firstAttribute="trailing" secondItem="WHc-k4-50p" secondAttribute="trailing" constant="16" id="y45-Fz-EUC"/>
+                                    <constraint firstItem="pDG-0f-Iiz" firstAttribute="trailing" secondItem="fOo-l7-Vq8" secondAttribute="trailing" id="yBq-pw-NRz"/>
                                     <constraint firstItem="tyQ-1e-aWF" firstAttribute="centerX" secondItem="uDq-Td-EBb" secondAttribute="centerX" id="zqc-XT-qTV"/>
                                 </constraints>
                             </scrollView>
@@ -955,6 +977,7 @@ This feature will be in the next update.</string>
                                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
                                                 <connections>
+                                                    <action selector="addNoteAction:" destination="0GY-ag-sLU" eventType="touchUpInside" id="Ww3-Je-tRB"/>
                                                     <outlet property="delegate" destination="0GY-ag-sLU" id="ilv-hp-LrM"/>
                                                 </connections>
                                             </textField>
@@ -1012,7 +1035,7 @@ This feature will be in the next update.</string>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3DA28WCp4Cu5LQiddJnDJJmKWvmmZAKP5K" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="j2L-wX-UIu">
-                                                <rect key="frame" x="41" y="151.5" width="261" height="33"/>
+                                                <rect key="frame" x="41" y="151.5" width="261.5" height="33"/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="12"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1236,14 +1259,14 @@ This feature will be in the next update.</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="loading" translatesAutoresizingMaskIntoConstraints="NO" id="P2z-Fa-KbC">
-                                <rect key="frame" x="128.5" y="274.5" width="117" height="117"/>
+                                <rect key="frame" x="129" y="275" width="117" height="117"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="117" id="bTI-zm-OW7"/>
                                     <constraint firstAttribute="width" constant="117" id="fA0-R2-OVf"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sending..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Jg-ab-E9W">
-                                <rect key="frame" x="147.5" y="411.5" width="79" height="23.5"/>
+                                <rect key="frame" x="148" y="412" width="79" height="23.5"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="17"/>
                                 <color key="textColor" red="0.97647058819999999" green="0.98039215690000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>

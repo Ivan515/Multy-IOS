@@ -5,7 +5,7 @@
 import UIKit
 import ZFRippleButton
 
-class SendAmountViewController: UIViewController, UITextFieldDelegate {
+class SendAmountViewController: UIViewController, UITextFieldDelegate, AnalyticsProtocol {
     
     @IBOutlet weak var titleLbl: UILabel! // "Send \(crypyoName)"
     @IBOutlet weak var amountTF: UITextField!
@@ -50,6 +50,8 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate {
             amountTF.text = "0"
         }
         presenter.getData()
+        sendAnalyticsEvent(screenName: "\(screenSendAmountWithChain)\(presenter.transactionDTO.choosenWallet!.chain)", eventName: "\(screenSendAmountWithChain)\(presenter.transactionDTO.choosenWallet!.chain)")
+        sendAnalyticsEvent(screenName: "\(screenSendAmountWithChain)\(presenter.transactionDTO.choosenWallet!.chain)", eventName: payForCommissionEnabled)
     }
     
     override func viewDidLayoutSubviews() {
@@ -82,6 +84,7 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate {
     @IBAction func cancelAction(_ sender: Any) {
         self.tabBarController?.selectedIndex = 0
         self.navigationController?.popToRootViewController(animated: false)
+        sendAnalyticsEvent(screenName: "\(screenSendAmountWithChain)\(presenter.transactionDTO.choosenWallet!.chain)", eventName: cancelTap)
     }
     
     @IBAction func payForCommisionAction(_ sender: Any) {
@@ -89,8 +92,10 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate {
         if self.presenter.isMaxEntered {
             self.presentWarning(message: self.presenter.messageForAlert())
             self.commissionSwitch.isOn = false
+            sendAnalyticsEvent(screenName: "\(screenSendAmountWithChain)\(presenter.transactionDTO.choosenWallet!.chain)", eventName: payForCommissionDisabled)
         } else {
             self.setSumInNextBtn()
+            sendAnalyticsEvent(screenName: "\(screenSendAmountWithChain)\(presenter.transactionDTO.choosenWallet!.chain)", eventName: payForCommissionEnabled)
         }
         self.presenter.setMaxAllowed()
     }
@@ -149,6 +154,8 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate {
         self.presenter.setSpendableAmountText()
         self.presenter.setMaxAllowed()
         self.setSumInNextBtn()
+        
+        sendAnalyticsEvent(screenName: "\(screenSendAmountWithChain)\(presenter.transactionDTO.choosenWallet!.chain)", eventName: switchTap)
     }
     
     
@@ -186,12 +193,13 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate {
             self.setSumInNextBtn()
         }
         self.presenter.saveTfValue()
+        sendAnalyticsEvent(screenName: "\(screenSendAmountWithChain)\(presenter.transactionDTO.choosenWallet!.chain)", eventName: payMaxTap)
     }
 
     
     
     @IBAction func nextAction(_ sender: Any) {
-        if self.presenter.sumInCrypto != 0.0 && self.presenter.donationObj != nil && !amountTF.text!.isEmpty && convertBTCStringToSatoshi(sum: amountTF.text!) != 0 {
+        if self.presenter.sumInCrypto != 0.0 && presenter.transactionDTO.transaction!.donationDTO != nil && !amountTF.text!.isEmpty && convertBTCStringToSatoshi(sum: amountTF.text!) != 0 {
             self.performSegue(withIdentifier: "sendFinishVC", sender: sender)
         } else {
             self.presentWarning(message: "You try to send 0.0 \(self.presenter.cryptoName).\nPlease enter the correct value")
@@ -298,18 +306,15 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "sendFinishVC" {
             let sendFinishVC = segue.destination as! SendFinishViewController
-            sendFinishVC.presenter.addressToStr =   presenter.addressToStr
-            sendFinishVC.presenter.walletFrom =     presenter.wallet
-            sendFinishVC.presenter.sumInFiat =      presenter.sumInFiat
-            sendFinishVC.presenter.cryptoName =     presenter.cryptoName
-            sendFinishVC.presenter.fiatName =       presenter.fiatName
-            sendFinishVC.presenter.transactionObj = presenter.transactionObj
-            sendFinishVC.presenter.sumInCrypto =    presenter.sumInCrypto
             sendFinishVC.presenter.isCrypto =       presenter.isCrypto
-            sendFinishVC.presenter.endSum =         presenter.getNextBtnSum()
-            sendFinishVC.presenter.rawTransaction = presenter.rawTransaction
-            sendFinishVC.presenter.account =        presenter.account
-            sendFinishVC.presenter.addressData =    presenter.addressData
+            
+            presenter.transactionDTO.sendAmount = presenter.sumInCrypto
+            presenter.transactionDTO.transaction?.newChangeAddress = presenter.addressData!["address"] as? String
+            presenter.transactionDTO.transaction?.rawTransaction = presenter.rawTransaction
+            presenter.transactionDTO.transaction?.transactionRLM = presenter.transactionObj
+            presenter.transactionDTO.transaction?.endSum = presenter.getNextBtnSum()
+            
+            sendFinishVC.presenter.transactionDTO = presenter.transactionDTO
         }
     }
     
@@ -336,4 +341,26 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate {
             self.scrollView.isScrollEnabled = false
         }
     }
+    
+    @IBAction func topBtn(_ sender: Any) {
+        var tap = ""
+        if self.presenter.isCrypto {
+            tap = cryptoTap
+        } else {
+            tap = fiatTap
+        }
+        sendAnalyticsEvent(screenName: "\(screenSendAmountWithChain)\(presenter.transactionDTO.choosenWallet!.chain)", eventName: tap)
+    }
+    
+    @IBAction func botBtn(_ sender: Any) {
+        var tap = ""
+        if self.presenter.isCrypto {
+            tap = cryptoTap
+        } else {
+            tap = fiatTap
+        }
+        sendAnalyticsEvent(screenName: "\(screenSendAmountWithChain)\(presenter.transactionDTO.choosenWallet!.chain)", eventName: tap)
+    }
+    
+    
 }
