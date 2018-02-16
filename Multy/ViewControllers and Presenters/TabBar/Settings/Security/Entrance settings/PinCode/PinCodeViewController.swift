@@ -5,7 +5,7 @@
 import UIKit
 import LTMorphingLabel
 
-class PinCodeViewController: UIViewController, UITextFieldDelegate {
+class PinCodeViewController: UIViewController, UITextFieldDelegate, AnalyticsProtocol {
 
     @IBOutlet weak var pinTF: UITextField!
     @IBOutlet weak var pinTextLbl: LTMorphingLabel!
@@ -60,8 +60,10 @@ class PinCodeViewController: UIViewController, UITextFieldDelegate {
         circle.layer.borderWidth = 0
         
         counter += 1
-        
+
         return true
     }
+    
+    //    sendAnalyticsEvent(screenName: screenBlockSettings, eventName: pinSetuped)    // send when pin settuped
     
 }

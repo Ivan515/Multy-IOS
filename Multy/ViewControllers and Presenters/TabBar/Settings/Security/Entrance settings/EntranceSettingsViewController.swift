@@ -4,7 +4,7 @@
 
 import UIKit
 
-class EntranceSettingsViewController: UIViewController {
+class EntranceSettingsViewController: UIViewController, AnalyticsProtocol {
 
     @IBOutlet weak var backupView: UIView!
     @IBOutlet weak var topPassConstraint: NSLayoutConstraint!
@@ -21,23 +21,27 @@ class EntranceSettingsViewController: UIViewController {
         
         self.pinView.alpha = closeAlpha
         self.biometricView.alpha = closeAlpha
+        sendAnalyticsEvent(screenName: screenBlockSettings, eventName: screenBlockSettings)
     }
 
     @IBAction func backAction(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
+        sendAnalyticsEvent(screenName: screenBlockSettings, eventName: closeTap)
     }
     
     @IBAction func usePassAction(_ sender: Any) {
         if usePassSwitch.isOn {
             self.pinView.alpha = 1.0
             self.pinView.isUserInteractionEnabled = true
+            sendAnalyticsEvent(screenName: screenBlockSettings, eventName: pinEnabledTap)
         } else {
             self.pinView.alpha = closeAlpha
             self.pinView.isUserInteractionEnabled = false
+            sendAnalyticsEvent(screenName: screenBlockSettings, eventName: pinDisableTap)
         }
     }
     
     @IBAction func goToPinAction(_ sender: Any) {
-        self.performSegue(withIdentifier: "pinVC", sender: nil)
+        self.performSegue(withIdentifier: "pinVC", sender: sender)
     }
 }
