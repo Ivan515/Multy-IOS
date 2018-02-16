@@ -36,7 +36,7 @@ class SendFinishViewController: UIViewController, UITextFieldDelegate, Analytics
         self.noteTF.delegate = self
 
         self.setupUI()
-        sendAnalyticsEvent(screenName: "\(screenSendSummaryWithChain)\(presenter.walletFrom!.chain)", eventName: "\(screenSendSummaryWithChain)\(presenter.walletFrom!.chain)")
+        sendAnalyticsEvent(screenName: "\(screenSendSummaryWithChain)\(presenter.transactionDTO.choosenWallet!.chain)", eventName: "\(screenSendSummaryWithChain)\(presenter.transactionDTO.choosenWallet!.chain)")
     }
     
     func setupUI() {
@@ -59,7 +59,7 @@ class SendFinishViewController: UIViewController, UITextFieldDelegate, Analytics
     
     @IBAction func backAction(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
-        sendAnalyticsEvent(screenName: "\(screenSendSummaryWithChain)\(presenter.walletFrom!.chain)", eventName: closeTap)
+        sendAnalyticsEvent(screenName: "\(screenSendSummaryWithChain)\(presenter.transactionDTO.choosenWallet!.chain)", eventName: closeTap)
     }
     
     @IBAction func cancelAction(_ sender: Any) {
@@ -68,7 +68,7 @@ class SendFinishViewController: UIViewController, UITextFieldDelegate, Analytics
     }
     
     @IBAction func addNoteAction(_ sender: Any) {
-        sendAnalyticsEvent(screenName: "\(screenSendSummaryWithChain)\(presenter.walletFrom!.chain)", eventName: addNoteTap)
+        sendAnalyticsEvent(screenName: "\(screenSendSummaryWithChain)\(presenter.transactionDTO.choosenWallet!.chain)", eventName: addNoteTap)
     }
     
     @IBAction func nextAction(_ sender: Any) {
@@ -130,7 +130,7 @@ class SendFinishViewController: UIViewController, UITextFieldDelegate, Analytics
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "sendingAnimationVC" {
             let sendAnimationVC = segue.destination as! SendingAnimationViewController
-            sendAnimationVC.chainId = self.presenter.walletFrom!.chain as! Int
+            sendAnimationVC.chainId = presenter.transactionDTO.choosenWallet!.chain as? Int
         }
     }
 }

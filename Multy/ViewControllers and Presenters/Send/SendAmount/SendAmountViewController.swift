@@ -50,8 +50,8 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate, Analytics
             amountTF.text = "0"
         }
         presenter.getData()
-        sendAnalyticsEvent(screenName: "\(screenSendAmountWithChain)\(presenter.wallet!.chain)", eventName: "\(screenSendAmountWithChain)\(presenter.wallet!.chain)")
-        sendAnalyticsEvent(screenName: "\(screenSendAmountWithChain)\(presenter.wallet!.chain)", eventName: payForCommissionEnabled)
+        sendAnalyticsEvent(screenName: "\(screenSendAmountWithChain)\(presenter.transactionDTO.choosenWallet!.chain)", eventName: "\(screenSendAmountWithChain)\(presenter.transactionDTO.choosenWallet!.chain)")
+        sendAnalyticsEvent(screenName: "\(screenSendAmountWithChain)\(presenter.transactionDTO.choosenWallet!.chain)", eventName: payForCommissionEnabled)
     }
     
     override func viewDidLayoutSubviews() {
@@ -84,7 +84,7 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate, Analytics
     @IBAction func cancelAction(_ sender: Any) {
         self.tabBarController?.selectedIndex = 0
         self.navigationController?.popToRootViewController(animated: false)
-        sendAnalyticsEvent(screenName: "\(screenSendAmountWithChain)\(presenter.wallet!.chain)", eventName: cancelTap)
+        sendAnalyticsEvent(screenName: "\(screenSendAmountWithChain)\(presenter.transactionDTO.choosenWallet!.chain)", eventName: cancelTap)
     }
     
     @IBAction func payForCommisionAction(_ sender: Any) {
@@ -92,10 +92,10 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate, Analytics
         if self.presenter.isMaxEntered {
             self.presentWarning(message: self.presenter.messageForAlert())
             self.commissionSwitch.isOn = false
-            sendAnalyticsEvent(screenName: "\(screenSendAmountWithChain)\(presenter.wallet!.chain)", eventName: payForCommissionDisabled)
+            sendAnalyticsEvent(screenName: "\(screenSendAmountWithChain)\(presenter.transactionDTO.choosenWallet!.chain)", eventName: payForCommissionDisabled)
         } else {
             self.setSumInNextBtn()
-            sendAnalyticsEvent(screenName: "\(screenSendAmountWithChain)\(presenter.wallet!.chain)", eventName: payForCommissionEnabled)
+            sendAnalyticsEvent(screenName: "\(screenSendAmountWithChain)\(presenter.transactionDTO.choosenWallet!.chain)", eventName: payForCommissionEnabled)
         }
         self.presenter.setMaxAllowed()
     }
@@ -155,7 +155,7 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate, Analytics
         self.presenter.setMaxAllowed()
         self.setSumInNextBtn()
         
-        sendAnalyticsEvent(screenName: "\(screenSendAmountWithChain)\(presenter.wallet!.chain)", eventName: switchTap)
+        sendAnalyticsEvent(screenName: "\(screenSendAmountWithChain)\(presenter.transactionDTO.choosenWallet!.chain)", eventName: switchTap)
     }
     
     
@@ -193,7 +193,7 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate, Analytics
             self.setSumInNextBtn()
         }
         self.presenter.saveTfValue()
-        sendAnalyticsEvent(screenName: "\(screenSendAmountWithChain)\(presenter.wallet!.chain)", eventName: payMaxTap)
+        sendAnalyticsEvent(screenName: "\(screenSendAmountWithChain)\(presenter.transactionDTO.choosenWallet!.chain)", eventName: payMaxTap)
     }
 
     
@@ -349,7 +349,7 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate, Analytics
         } else {
             tap = fiatTap
         }
-        sendAnalyticsEvent(screenName: "\(screenSendAmountWithChain)\(presenter.wallet!.chain)", eventName: tap)
+        sendAnalyticsEvent(screenName: "\(screenSendAmountWithChain)\(presenter.transactionDTO.choosenWallet!.chain)", eventName: tap)
     }
     
     @IBAction func botBtn(_ sender: Any) {
@@ -359,7 +359,7 @@ class SendAmountViewController: UIViewController, UITextFieldDelegate, Analytics
         } else {
             tap = fiatTap
         }
-        sendAnalyticsEvent(screenName: "\(screenSendAmountWithChain)\(presenter.wallet!.chain)", eventName: tap)
+        sendAnalyticsEvent(screenName: "\(screenSendAmountWithChain)\(presenter.transactionDTO.choosenWallet!.chain)", eventName: tap)
     }
     
     

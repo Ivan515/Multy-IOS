@@ -49,7 +49,7 @@ class TransactionViewController: UIViewController, AnalyticsProtocol {
         self.tabBarController?.tabBar.isHidden = true
         self.tabBarController?.tabBar.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
         self.isIncoming = presenter.histObj.isIncoming()
-        self.checkHeightForSrollAvailability()
+        self.checkHeightForScrollAvailability()
         self.checkForSendOrReceive()
         self.constraintDonationHeight.constant = 0
         self.donationView.isHidden = true
@@ -57,7 +57,7 @@ class TransactionViewController: UIViewController, AnalyticsProtocol {
         self.sendAnalyticOnStrart()
     }
 
-    func checkHeightForSrollAvailability() {
+    func checkHeightForScrollAvailability() {
 //        if screenHeight >= 667 {
 //            self.scrollView.isScrollEnabled = false
 //        }

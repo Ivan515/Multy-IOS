@@ -4,9 +4,8 @@
 
 import UIKit
 
-class WalletChoooseViewController: UIViewController, AnalyticsProtocol {
+class WalletChooseViewController: UIViewController, AnalyticsProtocol {
 
-    
     @IBOutlet weak var tableView: UITableView!
     
     let presenter = WalletChoosePresenter()

@@ -45,8 +45,8 @@ class SendDetailsViewController: UIViewController, UITextFieldDelegate, Analytic
         
         presenter.getData()
         
-        sendAnalyticsEvent(screenName: "\(screenTransactionFeeWithChain)\(presenter.choosenWallet!.chain)", eventName: "\(screenTransactionFeeWithChain)\(presenter.choosenWallet!.chain)")
-        sendAnalyticsEvent(screenName: "\(screenTransactionFeeWithChain)\(presenter.choosenWallet!.chain)", eventName: donationEnableTap)
+        sendAnalyticsEvent(screenName: "\(screenTransactionFeeWithChain)\(self.presenter.transactionDTO.choosenWallet!.chain)", eventName: "\(screenTransactionFeeWithChain)\(self.presenter.transactionDTO.choosenWallet!.chain)")
+        sendAnalyticsEvent(screenName: "\(screenTransactionFeeWithChain)\(self.presenter.transactionDTO.choosenWallet!.chain)", eventName: donationEnableTap)
     }
     
     override func viewDidLayoutSubviews() {
@@ -85,7 +85,7 @@ class SendDetailsViewController: UIViewController, UITextFieldDelegate, Analytic
     
     @IBAction func backAction(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
-        sendAnalyticsEvent(screenName: "\(screenTransactionFeeWithChain)\(presenter.choosenWallet!.chain)", eventName: closeTap)
+        sendAnalyticsEvent(screenName: "\(screenTransactionFeeWithChain)\(self.presenter.transactionDTO.choosenWallet!.chain)", eventName: closeTap)
     }
     @IBAction func cancelAction(_ sender: Any) {
         self.tabBarController?.selectedIndex = 0
@@ -149,14 +149,14 @@ class SendDetailsViewController: UIViewController, UITextFieldDelegate, Analytic
             self.presenter.donationInFiat = 0.0
             self.constraintDonationHeight.constant = self.constraintDonationHeight.constant / 2
             self.scrollView.contentSize.height = self.scrollView.contentSize.height - self.constraintDonationHeight.constant
-            sendAnalyticsEvent(screenName: "\(screenTransactionFeeWithChain)\(presenter.choosenWallet!.chain)", eventName: donationDisabledTap)
+            sendAnalyticsEvent(screenName: "\(screenTransactionFeeWithChain)\(self.presenter.transactionDTO.choosenWallet!.chain)", eventName: donationDisabledTap)
         } else {
             self.donationTF.becomeFirstResponder()
             self.presenter.donationInCrypto = (self.donationTF.text! as NSString).doubleValue
             self.presenter.donationInFiat = self.presenter.donationInCrypto! * exchangeCourse
             self.constraintDonationHeight.constant = self.constraintDonationHeight.constant * 2
             self.scrollView.contentSize.height = self.scrollView.contentSize.height + self.constraintDonationHeight.constant
-            sendAnalyticsEvent(screenName: "\(screenTransactionFeeWithChain)\(presenter.choosenWallet!.chain)", eventName: donationEnableTap)
+            sendAnalyticsEvent(screenName: "\(screenTransactionFeeWithChain)\(self.presenter.transactionDTO.choosenWallet!.chain)", eventName: donationEnableTap)
         }
         self.hideOrShowDonationBottom()
 //        self.scrollView.scrollRectToVisible(self.nextBtn.frame, animated: true)
@@ -231,7 +231,7 @@ class SendDetailsViewController: UIViewController, UITextFieldDelegate, Analytic
             }
             self.saveDonationSum(string: string)
         }
-        sendAnalyticsEvent(screenName: "\(screenTransactionFeeWithChain)\(presenter.choosenWallet!.chain)", eventName: donationChanged)
+        sendAnalyticsEvent(screenName: "\(screenTransactionFeeWithChain)\(self.presenter.transactionDTO.choosenWallet!.chain)", eventName: donationChanged)
         return newLength <= self.maxLengthForSum
     }
     
@@ -290,17 +290,17 @@ extension SendDetailsViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
         case 0:
-            sendAnalyticsEvent(screenName: "\(screenTransactionFeeWithChain)\(presenter.choosenWallet!.chain)", eventName: veryFastTap)
+            sendAnalyticsEvent(screenName: "\(screenTransactionFeeWithChain)\(self.presenter.transactionDTO.choosenWallet!.chain)", eventName: veryFastTap)
         case 1:
-            sendAnalyticsEvent(screenName: "\(screenTransactionFeeWithChain)\(presenter.choosenWallet!.chain)", eventName: fastTap)
+            sendAnalyticsEvent(screenName: "\(screenTransactionFeeWithChain)\(self.presenter.transactionDTO.choosenWallet!.chain)", eventName: fastTap)
         case 2:
-            sendAnalyticsEvent(screenName: "\(screenTransactionFeeWithChain)\(presenter.choosenWallet!.chain)", eventName: mediumTap)
+            sendAnalyticsEvent(screenName: "\(screenTransactionFeeWithChain)\(self.presenter.transactionDTO.choosenWallet!.chain)", eventName: mediumTap)
         case 3:
-            sendAnalyticsEvent(screenName: "\(screenTransactionFeeWithChain)\(presenter.choosenWallet!.chain)", eventName: slowTap)
+            sendAnalyticsEvent(screenName: "\(screenTransactionFeeWithChain)\(self.presenter.transactionDTO.choosenWallet!.chain)", eventName: slowTap)
         case 4:
-            sendAnalyticsEvent(screenName: "\(screenTransactionFeeWithChain)\(presenter.choosenWallet!.chain)", eventName: verySlowTap)
+            sendAnalyticsEvent(screenName: "\(screenTransactionFeeWithChain)\(self.presenter.transactionDTO.choosenWallet!.chain)", eventName: verySlowTap)
         case 5:
-            sendAnalyticsEvent(screenName: "\(screenTransactionFeeWithChain)\(presenter.choosenWallet!.chain)", eventName: customTap)
+            sendAnalyticsEvent(screenName: "\(screenTransactionFeeWithChain)\(self.presenter.transactionDTO.choosenWallet!.chain)", eventName: customTap)
         default : break
         }
         
