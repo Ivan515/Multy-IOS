@@ -5,8 +5,8 @@
 import UIKit
 import RealmSwift
 import Firebase
-import FirebaseInstanceID
-import FirebaseMessaging
+//import FirebaseInstanceID
+//import FirebaseMessaging
 import Branch
 import UserNotifications
 
