@@ -29,6 +29,11 @@ class EthWalletViewController: UIViewController, AnalyticsProtocol, CancelProtoc
     @IBOutlet weak var backImage: UIImageView!
     @IBOutlet weak var spiner: UIActivityIndicatorView!
     
+    @IBOutlet weak var transactionBtn: UIButton!
+    @IBOutlet weak var tokenBtn: UIButton!
+    @IBOutlet weak var tokensTable: UITableView!
+    
+    
     var presenter = EthWalletPresenter()
     
     var isBackupOnScreen = true
@@ -55,6 +60,8 @@ class EthWalletViewController: UIViewController, AnalyticsProtocol, CancelProtoc
     var isCanUpdate = true
     var isTableOnTop = false
     
+    var isHistory = true
+    
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(self.handleRefresh(_:)), for: UIControlEvents.valueChanged)
@@ -71,6 +78,7 @@ class EthWalletViewController: UIViewController, AnalyticsProtocol, CancelProtoc
         presenter.mainVC = self
         presenter.fixConstraints()
         presenter.registerCells()
+        setupBtns()
 
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateExchange), name: NSNotification.Name("exchageUpdated"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateWalletAfterSockets), name: NSNotification.Name("transactionUpdated"), object: nil)
@@ -114,6 +122,40 @@ class EthWalletViewController: UIViewController, AnalyticsProtocol, CancelProtoc
         self.collectionStartY = self.collectionView.frame.origin.y
         self.customHeader.roundCorners(corners: [.topRight, .topLeft], radius: 20)
         setupUI()
+    }
+    
+    func setupBtns() {
+        // check tokens here (set hiden if empty)
+        if isHistory {
+            transactionBtn.setTitleColor(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), for: .normal)
+            tokenBtn.setTitleColor(#colorLiteral(red: 0.5294117647, green: 0.631372549, blue: 0.7725490196, alpha: 1), for: .normal)
+        } else {
+            transactionBtn.setTitleColor(#colorLiteral(red: 0.5294117647, green: 0.631372549, blue: 0.7725490196, alpha: 1), for: .normal)
+            tokenBtn.setTitleColor(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), for: .normal)
+        }
+    }
+    
+    @IBAction func transactionAction(_ sender: Any) {
+        isHistory = true
+        setupBtns()
+//        UIView.animate(withDuration: 0.2) {
+//            self.tableView.frame.size.width = screenWidth
+//            self.tableView.frame.origin.x = 0
+//
+//            self.tokensTable.frame.size.width = 0
+//            self.tokensTable.frame.origin.x = screenWidth
+//        }
+    }
+    
+    @IBAction func tokensAction(_ sender: Any) {
+        isHistory = false
+        setupBtns()
+        UIView.animate(withDuration: 0.2) {
+            self.tableView.frame.origin.x = -screenWidth
+            
+            self.tokensTable.frame.origin.x = 0
+            self.tokensTable.frame.size.width = screenWidth
+        }
     }
     
     
@@ -456,7 +498,11 @@ extension EthWalletViewController: UITableViewDelegate, UITableViewDataSource {
             return pendingTrasactionCell
         } else {
             let transactionCell = self.tableView.dequeueReusableCell(withIdentifier: "TransactionWalletCellID") as! TransactionWalletCell
-            transactionCell.selectionStyle = .none
+            if tableView.isEqual(self.tokensTable) {
+                transactionCell.selectionStyle = .gray
+            } else {
+                 transactionCell.selectionStyle = .none
+            }
             if countOfHistObjs > 0 {
                 if indexPath.row >= countOfHistObjs {
                     transactionCell.changeState(isEmpty: true)
