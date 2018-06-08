@@ -1809,7 +1809,7 @@ By donating you help us to bring blockchain technology one step closer to ordina
                                 </connections>
                             </tableView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="mf9-84-q3x">
-                                <rect key="frame" x="375" y="282" width="0.0" height="330"/>
+                                <rect key="frame" x="375" y="282" width="375" height="330"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <outlet property="dataSource" destination="AaS-13-ZCZ" id="JTv-GN-YUw"/>
@@ -2028,7 +2028,7 @@ By donating you help us to bring blockchain technology one step closer to ordina
                             <constraint firstItem="1Fz-V4-uxe" firstAttribute="top" secondItem="NmL-yQ-47h" secondAttribute="bottom" id="F29-9p-dkL"/>
                             <constraint firstItem="3Yh-8Y-DyC" firstAttribute="top" secondItem="paw-pK-SZo" secondAttribute="bottom" constant="16" id="G8D-0h-lIQ"/>
                             <constraint firstItem="4wt-ap-wVn" firstAttribute="top" secondItem="ej0-MJ-fiE" secondAttribute="top" id="GXY-tp-oMh"/>
-                            <constraint firstAttribute="trailing" secondItem="mf9-84-q3x" secondAttribute="trailing" id="GtN-mg-Z49"/>
+                            <constraint firstItem="mf9-84-q3x" firstAttribute="width" secondItem="NmL-yQ-47h" secondAttribute="width" id="HNc-mL-FIF"/>
                             <constraint firstAttribute="trailing" secondItem="jUF-mM-u86" secondAttribute="trailing" id="Hh9-g9-NSO"/>
                             <constraint firstItem="NmL-yQ-47h" firstAttribute="width" secondItem="bck-YA-N5l" secondAttribute="width" id="IpO-cF-vyo"/>
                             <constraint firstItem="ej0-MJ-fiE" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Do2-Kb-s2l" secondAttribute="trailing" constant="6" id="L5v-6o-HKE"/>
@@ -2070,6 +2070,7 @@ By donating you help us to bring blockchain technology one step closer to ordina
                         <outlet property="customHeader" destination="jUF-mM-u86" id="SWJ-PL-LWd"/>
                         <outlet property="emptyArrowImg" destination="3Yh-8Y-DyC" id="vgL-cp-8kK"/>
                         <outlet property="emptySecondLbl" destination="paw-pK-SZo" id="wS8-p9-QMx"/>
+                        <outlet property="leftTableConstraint" destination="VI0-Vn-26g" id="z4R-XE-ilw"/>
                         <outlet property="spiner" destination="VNx-R4-5av" id="UAO-ol-pyf"/>
                         <outlet property="tableView" destination="NmL-yQ-47h" id="uNo-u4-lrK"/>
                         <outlet property="titleLbl" destination="ej0-MJ-fiE" id="FvS-eB-TGB"/>

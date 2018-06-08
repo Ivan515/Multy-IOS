@@ -33,6 +33,7 @@ class EthWalletViewController: UIViewController, AnalyticsProtocol, CancelProtoc
     @IBOutlet weak var tokenBtn: UIButton!
     @IBOutlet weak var tokensTable: UITableView!
     
+    @IBOutlet weak var leftTableConstraint: NSLayoutConstraint!
     
     var presenter = EthWalletPresenter()
     
@@ -138,23 +139,22 @@ class EthWalletViewController: UIViewController, AnalyticsProtocol, CancelProtoc
     @IBAction func transactionAction(_ sender: Any) {
         isHistory = true
         setupBtns()
-//        UIView.animate(withDuration: 0.2) {
-//            self.tableView.frame.size.width = screenWidth
-//            self.tableView.frame.origin.x = 0
-//
-//            self.tokensTable.frame.size.width = 0
-//            self.tokensTable.frame.origin.x = screenWidth
-//        }
+        self.leftTableConstraint.constant = 0
+        UIView.animate(withDuration: 0.2) {
+            self.view.layoutIfNeeded()
+        }
     }
     
     @IBAction func tokensAction(_ sender: Any) {
-        isHistory = false
-        setupBtns()
+//        DispatchQueue.main.async {
+        //                self.tableView.frame.origin.x = -screenWidth
+        
+        //                self.tokensTable.frame.origin.x = 0
+        self.isHistory = false
+        self.setupBtns()
+        self.leftTableConstraint.constant = -screenWidth
         UIView.animate(withDuration: 0.2) {
-            self.tableView.frame.origin.x = -screenWidth
-            
-            self.tokensTable.frame.origin.x = 0
-            self.tokensTable.frame.size.width = screenWidth
+            self.view.layoutIfNeeded()
         }
     }
     
