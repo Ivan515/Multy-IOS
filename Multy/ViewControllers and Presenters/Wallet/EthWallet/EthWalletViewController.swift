@@ -467,62 +467,11 @@ extension EthWalletViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //check number of transactions
-        // else return some empty cells
-        let countOfHistObjects = self.presenter.numberOfTransactions()
-        if countOfHistObjects > 0 {
-            self.tableView.isScrollEnabled = true
-            if countOfHistObjects < 10 {
-                return 10
-            } else {
-                return countOfHistObjects
-            }
-        } else {
-            if screenHeight == heightOfX {
-                return 13
-            }
-            return 10
-        }
+        return presenter.makeNumberOfRowIn(tableView: tableView)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let countOfHistObjs = self.presenter.numberOfTransactions()
-        
-        if indexPath.row < countOfHistObjs && presenter.isTherePendingMoney(for: indexPath) {
-            let pendingTrasactionCell = tableView.dequeueReusableCell(withIdentifier: "TransactionPendingCellID") as! TransactionPendingCell
-            pendingTrasactionCell.selectionStyle = .none
-            pendingTrasactionCell.histObj = presenter.historyArray[indexPath.row]
-            pendingTrasactionCell.wallet = presenter.wallet
-            pendingTrasactionCell.fillCell()
-            
-            return pendingTrasactionCell
-        } else {
-            let transactionCell = self.tableView.dequeueReusableCell(withIdentifier: "TransactionWalletCellID") as! TransactionWalletCell
-            if tableView.isEqual(self.tokensTable) {
-                transactionCell.selectionStyle = .gray
-            } else {
-                 transactionCell.selectionStyle = .none
-            }
-            if countOfHistObjs > 0 {
-                if indexPath.row >= countOfHistObjs {
-                    transactionCell.changeState(isEmpty: true)
-                } else {
-                    transactionCell.histObj = presenter.historyArray[indexPath.row]
-                    transactionCell.wallet = presenter.wallet!
-                    transactionCell.fillCell()
-                    transactionCell.changeState(isEmpty: false)
-                    self.hideEmptyLbls()
-                    if indexPath.row != 1 {
-                        transactionCell.changeTopConstraint()
-                    }
-                }
-            } else {
-                transactionCell.changeState(isEmpty: true)
-                fixForiPad()
-            }
-            
-            return transactionCell
-        }
+        return self.presenter.makeCellFor(tableView: tableView, indexPath: indexPath)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -544,11 +493,7 @@ extension EthWalletViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row < presenter.numberOfTransactions() && presenter.isTherePendingMoney(for: indexPath) { // <= since we begins from 1
-            return 135
-        } else {
-            return 70
-        }
+        return presenter.makeHeightForCellIn(tableView: tableView, indexPath: indexPath)
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
