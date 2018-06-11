@@ -73,8 +73,9 @@ class EthWalletViewController: UIViewController, AnalyticsProtocol, CancelProtoc
     override func viewDidLoad() {
         super.viewDidLoad()
         spiner.stopAnimating()
-        loader.setupUI(text: localize(string: Constants.gettingWalletString), image: #imageLiteral(resourceName: "walletHuge"))
+        loader.show(customTitle: Constants.gettingWalletString)
         self.view.addSubview(loader)
+        loader.hide()
         self.swipeToBack()
         presenter.mainVC = self
         presenter.fixConstraints()
@@ -225,14 +226,15 @@ class EthWalletViewController: UIViewController, AnalyticsProtocol, CancelProtoc
         }
         if presenter.isTherePendingAmount && self.customHeader.frame.origin.y != self.headerTopY  {
             UIView.animate(withDuration: 0.2) {
-                self.backImage.frame.size.height = 392
-                self.collectionView.frame.size.height = 305
+                self.backImage.frame.size.height = 402
+                self.collectionView.frame.size.height = 240
                 self.collectionView.frame.origin.y = self.collectionStartY
-                self.customHeader.frame.origin.y = 372
-                self.tableView.frame.origin.y = 402
-                self.tableView.frame.size.height = screenHeight - self.tableView.frame.origin.y - self.bottomView.frame.height
+                self.tableView.frame.origin.y = self.backImage.frame.size.height + 10
+                self.customHeader.frame.origin.y = self.tableView.frame.origin.y - 30
+                self.tableView.frame.size.height = screenHeight - self.tableView.frame.origin.y //- self.bottomView.frame.height
                 self.changeBackupY()
             }
+            self.setTableToBot(duration: 0.2)
         } else {
             setTableToBot(duration: 0.2)
         }
@@ -263,7 +265,7 @@ class EthWalletViewController: UIViewController, AnalyticsProtocol, CancelProtoc
         }
         
         isSocketInitiateUpdating = true
-        
+        presenter.isUpdateBySocket = presenter.isUpdateBySocket != nil ? false : true
         presenter.getHistoryAndWallet()
     }
     
@@ -325,17 +327,18 @@ class EthWalletViewController: UIViewController, AnalyticsProtocol, CancelProtoc
         image.image = #imageLiteral(resourceName: "warninngBig")
         image.frame = CGRect(x: 13, y: 11, width: 22, height: 22)
         
-        let btn = UIButton()
-        btn.frame = CGRect(x: 50, y: 0, width: backupView!.frame.width - 35, height: backupView!.frame.height)
-        btn.setTitle(localize(string: Constants.backupNeededString), for: .normal)
-        btn.setTitleColor(.red, for: .normal)
-        btn.titleLabel?.font = UIFont(name: "Avenir-Next", size: 6)
-        btn.contentHorizontalAlignment = .left
-        btn.addTarget(self, action: #selector(goToSeed), for: .touchUpInside)
-        
         let chevron = UIImageView()
         chevron.image = #imageLiteral(resourceName: "chevronRed")
         chevron.frame = CGRect(x: backupView!.frame.width - 35, y: 15, width: 11, height: 11)
+        
+        let btn = UIButton()
+        btn.frame = CGRect(x: 50, y: 0, width: chevron.frame.origin.x - 50, height: backupView!.frame.height)
+        btn.setTitle(localize(string: Constants.backupNeededString), for: .normal)
+        btn.setTitleColor(.red, for: .normal)
+        btn.titleLabel?.adjustsFontSizeToFitWidth = true
+        btn.titleLabel?.minimumScaleFactor = 0.5
+        btn.contentHorizontalAlignment = .left
+        btn.addTarget(self, action: #selector(goToSeed), for: .touchUpInside)
         
         backupView!.addSubview(chevron)
         backupView!.addSubview(btn)
@@ -378,7 +381,7 @@ class EthWalletViewController: UIViewController, AnalyticsProtocol, CancelProtoc
     
     @IBAction func sendAction(_ sender: Any) {
         if presenter.isThereAvailableAmount == false {
-            self.presentAlert(with: "You have no available funds")
+            self.presentAlert(with: localize(string: Constants.noFundsString))
             
             return
         }
@@ -588,7 +591,7 @@ extension EthWalletViewController : UICollectionViewDelegateFlowLayout {
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
 //        return CGSize(width: screenWidth, height: presenter.topCellHeight - Constants.ETHWalletScreen.collectionCellDifference)
         
-        return CGSize(width: screenWidth, height: presenter.isTherePendingAmount == false ? 140 : 190)
+        return CGSize(width: screenWidth, height: presenter.isTherePendingAmount == false ? 140 : 200)
     }
     
     func collectionView(_ collectionView: UICollectionView,

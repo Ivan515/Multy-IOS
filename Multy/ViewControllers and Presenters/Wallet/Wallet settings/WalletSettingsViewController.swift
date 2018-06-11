@@ -13,13 +13,14 @@ class WalletSettingsViewController: UIViewController,AnalyticsProtocol {
     let presenter = WalletSettingsPresenter()
     
 //    let progressHUD = ProgressHUD(text: "Deleting Wallet...")
-    let loader = PreloaderView(frame: HUDFrame, text: "Updating", image: #imageLiteral(resourceName: "walletHuge"))
+    var loader = PreloaderView(frame: HUDFrame, text: "Updating", image: #imageLiteral(resourceName: "walletHuge"))
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.swipeToBack()
         walletNameTF.accessibilityIdentifier = "nameField"
-        loader.setupUI(text: localize(string: Constants.updatingString), image: #imageLiteral(resourceName: "walletHuge"))
+        loader = PreloaderView(frame: HUDFrame, text: Constants.updatingString, image: #imageLiteral(resourceName: "walletHuge"))
+//        loader.setupUI(text: localize(string: Constants.updatingString), image: #imageLiteral(resourceName: "walletHuge"))
         view.addSubview(loader)
         
         self.presenter.walletSettingsVC = self
@@ -41,8 +42,8 @@ class WalletSettingsViewController: UIViewController,AnalyticsProtocol {
         if presenter.wallet!.isEmpty {
             let message = localize(string: Constants.deleteWalletAlertString)
             let alert = UIAlertController(title: localize(string: Constants.warningString), message: message, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: localize(string: Constants.yesString), style: .cancel, handler: { (action) in
-                self.loader.show(customTitle: "Deleting")
+            alert.addAction(UIAlertAction(title: localize(string: Constants.yesString), style: .cancel, handler: { [unowned self] (action) in
+                self.loader.show(customTitle: self.localize(string: Constants.deletingString))
                 self.presenter.delete()
                 self.sendAnalyticsEvent(screenName: "\(screenWalletSettingsWithChain)\(self.presenter.wallet!.chain)", eventName: "\(walletDeletedWithChain)\(self.presenter.wallet!.chain)")
             }))

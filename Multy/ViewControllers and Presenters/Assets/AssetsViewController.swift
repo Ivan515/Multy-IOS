@@ -78,6 +78,8 @@ class AssetsViewController: UIViewController, AnalyticsProtocol {
                 return
             }
             
+            self.autorizeFromAppdelegate()
+            
             self.sendAnalyticsEvent(screenName: screenMain, eventName: screenMain)
             NotificationCenter.default.addObserver(self, selector: #selector(self.updateExchange), name: NSNotification.Name("exchageUpdated"), object: nil)
             NotificationCenter.default.addObserver(self, selector: #selector(self.updateWalletAfterSockets), name: NSNotification.Name("transactionUpdated"), object: nil)
@@ -151,6 +153,26 @@ class AssetsViewController: UIViewController, AnalyticsProtocol {
     }
     
     
+    func autorizeFromAppdelegate() {
+        DataManager.shared.realmManager.getAccount { (acc, err) in
+            DataManager.shared.realmManager.fetchCurrencyExchange { (currencyExchange) in
+                if currencyExchange != nil {
+                    DataManager.shared.currencyExchange.update(currencyExchangeRLM: currencyExchange!)
+                }
+            }
+            isNeedToAutorise = acc != nil
+            DataManager.shared.apiManager.userID = acc == nil ? "" : acc!.userID
+            //MAKR: Check here isPin option from NSUserDefaults
+            UserPreferences.shared.getAndDecryptPin(completion: { [weak self] (code, err) in
+                if code != nil && code != "" {
+                    isNeedToAutorise = true
+                    let appDel = UIApplication.shared.delegate as! AppDelegate
+                    appDel.authorization(isNeedToPresentBiometric: true)
+                }
+            })
+        }
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         if self.presenter.isJailed {
             self.presentWarningAlert(message: localize(string: Constants.jailbrokenDeviceWarningString))
@@ -211,13 +233,14 @@ class AssetsViewController: UIViewController, AnalyticsProtocol {
         }
         
         isSocketInitiateUpdating = true
-        presenter.getWalletVerboseForSockets { (_) in
+        presenter.getWalletVerboseForSockets { [unowned self] (_) in
             self.isSocketInitiateUpdating = false
-            for cell in self.tableView.visibleCells {
-                if cell.isKind(of: WalletTableViewCell.self) {
-                    (cell as! WalletTableViewCell).fillInCell()
-                }
-            }
+            self.tableView.reloadData()
+//            for cell in self.tableView.visibleCells {
+//                if cell.isKind(of: WalletTableViewCell.self) {
+//                    (cell as! WalletTableViewCell).fillInCell()
+//                }
+//            }
         }
     }
     
@@ -350,6 +373,10 @@ class AssetsViewController: UIViewController, AnalyticsProtocol {
             let termsVC = storyBoard.instantiateViewController(withIdentifier: "termsVC")
             self.present(termsVC, animated: true, completion: nil)
         }
+    }
+    
+    func isOnWindow() -> Bool {
+        return self.navigationController!.topViewController!.isKind(of: AssetsViewController.self)
     }
 }
 
@@ -670,13 +697,15 @@ extension CollectionViewDelegate : UICollectionViewDelegate {
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        guard let firstCell = self.tableView.cellForRow(at: [0,0]) else { return }
-        (firstCell as! PortfolioTableViewCell).pageControl.currentPage = Int(scrollView.contentOffset.x) / Int(scrollView.frame.width)
+        guard let firstCell = self.tableView.cellForRow(at: [0,0]) as? PortfolioTableViewCell else { return }
+        let firstCellCollectionView = firstCell.collectionView!
+        firstCell.pageControl.currentPage = Int(firstCellCollectionView.contentOffset.x) / Int(firstCellCollectionView.frame.width)
     }
     
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        guard let firstCell = self.tableView.cellForRow(at: [0,0]) else { return }
-        (firstCell as! PortfolioTableViewCell).pageControl.currentPage = Int(scrollView.contentOffset.x) / Int(scrollView.frame.width)
+        guard let firstCell = self.tableView.cellForRow(at: [0,0]) as? PortfolioTableViewCell else { return }
+        let firstCellCollectionView = firstCell.collectionView!
+        firstCell.pageControl.currentPage = Int(firstCellCollectionView.contentOffset.x) / Int(firstCellCollectionView.frame.width)
     }
 }
 

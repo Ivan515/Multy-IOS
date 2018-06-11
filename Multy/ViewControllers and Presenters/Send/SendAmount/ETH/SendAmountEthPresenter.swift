@@ -144,12 +144,12 @@ class SendAmountEthPresenter: NSObject {
             var message = rawTransaction
             
             if message.hasPrefix("BigInt value is not representable as") {
-                message = "You entered too small amount!"
+                message = sendAmountVC!.localize(string: Constants.youEnteredTooSmallAmountString)
             } else if message.hasPrefix("Transaction is trying to spend more than available in inputs") {
-                message = "You are trying to spend more then you have."
+                message = sendAmountVC!.localize(string: Constants.youEnteredTooSmallAmountString)
             }
             
-            let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+            let alert = UIAlertController(title: sendAmountVC!.localize(string: Constants.errorString), message: message, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action) in }))
             sendAmountVC!.present(alert, animated: true, completion: nil)
             
@@ -259,20 +259,27 @@ class SendAmountEthPresenter: NSObject {
             if transactionDTO.transaction!.donationDTO != nil {
                 let donationCryptoValue = Constants.BigIntSwift.oneBTCInSatoshiKey * transactionDTO.transaction!.donationDTO!.sumInCrypto!
                 
-                message = "You can`t spend sum more than you have!\nDon`t forget about Fee and donation.\n\nYour fee is \(currentCryptoFeeAmountString()) \(self.cryptoName) \nand donation is \(donationCryptoValue.cryptoValueString(for: blockchain)) \(self.cryptoName)"
+                message = sendAmountVC!.localize(string: Constants.youCantSpendMoreThanFeeAndDonationString) +
+                    "\(currentCryptoFeeAmountString()) \(self.cryptoName)" +
+                    sendAmountVC!.localize(string: Constants.andDonationString) +
+                    "\(donationCryptoValue.cryptoValueString(for: blockchain)) \(self.cryptoName)"
             } else {
-                message = "You can`t spend sum more than you have!\nDon`t forget about Fee.\nYour is fee \(currentCryptoFeeAmountString()) \(self.cryptoName)"
+                message = sendAmountVC!.localize(string: Constants.youCantSpendMoreThanFeeString) + "\(currentCryptoFeeAmountString()) \(self.cryptoName)"
             }
         case false:
             if transactionDTO.transaction!.donationDTO != nil {
                 let donationCryptoValue = Constants.BigIntSwift.oneBTCInSatoshiKey * transactionDTO.transaction!.donationDTO!.sumInCrypto!
                 let donationFiatValue = donationCryptoValue * exchangeCourse
                 
-                message = "You can`t spend sum more than you have!\nDon`t forget about Fee and donation.\n\nYour fee is \(currentFiatFeeAmountString()) \(self.fiatName) \nand donation is \(donationFiatValue.cryptoValueString(for: blockchain)) \(self.fiatName)"
+                message = sendAmountVC!.localize(string: Constants.youCantSpendMoreThanFeeAndDonationString) +
+                    "\(currentFiatFeeAmountString()) \(self.fiatName)" +
+                    sendAmountVC!.localize(string: Constants.andDonationString) +
+                    "\(donationFiatValue.cryptoValueString(for: blockchain)) \(self.fiatName)"
             } else {
-                message = "You can`t spend sum more than you have!\nDon`t forget about Fee.\nYour is fee \(currentFiatFeeAmountString()) \(self.fiatName)"
+                message = sendAmountVC!.localize(string: Constants.youCantSpendMoreThanFeeString) + "   \(currentFiatFeeAmountString()) \(self.fiatName)"
             }
         }
+        
         return message
     }
 }
@@ -316,7 +323,7 @@ extension CreateTransactionDelegate {
                                                                               balanceAmount: "\(transactionDTO.choosenWallet!.ethWallet!.balance)",
             ethereumChainID: UInt32(transactionDTO.choosenWallet!.blockchainType.net_type),
             gasPrice: transactionDTO.transaction?.transactionRLM?.sumInCryptoBigInt.stringValue ?? "0",
-            gasLimit: "21000") // "\(transactionDTO.transaction?.customGAS?.gasPrice ?? 0)")
+            gasLimit: "21000")
         
         rawTransaction = trData.message
         

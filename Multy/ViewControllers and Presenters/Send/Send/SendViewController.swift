@@ -207,6 +207,7 @@ class SendViewController: UIViewController {
     func updateUIForBluetoothState(_ isEnable : Bool) {
         bluetoothDisabledContentView.isHidden = isEnable
         bluetoothEnabledContentView.isHidden = !isEnable
+        activeRequestsAmountLabel.isHidden = !isEnable
         
         refreshBackground()
     }
@@ -597,7 +598,11 @@ class SendViewController: UIViewController {
 
 
     @objc func close() {
-        self.navigationController?.popViewController(animated: true)
+        guard let nc = self.navigationController else {
+            return self.dismiss(animated: false, completion: nil)
+        }
+        
+        nc.popToRootViewController(animated: true)
         if let tbc = self.tabBarController as? CustomTabBarViewController {
             tbc.setSelectIndex(from: 2, to: tbc.previousSelectedIndex)
         }

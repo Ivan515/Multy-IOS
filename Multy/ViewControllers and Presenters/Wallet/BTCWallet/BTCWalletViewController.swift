@@ -74,8 +74,9 @@ class BTCWalletViewController: UIViewController, AnalyticsProtocol {
         super.viewDidLoad()
         spiner.isHidden = true
         spiner.stopAnimating()
-        loader.setupUI(text: localize(string: Constants.updatingString), image: #imageLiteral(resourceName: "walletHuge"))
+        loader.show(customTitle: Constants.updatingString)
         view.addSubview(loader)
+        loader.hide()
         self.swipeToBack()
         presenter.mainVC = self
         presenter.fixConstraints()
@@ -182,9 +183,9 @@ class BTCWalletViewController: UIViewController, AnalyticsProtocol {
             backupTopY = 80
             tableTopY = 130
         default:
-            headerTopY = 80
-            backupTopY = 70
-            tableTopY = 110
+            headerTopY = 70
+            backupTopY = 60
+            tableTopY = 100
         }
         if self.presenter.blockedAmount != 0 {
             UIView.animate(withDuration: 0.2) {
@@ -351,7 +352,7 @@ class BTCWalletViewController: UIViewController, AnalyticsProtocol {
     
     @IBAction func sendAction(_ sender: Any) {
         if presenter.wallet!.availableAmount.isZero {
-            self.presentAlert(with: "You have no available funds")
+            self.presentAlert(with: localize(string: Constants.noFundsString))
             
             return
         }
